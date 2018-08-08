@@ -1,0 +1,6 @@
+framework module Pods_BlueUITests {
+  umbrella header "Pods-BlueUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
