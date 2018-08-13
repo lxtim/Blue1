@@ -13,16 +13,18 @@
 
 
 import UIKit
+import Firebase
+
 class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
-    
     var pageControl = UIPageControl()
+    var ref: DatabaseReference = Database.database().reference()
     
     // MARK: UIPageViewControllerDataSource
     
     lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newVc(viewController: "sbBlue"),
-                self.newVc(viewController: "sbOrange")]
+        return [Object(FeedViewController.self),
+                Object(ProfileViewController.self)]
     }()
    //if 3rd viewcontroller needed
     //,self.newVc(viewController: "sbRed")
@@ -30,11 +32,10 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.getFirstMyFollowers()
         self.dataSource = self
         self.delegate = self
-        
-        
-        
         // This sets up the first view that will show up on our page control
         if let firstViewController = orderedViewControllers.first {
             setViewControllers([firstViewController],
@@ -44,23 +45,40 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         }
         
         configurePageControl()
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.view.backgroundColor = .white
+        
         
         // Do any additional setup after loading the view.
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.pageControl.frame = CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50)
+    }
+    
+//    func getFirstMyFollowers() {
+//        self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observeSingleEvent(of: DataEventType.value) { (snapshot) in
+//            let snap = snapshot.value as? NSDictionary
+//            if let array = snap?.value(forKey: ConstantKey.follow) as? NSArray {
+//                BasicStuff.shared.followArray = NSMutableArray(array: array)
+//                JDB.log("following array ==%@", array)
+//            }
+//            JDB.log("following array ==%@", snap)
+//        }
+//    }
+    
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
-        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
+        self.pageControl.translatesAutoresizingMaskIntoConstraints =  false
+        pageControl = UIPageControl(frame: CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50))
         self.pageControl.numberOfPages = orderedViewControllers.count
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.black
         self.pageControl.pageIndicatorTintColor = UIColor.red
         self.pageControl.currentPageIndicatorTintColor = UIColor.gray
-        self.view.addSubview(pageControl)
-    }
-    
-    func newVc(viewController: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: viewController)
+        self.view.insertSubview(pageControl, at: 10)
     }
     
     

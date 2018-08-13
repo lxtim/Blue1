@@ -11,7 +11,11 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
-
+pod 'Firebase/Storage'
+pod 'TPKeyboardAvoidingSwift'
+pod 'MRProgress'
+pod 'UITextView+Placeholder'
+pod 'PINRemoteImage'
 
   target 'BlueTests' do
     inherit! :search_paths
