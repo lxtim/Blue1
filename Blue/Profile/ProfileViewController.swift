@@ -23,7 +23,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     
     var ref: DatabaseReference = Database.database().reference()
-    var feedData:NSMutableArray = NSMutableArray()
+    var feedData:[[String:Any]] = [[String:Any]]()
     var allFeed:NSDictionary = NSDictionary()
     
     var isOtherUserProfile:Bool = false
@@ -189,15 +189,20 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
 //            HUD.dismiss()
             if let value = snapshot.value as? NSDictionary {
                 self.allFeed = value
-                    self.feedData = NSMutableArray()
+                self.feedData = [[String:Any]]()
                     for (k,v) in self.allFeed {
                         if let data = v as? NSDictionary {
                             let mutableData = NSMutableDictionary(dictionary: data)
                             mutableData.setValue(k, forKey: "id")
-                            self.feedData.add(mutableData)
+                            self.feedData.append(mutableData as! [String : Any])
                         }
                     }
-                    self.tableView.reloadData()
+                
+                let sortedArray = self.feedData.sorted(by: {(one , two) in
+                    return  (one["date"] as! String).date > (two["date"] as! String).date
+                })
+                self.feedData = sortedArray
+                self.tableView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
                     self.tableView.isHidden = false
                 })
@@ -220,7 +225,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
-        let feed = self.feedData.object(at: indexPath.row) as! NSMutableDictionary
+        let feed = self.feedData[indexPath.row]
         cell.object = feed
         cell.likeImg.isUserInteractionEnabled = false
         return cell

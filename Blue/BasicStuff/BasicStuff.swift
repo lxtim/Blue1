@@ -24,6 +24,7 @@ struct ConstantKey {
     static let likes:String = "likes"
     static let email:String = "email"
     static let follow:String = "follow"
+    static let date:String = "date"
     
 }
 
@@ -78,7 +79,41 @@ extension UITextField{
     }
 }
 
+extension DateFormatter {
+    static var formate:DateFormatter {
+        let dateformater = DateFormatter()
+        if let timezone = TimeZone(abbreviation: "UTC") {
+            dateformater.timeZone = timezone
+        }
+        dateformater.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        return dateformater
+    }
+}
+extension String {
+    var date:Date {
+        if let sdate = DateFormatter.formate.date(from: self) {
+            return sdate
+        }
+        else {
+            return Date()
+        }
+    }
+}
 
+extension Date {
+    var string: String {
+        return DateFormatter.formate.string(from: self)
+    }
+    func interval(ofComponent comp: Calendar.Component, fromDate date: Date) -> Int {
+        
+        let currentCalendar = Calendar.current
+        
+        guard let start = currentCalendar.ordinality(of: comp, in: .era, for: date) else { return 0 }
+        guard let end = currentCalendar.ordinality(of: comp, in: .era, for: self) else { return 0 }
+        
+        return end - start
+    }
+}
 
 var firebaseUser:User = Auth.auth().currentUser!
 

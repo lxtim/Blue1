@@ -15,10 +15,11 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     var ref: DatabaseReference = Database.database().reference()
-    var feedData:NSMutableArray = NSMutableArray()
+    var feedData:[[String:Any]] = [[String:Any]]()
     var allFeed:NSDictionary = NSDictionary()
     
     var currentObserver:UInt?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,21 +56,26 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     func getFeed() {
 //        HUD.show()
-        currentObserver = self.ref.child(ConstantKey.feed).observe(DataEventType.value) { (snapshot) in
+        currentObserver = self.ref.child(ConstantKey.feed).queryOrdered(byChild: "date").observe(DataEventType.value) { (snapshot) in
 //            HUD.dismiss()
             if let value = snapshot.value as? NSDictionary {
                 self.allFeed = value
                 
-                    self.feedData = NSMutableArray()
+                self.feedData = [[String:Any]]()
                     for (k,v) in self.allFeed {
                         if let data = v as? NSDictionary {
                             if let userID = data.value(forKey: ConstantKey.userid) , BasicStuff.shared.followArray.contains(userID) {
                                 let mutableData = NSMutableDictionary(dictionary: data)
                                 mutableData.setValue(k, forKey: "id")
-                                self.feedData.add(mutableData)
+                                self.feedData.append(mutableData as! [String : Any])
                             }
                         }
                     }
+                let sortedArray = self.feedData.sorted(by: {(one , two) in
+                    return  (one["date"] as! String).date > (two["date"] as! String).date
+                })
+                
+                self.feedData = sortedArray
                 self.tableView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
                     if self.feedData.count > 0 {
@@ -118,7 +124,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
-        let feed = self.feedData.object(at: indexPath.row) as! NSMutableDictionary
+        let feed = self.feedData[indexPath.row]
         cell.object = feed
         
         return cell

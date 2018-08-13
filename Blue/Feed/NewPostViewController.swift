@@ -86,6 +86,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                         json[ConstantKey.image] = downloadURL.absoluteString
                         json[ConstantKey.caption] = caption
                         json[ConstantKey.likes] = []
+                        json[ConstantKey.date] = Date().string
                         
                         self.ref.child(ConstantKey.feed).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
                             HUD.dismiss()

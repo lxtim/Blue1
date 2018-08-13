@@ -24,13 +24,13 @@ class PostCell: UITableViewCell {
     //var post: Post!
     var ref: DatabaseReference = Database.database().reference()
     
-    var object:NSMutableDictionary  = NSMutableDictionary() {
+    var object:[String:Any]  = [String:Any]() {
         didSet(newValue) {
-            if let user = object.value(forKey: ConstantKey.user) as? NSDictionary {
+            if let user = object[ConstantKey.user] as? NSDictionary {
                 self.usernameLbl.text = user.value(forKey: ConstantKey.username) as? String
             }
             
-            if let id = object.value(forKey: ConstantKey.userid) as? String {
+            if let id = object[ConstantKey.userid] as? String {
                 self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: DataEventType.value) { (snapshot) in
                     if let snap = snapshot.value as? NSDictionary {
                         self.usernameLbl.text = snap.value(forKey: ConstantKey.username) as? String
@@ -42,13 +42,13 @@ class PostCell: UITableViewCell {
             }
             
 
-            if let url = object.value(forKey: ConstantKey.image) as? String {
+            if let url = object[ConstantKey.image] as? String {
                 self.postImg.pin_setImage(from: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"))
             }
             
-            self.caption.text = object.value(forKey: ConstantKey.caption) as? String
+            self.caption.text = object[ConstantKey.caption] as? String
             
-            if let likes = object.value(forKey: ConstantKey.likes) as? NSArray {
+            if let likes = object[ConstantKey.likes] as? NSArray {
                 if likes.contains(firebaseUser.uid) {
                     self.likeImg.image = #imageLiteral(resourceName: "Filledheart")
                     self.likeImg.tag = 1
@@ -81,14 +81,14 @@ class PostCell: UITableViewCell {
     
     @objc func likeTapped(sender: UITapGestureRecognizer) {
         var likes = NSMutableArray()
-        if let like = object.value(forKey: ConstantKey.likes) as? NSArray {
+        if let like = object[ConstantKey.likes] as? NSArray {
             likes = NSMutableArray(array: like)
         }
         
-        let feedID = object.value(forKey: ConstantKey.id) as! String
+        let feedID = object[ConstantKey.id] as! String
         if self.likeImg.tag == 0 {
             likes.add(firebaseUser.uid)
-            object.setValue(likes, forKey: ConstantKey.likes)
+            object[ConstantKey.likes] = likes
             self.ref.child(ConstantKey.feed).child(feedID).setValue(object) { (error, refrance) in
                 if error == nil {
                     self.likeImg.image = #imageLiteral(resourceName: "Filledheart")
@@ -98,7 +98,7 @@ class PostCell: UITableViewCell {
         }
         else {
             likes.remove(firebaseUser.uid)
-            object.setValue(likes, forKey: ConstantKey.likes)
+            object[ConstantKey.likes] = likes
             self.ref.child(ConstantKey.feed).child(feedID).setValue(object) { (error, refrance) in
                 if error == nil {
                     self.likeImg.image = #imageLiteral(resourceName: "Heart unfilled")
