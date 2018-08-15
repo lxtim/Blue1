@@ -25,6 +25,8 @@
 		F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4E211D6D29008ED448 /* FeedViewController.swift */; };
 		F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A50211D7590008ED448 /* NewPostViewController.swift */; };
 		F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */; };
+		F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95B21243C2800D24606 /* FollwersViewController.swift */; };
+		F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95D21244A8A00D24606 /* SettingViewController.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
 		F348C51360C5A6AB1087E384 /* Pods_BlueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3845367C3D286815F72E9B7 /* Pods_BlueUITests.framework */; };
 /* End PBXBuildFile section */
@@ -76,6 +78,8 @@
 		F18A4A4E211D6D29008ED448 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		F18A4A50211D7590008ED448 /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
+		F1A1B95B21243C2800D24606 /* FollwersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollwersViewController.swift; sourceTree = "<group>"; };
+		F1A1B95D21244A8A00D24606 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
 		F8B48E2977AA251FCEEE0A64 /* Pods-BlueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueUITests/Pods-BlueUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				D934FE6E2117647500A5F66F /* ProfileViewController.swift */,
+				F1A1B95B21243C2800D24606 /* FollwersViewController.swift */,
+				F1A1B95D21244A8A00D24606 /* SettingViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -420,12 +426,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Blue/Pods-Blue-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/MRProgress/MRProgress.framework",
-				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
-				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoidingSwift/TPKeyboardAvoidingSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -433,12 +437,10 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MRProgress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoidingSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -456,8 +458,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */,
 				D934FE6D2115DD0200A5F66F /* PostCell.swift in Sources */,
 				D934FE6F2117647500A5F66F /* ProfileViewController.swift in Sources */,
+				F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */,
 				F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */,
 				D959983320ED478E00982DBC /* ViewController.swift in Sources */,
 				F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */,

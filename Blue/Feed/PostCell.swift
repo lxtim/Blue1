@@ -9,8 +9,7 @@
 import Foundation
 import Firebase
 import UIKit
-import PINRemoteImage
-
+import SDWebImage
 
 class PostCell: UITableViewCell {
 
@@ -20,34 +19,25 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var caption: UITextView!
     @IBOutlet weak var likeLbl: UILabel!
     @IBOutlet weak var likeImg: UIImageView!
+    @IBOutlet weak var timeAgoLabel: UILabel!
     
     //var post: Post!
     var ref: DatabaseReference = Database.database().reference()
     
     var object:[String:Any]  = [String:Any]() {
         didSet(newValue) {
-            if let user = object[ConstantKey.user] as? NSDictionary {
-                self.usernameLbl.text = user.value(forKey: ConstantKey.username) as? String
-            }
-            
-            if let id = object[ConstantKey.userid] as? String {
-                self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: DataEventType.value) { (snapshot) in
-                    if let snap = snapshot.value as? NSDictionary {
-                        self.usernameLbl.text = snap.value(forKey: ConstantKey.username) as? String
-                        if let url = snap.value(forKey: ConstantKey.image) as? String {
-                            self.profileImg.pin_setImage(from: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"))
-                        }
-                    }
+            if let user = object[ConstantKey.user] as? [String:Any] {
+                self.usernameLbl.text = user[ConstantKey.username] as? String
+                if let url = user[ConstantKey.image] as? String {
+                    self.profileImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
-            
-
             if let url = object[ConstantKey.image] as? String {
-                self.postImg.pin_setImage(from: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"))
+                self.postImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
             }
             
             self.caption.text = object[ConstantKey.caption] as? String
-            
+            self.timeAgoLabel.text = Date().offset(from: (object[ConstantKey.date] as! String).date) + " ago"
             if let likes = object[ConstantKey.likes] as? NSArray {
                 if likes.contains(firebaseUser.uid) {
                     self.likeImg.image = #imageLiteral(resourceName: "Filledheart")
@@ -84,12 +74,13 @@ class PostCell: UITableViewCell {
         if let like = object[ConstantKey.likes] as? NSArray {
             likes = NSMutableArray(array: like)
         }
-        
         let feedID = object[ConstantKey.id] as! String
+        let userID = object[ConstantKey.userid] as! String
+        
         if self.likeImg.tag == 0 {
             likes.add(firebaseUser.uid)
             object[ConstantKey.likes] = likes
-            self.ref.child(ConstantKey.feed).child(feedID).setValue(object) { (error, refrance) in
+            self.ref.child(ConstantKey.feed).child(userID).child(feedID).setValue(object) { (error, refrance) in
                 if error == nil {
                     self.likeImg.image = #imageLiteral(resourceName: "Filledheart")
                     self.likeImg.tag = 1
@@ -99,44 +90,14 @@ class PostCell: UITableViewCell {
         else {
             likes.remove(firebaseUser.uid)
             object[ConstantKey.likes] = likes
-            self.ref.child(ConstantKey.feed).child(feedID).setValue(object) { (error, refrance) in
+            self.ref.child(ConstantKey.feed).child(userID).child(feedID).setValue(object) { (error, refrance) in
                 if error == nil {
                     self.likeImg.image = #imageLiteral(resourceName: "Heart unfilled")
                     self.likeImg.tag = 0
                 }
             }
         }
-        
-//        self.ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let _ = snapshot.value as? NSNull {
-//                self.likeImg.image = UIImage(named: "filled-heart")
-//              //  self.post.adjustLikes(addLike: true)
-//                self.likesRef.setValue(true)
-//            } else {
-//                self.likeImg.image = UIImage(named: "empty-heart")
-//             //   self.post.adjustLikes(addLike: false)
-//                self.likesRef.removeValue()
-//            }
-//        })
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    // Handles Likes
-//    
-//    likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//    if let _ = snapshot.value as? NSNull {
-//    self.likeImg.image = UIImage(named: "empty-heart")
-//    } else {
-//    self.likeImg.image = UIImage(named: "filled-heart")
-//    }
-//    })
 }
 
 

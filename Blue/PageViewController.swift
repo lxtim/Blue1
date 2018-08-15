@@ -26,14 +26,10 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         return [Object(FeedViewController.self),
                 Object(ProfileViewController.self)]
     }()
-   //if 3rd viewcontroller needed
-    //,self.newVc(viewController: "sbRed")
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.getFirstMyFollowers()
         self.dataSource = self
         self.delegate = self
         // This sets up the first view that will show up on our page control
@@ -56,18 +52,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.pageControl.frame = CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50)
+        self.pageControl.isUserInteractionEnabled = false
     }
-    
-//    func getFirstMyFollowers() {
-//        self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observeSingleEvent(of: DataEventType.value) { (snapshot) in
-//            let snap = snapshot.value as? NSDictionary
-//            if let array = snap?.value(forKey: ConstantKey.follow) as? NSArray {
-//                BasicStuff.shared.followArray = NSMutableArray(array: array)
-//                JDB.log("following array ==%@", array)
-//            }
-//            JDB.log("following array ==%@", snap)
-//        }
-//    }
     
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.

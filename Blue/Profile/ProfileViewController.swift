@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import SDWebImage
 
 
 class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource{
@@ -21,14 +22,24 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     @IBOutlet weak var btnFollow: UIButton!
     
+    @IBOutlet weak var followersLabel: UILabel!
+    @IBOutlet weak var followingLabel: UILabel!
     
-    var ref: DatabaseReference = Database.database().reference()
+    @IBOutlet weak var followStackView: UIStackView!
+
+    
+    var userRef = Database.database().reference().child(ConstantKey.Users)
+    var feedRef = Database.database().reference().child(ConstantKey.feed)
+    
     var feedData:[[String:Any]] = [[String:Any]]()
     var allFeed:NSDictionary = NSDictionary()
     
     var isOtherUserProfile:Bool = false
     var userProfileData:NSMutableDictionary = NSMutableDictionary()
     
+    var followers:[[String:Any]] = [[String:Any]]()
+    
+    //MARK:-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -37,26 +48,48 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         if isOtherUserProfile {
             self.checkFollow()
             if let url = userProfileData.value(forKey: ConstantKey.image) as? String {
-                self.profileImageView.pin_setImage(from: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"))
+                self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
             self.userNameLabel.text = userProfileData.value(forKey: ConstantKey.username) as? String
             self.btnFollow.isHidden = false
         }
         else {
             if let url = firebaseUser.photoURL {
-                self.profileImageView.pin_setImage(from: url, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"))
+                self.profileImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
             self.userNameLabel.text = firebaseUser.displayName
             self.btnFollow.isHidden = true
             self.getFeed()
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let parent = self.parent as? PageViewController {
+            
+            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
+            
+            parent.navigationItem.title = "Profile"
+            parent.navigationItem.leftBarButtonItem = nil
+            parent.navigationItem.rightBarButtonItem = settingItem
+        }
+        else {
+            self.navigationItem.title = "Profile"
+        }
+        
+        self.getFollowing()
+        self.getFollowers()
+    }
+    
+    @objc func btnSettingAction(_ sender:UIButton) {
+        let object = Object(SettingViewController.self)
+        self.navigationController?.pushViewController(object, animated: true)
+    }
     
     @IBAction func imageViewDidTapAction(_ sender: UITapGestureRecognizer) {
         if isOtherUserProfile == true {
             return
         }
-        
         let actionSheet = UIAlertController(title: "Choose Option", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "Camera", style: .default) { (cameraAction) in
             if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
@@ -85,14 +118,6 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         actionSheet.addAction(cancelAction)
         self.present(actionSheet, animated: true) {}
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.parent?.navigationItem.rightBarButtonItem = nil
-        self.parent?.navigationItem.leftBarButtonItem = nil
-        self.parent?.navigationItem.title = "Profile"
-    }
-    
-    
     @IBAction func btnFollowAction(_ sender: UIButton) {
         if sender.tag == 0 {
             BasicStuff.shared.followArray.add(userProfileData.value(forKey: ConstantKey.id) as! String)
@@ -103,7 +128,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         BasicStuff.shared.UserData.setValue(BasicStuff.shared.followArray, forKey: ConstantKey.follow)
         
         HUD.show()
-        self.ref.child(ConstantKey.Users).child(firebaseUser.uid).setValue(BasicStuff.shared.UserData) { (error, ref) in
+        self.userRef.child(firebaseUser.uid).setValue(BasicStuff.shared.UserData) { (error, ref) in
             HUD.dismiss()
             if error == nil  {
                 self.checkFollow()
@@ -111,6 +136,11 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
 
+    @IBAction func btnFollowersAction(_ sender: UIButton) {
+        let action = Object(FollwersViewController.self)
+        action.followers = followers
+        self.navigationController?.pushViewController(action, animated: true)
+    }
     func checkFollow() {
         if BasicStuff.shared.followArray.contains(userProfileData.value(forKey: ConstantKey.id) as! String) {
             self.btnFollow.tag = 1
@@ -121,6 +151,76 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.btnFollow.setTitle("Follow", for: .normal)
         }
     }
+    func getFeed() {
+        self.feedData = [[String:Any]]()
+        self.userRef.child(firebaseUser.uid).observe(.value) { (snapshot) in
+            self.feedRef.child(firebaseUser.uid).observe(.value, with: { (snap) in
+                if let value = snap.value as? [String:Any] {
+                    for (k,v) in value {
+                        if var data = v as? [String:Any] {
+                            data[ConstantKey.user] = snapshot.value
+                            data[ConstantKey.id] = k
+                            if let index = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
+                                self.feedData.remove(at: index)
+                            }
+                            self.feedData.append(data)
+                        }
+                    }
+                }
+                
+                let sortedArray = self.feedData.sorted(by: {(one , two) in
+                    return  (one["date"] as! String).date > (two["date"] as! String).date
+                })
+                self.feedData = sortedArray
+                self.tableView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+                    if self.feedData.count > 0 {
+                        self.tableView.isHidden = false
+                    }
+                    else {
+                        self.tableView.isHidden = true
+                    }
+                })
+            })
+        }
+    }
+    func getFollowing() {
+        if self.isOtherUserProfile {
+            if let following = userProfileData.value(forKey: ConstantKey.follow) as? NSArray {
+                self.followingLabel.text = "\(following.count)"
+            }
+            else {
+                self.followingLabel.text = "0"
+            }
+        }
+        else {
+            self.followingLabel.text = "\(BasicStuff.shared.followArray.count)"
+        }
+    }
+    
+    func getFollowers() {
+         self.followers = [[String:Any]]()
+        self.userRef.observe(.value) { (snapshot) in
+            if let value = snapshot.value as? NSDictionary {
+                if let allUsersValue = value.allValues as? [[String:Any]] {
+                    for item in allUsersValue {
+                        if let follow = item[ConstantKey.follow] as? [String] {
+                            var id = firebaseUser.uid
+                            if self.isOtherUserProfile {
+                                id = self.userProfileData[ConstantKey.id] as! String
+                            }
+                            if follow.contains(id) {
+                                self.followers.append(item)
+                            }
+                        }
+                    }
+                }
+            }
+            self.followersLabel.text = "\(self.followers.count)"
+        }
+    }
+    //MARK:- UIImagepickerDelegate
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -156,7 +256,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                                                 ConstantKey.image:downloadURL.absoluteString,
                                                 ConstantKey.email:firebaseUser.email ?? ""]
                                     
-                                    self.ref.child(ConstantKey.Users).child(firebaseUser.uid).setValue(json, withCompletionBlock: { (error, databaseRef) in
+                                    self.userRef.child(firebaseUser.uid).setValue(json, withCompletionBlock: { (error, databaseRef) in
                                         HUD.dismiss()
                                         guard let error = error else {
                                             self.showAlert("Profile picture uploaded successfully")
@@ -182,33 +282,6 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         picker.dismiss(animated: true, completion: nil)
     }
     
-    
-    func getFeed() {
-//        HUD.show()
-        self.ref.child(ConstantKey.feed).queryOrdered(byChild: ConstantKey.userid).queryEqual(toValue: firebaseUser.uid).observe(.value) { (snapshot) in
-//            HUD.dismiss()
-            if let value = snapshot.value as? NSDictionary {
-                self.allFeed = value
-                self.feedData = [[String:Any]]()
-                    for (k,v) in self.allFeed {
-                        if let data = v as? NSDictionary {
-                            let mutableData = NSMutableDictionary(dictionary: data)
-                            mutableData.setValue(k, forKey: "id")
-                            self.feedData.append(mutableData as! [String : Any])
-                        }
-                    }
-                
-                let sortedArray = self.feedData.sorted(by: {(one , two) in
-                    return  (one["date"] as! String).date > (two["date"] as! String).date
-                })
-                self.feedData = sortedArray
-                self.tableView.reloadData()
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
-                    self.tableView.isHidden = false
-                })
-            }
-        }
-    }
     
     //MARK:- UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -15,11 +15,14 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     var ref: DatabaseReference = Database.database().reference()
+    var userRef = Database.database().reference().child(ConstantKey.Users)
+    var feedRef = Database.database().reference().child(ConstantKey.feed)
+    
     var feedData:[[String:Any]] = [[String:Any]]()
     var allFeed:NSDictionary = NSDictionary()
     
     var currentObserver:UInt?
-    
+    var isFirstTime:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,35 +58,44 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func getFeed() {
-//        HUD.show()
-        currentObserver = self.ref.child(ConstantKey.feed).queryOrdered(byChild: "date").observe(DataEventType.value) { (snapshot) in
-//            HUD.dismiss()
-            if let value = snapshot.value as? NSDictionary {
-                self.allFeed = value
-                
-                self.feedData = [[String:Any]]()
-                    for (k,v) in self.allFeed {
-                        if let data = v as? NSDictionary {
-                            if let userID = data.value(forKey: ConstantKey.userid) , BasicStuff.shared.followArray.contains(userID) {
-                                let mutableData = NSMutableDictionary(dictionary: data)
-                                mutableData.setValue(k, forKey: "id")
-                                self.feedData.append(mutableData as! [String : Any])
+        self.feedData = [[String:Any]]()
+        self.userRef.observe(.childAdded) { (snapshot) in
+            if BasicStuff.shared.followArray.contains(snapshot.key) {
+                self.feedRef.child(snapshot.key).observe(.value, with: { (snap) in
+                    if let value = snap.value as? [String:Any] {
+                        for (k,v) in value {
+                            if var data = v as? [String:Any] {
+                                data[ConstantKey.user] = snapshot.value
+                                data[ConstantKey.id] = k
+                                if let index = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
+                                    self.feedData.remove(at: index)
+                                    self.feedData.insert(data, at: index)
+                                }
+                                else {
+                                    self.feedData.append(data)
+                                    self.isFirstTime = true
+                                }
                             }
                         }
                     }
-                let sortedArray = self.feedData.sorted(by: {(one , two) in
-                    return  (one["date"] as! String).date > (two["date"] as! String).date
-                })
-                
-                self.feedData = sortedArray
-                self.tableView.reloadData()
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
-                    if self.feedData.count > 0 {
-                        self.tableView.isHidden = false
+                    
+                    let sortedArray = self.feedData.sorted(by: {(one , two) in
+                        return  (one["date"] as! String).date > (two["date"] as! String).date
+                    })
+                    self.feedData = sortedArray
+                    if self.isFirstTime {
+                        self.isFirstTime = false
+                        self.tableView.reloadData()
                     }
-                    else {
-                        self.tableView.isHidden = true
-                    }
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+                        if self.feedData.count > 0 {
+                            self.tableView.isHidden = false
+                        }
+                        else {
+                            self.tableView.isHidden = true
+                        }
+                    })
+                    
                 })
             }
         }
