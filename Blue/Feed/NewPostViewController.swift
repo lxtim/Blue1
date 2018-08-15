@@ -88,7 +88,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                         json[ConstantKey.likes] = []
                         json[ConstantKey.date] = Date().string
                         
-                        self.ref.child(ConstantKey.feed).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
+                        self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
                             HUD.dismiss()
                             guard let error = error else {
                                 JDB.log("Data saves SuccessFully")

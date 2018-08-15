@@ -97,14 +97,9 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - PINCache (2.3)
-  - PINRemoteImage (2.1.4):
-    - PINRemoteImage/FLAnimatedImage (= 2.1.4)
-  - PINRemoteImage/Core (2.1.4):
-    - PINCache (>= 2.1)
-  - PINRemoteImage/FLAnimatedImage (2.1.4):
-    - FLAnimatedImage (>= 1.0)
-    - PINRemoteImage/Core
+  - SDWebImage (4.4.1):
+    - SDWebImage/Core (= 4.4.1)
+  - SDWebImage/Core (4.4.1)
   - TPKeyboardAvoidingSwift (1.0)
   - "UITextView+Placeholder (1.2.1)"
 
@@ -114,7 +109,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - MRProgress
-  - PINRemoteImage
+  - SDWebImage
   - TPKeyboardAvoidingSwift
   - "UITextView+Placeholder"
 
@@ -135,8 +130,7 @@ SPEC REPOS:
     - leveldb-library
     - MRProgress
     - nanopb
-    - PINCache
-    - PINRemoteImage
+    - SDWebImage
     - TPKeyboardAvoidingSwift
     - "UITextView+Placeholder"
 
@@ -156,11 +150,10 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
-  PINRemoteImage: 4ac4011c5caefd6befd99758e09becede05d3226
+  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   TPKeyboardAvoidingSwift: 1a5823ef8bf6d97d140c89b38ff4377276eaeb8f
   "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
 
-PODFILE CHECKSUM: 8b75ffbe90090e1dcceb1becf76a6ad6ab849ec1
+PODFILE CHECKSUM: fcae84506db9c4607617cd30f61025161c785e1d
 
 COCOAPODS: 1.5.3

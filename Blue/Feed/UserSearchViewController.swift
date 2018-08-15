@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 protocol UserSearchDelegate {
     func userDidSelect(_ data:NSDictionary)
@@ -25,7 +26,7 @@ class UserSearchCell : UITableViewCell {
         didSet(newValue) {
             self.profileImageView.image = #imageLiteral(resourceName: "profile_placeHolder")
             
-        self.profileImageView?.pin_setImage(from: URL(string: imageURLString)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"))
+        self.profileImageView?.sd_setImage(with: URL(string: imageURLString)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
         }
     }
 }
