@@ -40,7 +40,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="556"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJJ-Oh-QMj">
-                                        <rect key="frame" x="50" y="323" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="282" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration" identifier="SignInButton"/>
                                         <state key="normal" title="Log In">
@@ -62,7 +62,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IKu-kT-jDh">
-                                        <rect key="frame" x="50" y="243" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="202" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -90,10 +90,10 @@
                                         </connections>
                                     </textField>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Filledheart" translatesAutoresizingMaskIntoConstraints="NO" id="RQM-IU-4rY">
-                                        <rect key="frame" x="138" y="50" width="99" height="76"/>
+                                        <rect key="frame" x="170" y="50" width="35" height="35"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eoM-be-gRw">
-                                        <rect key="frame" x="50" y="186" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="145" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -180,7 +180,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gXQ-td-GHB">
-                                        <rect key="frame" x="50" y="176" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="135" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -205,7 +205,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-9g-S8g">
-                                        <rect key="frame" x="50" y="233" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="192" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -230,7 +230,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tu2-zi-fgf">
-                                        <rect key="frame" x="50" y="290" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="249" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -255,7 +255,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="nextPressed" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpw-by-a9G">
-                                        <rect key="frame" x="50" y="370" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="329" width="275" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Sign Up">
@@ -286,7 +286,7 @@
                                         </connections>
                                     </button>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Filledheart" translatesAutoresizingMaskIntoConstraints="NO" id="cdJ-8e-FDI">
-                                        <rect key="frame" x="138" y="50" width="99" height="76"/>
+                                        <rect key="frame" x="170" y="50" width="35" height="35"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -1101,7 +1101,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Filledheart" width="99" height="76"/>
+        <image name="Filledheart" width="35" height="35"/>
         <image name="Rectangle 7" width="375" height="667"/>
         <image name="addimage" width="32" height="32"/>
         <image name="btn_add_final" width="22" height="21"/>
