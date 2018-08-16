@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UserSearchDelegate {
+class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UserSearchDelegate , FeedPostCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -148,13 +148,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         if feed[ConstantKey.image] != nil {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
             cell.object = feed
-            cell.likeImg.isUserInteractionEnabled = false
+            cell.delegate = self
             return cell
         }
         else {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
             cell.object = feed
-            cell.likeImg.isUserInteractionEnabled = false
+            cell.delegate = self
             return cell
         }
     }
@@ -164,6 +164,12 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         
     }
     
+    //MARK:- FeedPostCellDelegate
+    func postcellDidSelectLike(user: [String : Any]) {
+        let likeVC = Object(LikeViewController.self)
+        likeVC.user = user
+        self.navigationController?.pushViewController(likeVC, animated: true)
+    }
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {
         let profileVC = Object(ProfileViewController.self)

@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tJ-jK-kBw">
-                        <rect key="frame" x="0.0" y="0.5" width="375" height="498"/>
+                        <rect key="frame" x="0.0" y="0.5" width="375" height="503"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6cg-gM-CyC">
                                 <rect key="frame" x="10" y="15.5" width="60" height="60"/>
@@ -50,15 +50,8 @@
                                     <constraint firstAttribute="width" secondItem="OMl-ad-bTE" secondAttribute="height" multiplier="25:17" id="3Cd-N8-eUO"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12563 Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-Ys-yUU">
-                                <rect key="frame" x="278" y="458.5" width="92" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yAr-M4-Dwb">
-                                <rect key="frame" x="10" y="353.5" width="355" height="90"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="10" y="353.5" width="355" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="90" id="RvH-e5-xCD"/>
                                 </constraints>
@@ -67,40 +60,54 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Heart unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="0dq-SE-aV1">
-                                <rect key="frame" x="15" y="458.5" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="NOA-mz-brb"/>
-                                    <constraint firstAttribute="height" constant="25" id="ygH-pK-9nW"/>
-                                </constraints>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm8-4R-beR">
+                                <rect key="frame" x="319" y="453.5" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnLikeAction:" destination="pY5-UZ-4Eu" eventType="touchUpInside" id="TmI-YJ-GEf"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKx-7D-Yy6">
-                                <rect key="frame" x="85" y="46" width="66.5" height="21"/>
+                                <rect key="frame" x="85" y="45.5" width="66.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iq5-HK-mfD">
+                                <rect key="frame" x="15" y="453.5" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Weg-5g-0a1"/>
+                                    <constraint firstAttribute="width" constant="35" id="cea-YP-b1q"/>
+                                </constraints>
+                                <state key="normal" image="Filledheart"/>
+                                <state key="selected" image="Heart unfilled"/>
+                                <connections>
+                                    <action selector="btnLikeHeartAction:" destination="pY5-UZ-4Eu" eventType="touchUpInside" id="Ynu-Ah-neq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="yAr-M4-Dwb" secondAttribute="trailing" constant="10" id="2As-7I-50G"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1xO-59-4wU" secondAttribute="trailing" constant="10" id="2W6-wo-ecB"/>
+                            <constraint firstItem="Iq5-HK-mfD" firstAttribute="top" secondItem="yAr-M4-Dwb" secondAttribute="bottom" constant="15" id="4oD-Yl-Gd4"/>
                             <constraint firstItem="aKx-7D-Yy6" firstAttribute="leading" secondItem="6cg-gM-CyC" secondAttribute="trailing" constant="15" id="5Vg-uV-m7a"/>
                             <constraint firstItem="OMl-ad-bTE" firstAttribute="top" secondItem="6cg-gM-CyC" secondAttribute="bottom" constant="15" id="63J-I9-kPE"/>
-                            <constraint firstItem="3AY-Ys-yUU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0dq-SE-aV1" secondAttribute="trailing" constant="25" id="8WE-Yg-mMy"/>
-                            <constraint firstItem="0dq-SE-aV1" firstAttribute="top" secondItem="yAr-M4-Dwb" secondAttribute="bottom" constant="15" id="8oj-zm-0YX"/>
                             <constraint firstItem="1xO-59-4wU" firstAttribute="top" secondItem="4tJ-jK-kBw" secondAttribute="top" constant="15" id="Ajg-w7-t0a"/>
                             <constraint firstItem="yAr-M4-Dwb" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" constant="10" id="EoR-Ry-Q1A"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aKx-7D-Yy6" secondAttribute="trailing" constant="20" id="Lqh-4e-vHt"/>
                             <constraint firstItem="aKx-7D-Yy6" firstAttribute="top" secondItem="1xO-59-4wU" secondAttribute="bottom" constant="5" id="Ntf-PF-tCs"/>
                             <constraint firstAttribute="trailing" secondItem="OMl-ad-bTE" secondAttribute="trailing" id="SPX-x4-kUU"/>
                             <constraint firstItem="6cg-gM-CyC" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" constant="10" id="SWF-Cr-5b4"/>
-                            <constraint firstAttribute="trailing" secondItem="3AY-Ys-yUU" secondAttribute="trailing" constant="5" id="Srl-2A-2yc"/>
+                            <constraint firstAttribute="bottom" secondItem="Iq5-HK-mfD" secondAttribute="bottom" constant="15" id="Vsy-LG-YT9"/>
                             <constraint firstItem="yAr-M4-Dwb" firstAttribute="top" secondItem="OMl-ad-bTE" secondAttribute="bottom" constant="8" id="Wtd-uO-eDI"/>
-                            <constraint firstItem="3AY-Ys-yUU" firstAttribute="top" secondItem="yAr-M4-Dwb" secondAttribute="bottom" constant="15" id="YcO-xy-Ebi"/>
+                            <constraint firstItem="Nm8-4R-beR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Iq5-HK-mfD" secondAttribute="trailing" constant="15" id="clH-Bw-s8A"/>
                             <constraint firstItem="1xO-59-4wU" firstAttribute="leading" secondItem="6cg-gM-CyC" secondAttribute="trailing" constant="15" id="fPX-LB-rRc"/>
-                            <constraint firstAttribute="bottom" secondItem="0dq-SE-aV1" secondAttribute="bottom" constant="15" id="ffU-kF-Hjc"/>
-                            <constraint firstItem="0dq-SE-aV1" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" constant="15" id="lif-Kk-UH0"/>
+                            <constraint firstItem="Iq5-HK-mfD" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" constant="15" id="m16-oD-4Zz"/>
+                            <constraint firstItem="Nm8-4R-beR" firstAttribute="top" secondItem="yAr-M4-Dwb" secondAttribute="bottom" constant="15" id="mN5-Ib-lek"/>
+                            <constraint firstAttribute="trailing" secondItem="Nm8-4R-beR" secondAttribute="trailing" constant="10" id="n5D-Yl-T3Q"/>
                             <constraint firstItem="6cg-gM-CyC" firstAttribute="top" secondItem="4tJ-jK-kBw" secondAttribute="top" constant="15" id="pUN-Pq-0OZ"/>
                             <constraint firstItem="OMl-ad-bTE" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" id="wdb-8T-Zfm"/>
                         </constraints>
@@ -116,8 +123,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="caption" destination="yAr-M4-Dwb" id="XwB-tH-HHt"/>
-                <outlet property="likeImg" destination="0dq-SE-aV1" id="w8s-vS-zY1"/>
-                <outlet property="likeLbl" destination="3AY-Ys-yUU" id="ePK-xN-p0n"/>
+                <outlet property="likeImg" destination="Iq5-HK-mfD" id="YSK-GY-o2i"/>
+                <outlet property="likebtn" destination="Nm8-4R-beR" id="V01-no-XmP"/>
                 <outlet property="postImg" destination="OMl-ad-bTE" id="X9H-Ap-54L"/>
                 <outlet property="profileImg" destination="6cg-gM-CyC" id="C7t-x6-4hO"/>
                 <outlet property="timeAgoLabel" destination="aKx-7D-Yy6" id="BuV-EW-NUh"/>
@@ -127,6 +134,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Heart unfilled" width="42" height="33"/>
+        <image name="Filledheart" width="35" height="35"/>
+        <image name="Heart unfilled" width="35" height="35"/>
     </resources>
 </document>

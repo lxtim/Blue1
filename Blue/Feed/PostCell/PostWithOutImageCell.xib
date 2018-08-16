@@ -42,14 +42,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12563 Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLU-lD-dXm">
-                                <rect key="frame" x="278" y="159.5" width="92" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YT-HT-S1e">
+                                <rect key="frame" x="319" y="159" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnLikeAction:" destination="APD-4n-lZo" eventType="touchUpInside" id="6XS-Y4-0oy"/>
+                                </connections>
+                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jbp-EM-mxy">
-                                <rect key="frame" x="10" y="90.5" width="355" height="54"/>
+                                <rect key="frame" x="10" y="90.5" width="355" height="53.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="10h-rK-8nU"/>
@@ -60,39 +63,43 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Heart unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="o8I-H3-zwx">
-                                <rect key="frame" x="15" y="159.5" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="F0m-me-X2V"/>
-                                    <constraint firstAttribute="height" constant="25" id="X73-4M-xPA"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iak-8f-Nph">
                                 <rect key="frame" x="85" y="46" width="66.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7r-pT-6St">
+                                <rect key="frame" x="15" y="159" width="35" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="H3Q-5h-GIR"/>
+                                    <constraint firstAttribute="height" constant="35" id="Wkz-ev-EAf"/>
+                                </constraints>
+                                <state key="normal" image="Filledheart"/>
+                                <connections>
+                                    <action selector="btnLikeHeartAction:" destination="APD-4n-lZo" eventType="touchUpInside" id="94h-VW-rdJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Iak-8f-Nph" secondAttribute="trailing" constant="20" id="158-Jl-bD8"/>
+                            <constraint firstAttribute="trailing" secondItem="7YT-HT-S1e" secondAttribute="trailing" constant="10" id="2Jz-Nd-9bG"/>
                             <constraint firstItem="Iak-8f-Nph" firstAttribute="top" secondItem="YS1-Lj-cs7" secondAttribute="bottom" constant="5" id="5iS-jJ-VTB"/>
+                            <constraint firstAttribute="bottom" secondItem="U7r-pT-6St" secondAttribute="bottom" constant="15" id="B18-nk-90p"/>
                             <constraint firstItem="BPQ-9z-qJz" firstAttribute="top" secondItem="erW-8Y-evl" secondAttribute="top" constant="15" id="Bzk-F3-icu"/>
-                            <constraint firstItem="KLU-lD-dXm" firstAttribute="top" secondItem="jbp-EM-mxy" secondAttribute="bottom" constant="15" id="CMU-uM-8rv"/>
                             <constraint firstItem="YS1-Lj-cs7" firstAttribute="leading" secondItem="BPQ-9z-qJz" secondAttribute="trailing" constant="15" id="DDk-eW-9PK"/>
+                            <constraint firstItem="U7r-pT-6St" firstAttribute="leading" secondItem="erW-8Y-evl" secondAttribute="leading" constant="15" id="Fu9-U1-ogh"/>
+                            <constraint firstItem="7YT-HT-S1e" firstAttribute="top" secondItem="jbp-EM-mxy" secondAttribute="bottom" constant="15" id="KfZ-AE-6BC"/>
                             <constraint firstItem="YS1-Lj-cs7" firstAttribute="top" secondItem="erW-8Y-evl" secondAttribute="top" constant="15" id="Lck-EP-y09"/>
-                            <constraint firstItem="o8I-H3-zwx" firstAttribute="leading" secondItem="erW-8Y-evl" secondAttribute="leading" constant="15" id="MTv-ie-kSK"/>
                             <constraint firstItem="BPQ-9z-qJz" firstAttribute="leading" secondItem="erW-8Y-evl" secondAttribute="leading" constant="10" id="SbB-Qc-siZ"/>
                             <constraint firstItem="jbp-EM-mxy" firstAttribute="leading" secondItem="erW-8Y-evl" secondAttribute="leading" constant="10" id="WgU-YI-nlZ"/>
+                            <constraint firstItem="U7r-pT-6St" firstAttribute="top" secondItem="jbp-EM-mxy" secondAttribute="bottom" constant="15" id="gIe-do-92v"/>
                             <constraint firstItem="jbp-EM-mxy" firstAttribute="top" secondItem="BPQ-9z-qJz" secondAttribute="bottom" constant="15" id="hzE-4r-JIO"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YS1-Lj-cs7" secondAttribute="trailing" constant="10" id="nsX-yB-El7"/>
                             <constraint firstAttribute="trailing" secondItem="jbp-EM-mxy" secondAttribute="trailing" constant="10" id="q0B-On-H1q"/>
-                            <constraint firstItem="o8I-H3-zwx" firstAttribute="top" secondItem="jbp-EM-mxy" secondAttribute="bottom" constant="15" id="sT0-Lk-aEb"/>
                             <constraint firstItem="Iak-8f-Nph" firstAttribute="leading" secondItem="BPQ-9z-qJz" secondAttribute="trailing" constant="15" id="uIl-KC-LqG"/>
-                            <constraint firstAttribute="bottom" secondItem="o8I-H3-zwx" secondAttribute="bottom" constant="15" id="ump-h2-K45"/>
-                            <constraint firstAttribute="trailing" secondItem="KLU-lD-dXm" secondAttribute="trailing" constant="5" id="vBO-Nc-ZkJ"/>
-                            <constraint firstItem="KLU-lD-dXm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="o8I-H3-zwx" secondAttribute="trailing" constant="25" id="yho-km-Cpn"/>
+                            <constraint firstItem="7YT-HT-S1e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="U7r-pT-6St" secondAttribute="trailing" constant="15" id="zd4-DF-pL8"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -105,8 +112,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="caption" destination="jbp-EM-mxy" id="dAq-aF-YTt"/>
-                <outlet property="likeImg" destination="o8I-H3-zwx" id="Ucn-xo-Yxi"/>
-                <outlet property="likeLbl" destination="KLU-lD-dXm" id="JVP-tP-emT"/>
+                <outlet property="likeImg" destination="U7r-pT-6St" id="Jst-Gj-ho2"/>
+                <outlet property="likebtn" destination="7YT-HT-S1e" id="Oiw-Ea-L9N"/>
                 <outlet property="profileImg" destination="BPQ-9z-qJz" id="odL-7Q-16f"/>
                 <outlet property="timeAgoLabel" destination="Iak-8f-Nph" id="bpu-g2-wMT"/>
                 <outlet property="usernameLbl" destination="YS1-Lj-cs7" id="Onc-78-20a"/>
@@ -115,6 +122,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Heart unfilled" width="42" height="33"/>
+        <image name="Filledheart" width="99" height="76"/>
     </resources>
 </document>

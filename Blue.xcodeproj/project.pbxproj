@@ -32,6 +32,8 @@
 		F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95B21243C2800D24606 /* FollwersViewController.swift */; };
 		F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95D21244A8A00D24606 /* SettingViewController.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
+		F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A221258CC300CB7197 /* FollowingViewController.swift */; };
+		F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A62125984A00CB7197 /* LikeViewController.swift */; };
 		F348C51360C5A6AB1087E384 /* Pods_BlueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3845367C3D286815F72E9B7 /* Pods_BlueUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,8 @@
 		F1A1B95D21244A8A00D24606 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
+		F1E809A221258CC300CB7197 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
+		F1E809A62125984A00CB7197 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
 		F8B48E2977AA251FCEEE0A64 /* Pods-BlueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueUITests/Pods-BlueUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -239,6 +243,7 @@
 				F18A4A50211D7590008ED448 /* NewPostViewController.swift */,
 				F18A4A4E211D6D29008ED448 /* FeedViewController.swift */,
 				F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */,
+				F1E809A62125984A00CB7197 /* LikeViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 			children = (
 				D934FE6E2117647500A5F66F /* ProfileViewController.swift */,
 				F1A1B95B21243C2800D24606 /* FollwersViewController.swift */,
+				F1E809A221258CC300CB7197 /* FollowingViewController.swift */,
 				F1A1B95D21244A8A00D24606 /* SettingViewController.swift */,
 			);
 			path = Profile;
@@ -488,7 +494,9 @@
 				F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */,
 				F183D69D21254060009DF2AC /* PostCell.swift in Sources */,
 				D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */,
+				F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */,
 				F183D6A8212554D3009DF2AC /* PostWithOutImageCell.swift in Sources */,
+				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,
 				F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */,

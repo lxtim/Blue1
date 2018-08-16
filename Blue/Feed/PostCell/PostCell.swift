@@ -11,18 +11,22 @@ import Firebase
 import UIKit
 import SDWebImage
 
+protocol FeedPostCellDelegate {
+    func postcellDidSelectLike(user:[String:Any])
+}
 class PostCell: UITableViewCell {
 
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var postImg: UIImageView!
     @IBOutlet weak var caption: UITextView!
-    @IBOutlet weak var likeLbl: UILabel!
-    @IBOutlet weak var likeImg: UIImageView!
+    @IBOutlet weak var likeImg: UIButton!
     @IBOutlet weak var timeAgoLabel: UILabel!
+    @IBOutlet weak var likebtn: UIButton!
     
     //var post: Post!
     var ref: DatabaseReference = Database.database().reference()
+    var delegate:FeedPostCellDelegate? = nil
     
     var object:[String:Any]  = [String:Any]() {
         didSet(newValue) {
@@ -40,20 +44,20 @@ class PostCell: UITableViewCell {
             self.timeAgoLabel.text = Date().offset(from: (object[ConstantKey.date] as! String).date) + " ago"
             if let likes = object[ConstantKey.likes] as? NSArray {
                 if likes.contains(firebaseUser.uid) {
-                    self.likeImg.image = #imageLiteral(resourceName: "Filledheart")
+                    self.likeImg.isSelected = false
                     self.likeImg.tag = 1
                 }
                 else {
-                    self.likeImg.image = #imageLiteral(resourceName: "Heart unfilled")
+                    self.likeImg.isSelected = true
                     self.likeImg.tag = 0
                 }
                 
-                self.likeLbl.text = "\(likes.count) Likes"
+                self.likebtn.setTitle("\(likes.count) Likes", for: .normal)
             }
             else {
-                self.likeImg.image = #imageLiteral(resourceName: "Heart unfilled")
+                self.likeImg.isSelected = true
                 self.likeImg.tag = 0
-                self.likeLbl.text = "0 Likes"
+                self.likebtn.setTitle("0 Like", for: .normal)
             }
         }
     }
@@ -62,14 +66,18 @@ class PostCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(likeTapped))
-        tap.numberOfTapsRequired = 1
-        likeImg.addGestureRecognizer(tap)
-        likeImg.isUserInteractionEnabled = true
+    }
+    
+    @IBAction func btnLikeAction(_ sender: UIButton) {
+        if object[ConstantKey.likes] != nil {
+            if let delegate = self.delegate {
+                delegate.postcellDidSelectLike(user: object)
+            }
+        }
     }
     
     
-    @objc func likeTapped(sender: UITapGestureRecognizer) {
+    @IBAction func btnLikeHeartAction(_ sender: UIButton) {
         var likes = NSMutableArray()
         if let like = object[ConstantKey.likes] as? NSArray {
             likes = NSMutableArray(array: like)
@@ -82,7 +90,7 @@ class PostCell: UITableViewCell {
             object[ConstantKey.likes] = likes
             self.ref.child(ConstantKey.feed).child(userID).child(feedID).setValue(object) { (error, refrance) in
                 if error == nil {
-                    self.likeImg.image = #imageLiteral(resourceName: "Filledheart")
+                    self.likeImg.isSelected = false
                     self.likeImg.tag = 1
                 }
             }
@@ -92,7 +100,7 @@ class PostCell: UITableViewCell {
             object[ConstantKey.likes] = likes
             self.ref.child(ConstantKey.feed).child(userID).child(feedID).setValue(object) { (error, refrance) in
                 if error == nil {
-                    self.likeImg.image = #imageLiteral(resourceName: "Heart unfilled")
+                    self.likeImg.isSelected = true
                     self.likeImg.tag = 0
                 }
             }
