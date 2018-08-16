@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UserSearchDelegate {
+class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UserSearchDelegate , FeedPostCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,6 +29,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.tableView.isHidden = true
         self.getMyFollowers()
+        self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
+        self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +42,15 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.parent?.navigationItem.leftBarButtonItem = searchFeed
         self.parent?.navigationItem.title = "Feed"
         
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
+        let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
+        
+        self.parent?.navigationItem.rightBarButtonItem = addFeedItem
+        self.parent?.navigationItem.leftBarButtonItem = searchFeed
+        self.parent?.navigationItem.title = "Feed"
     }
     
     @objc func btnAddFeedAction(_ sender: UIBarButtonItem) {
@@ -102,7 +113,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func getMyFollowers() {
-//        HUD.show()
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
             if let snap = snapshot.value as? NSDictionary {
                 BasicStuff.shared.UserData = NSMutableDictionary(dictionary: snap)
@@ -115,7 +125,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                 if let observer = self.currentObserver {
                     self.ref.removeObserver(withHandle: observer)
                 }
-                
                 self.getFeed()
             }
         }
@@ -135,11 +144,19 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         let feed = self.feedData[indexPath.row]
-        cell.object = feed
-        
-        return cell
+        if feed[ConstantKey.image] != nil {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+            cell.object = feed
+            cell.delegate = self
+            return cell
+        }
+        else {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
+            cell.object = feed
+            cell.delegate = self
+            return cell
+        }
     }
     
     //MARK:- UITableViewDelegate
@@ -147,9 +164,14 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         
     }
     
+    //MARK:- FeedPostCellDelegate
+    func postcellDidSelectLike(user: [String : Any]) {
+        let likeVC = Object(LikeViewController.self)
+        likeVC.user = user
+        self.navigationController?.pushViewController(likeVC, animated: true)
+    }
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {
-        JDB.log("selected user data ==>%@", data)
         let profileVC = Object(ProfileViewController.self)
         profileVC.isOtherUserProfile = true
         profileVC.userProfileData = NSMutableDictionary(dictionary: data)

@@ -99,7 +99,42 @@ extension String {
         }
     }
 }
-
+extension UIImage {
+    func resizeWithPercent(percentage: CGFloat) -> UIImage? {
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: size.width * percentage, height: size.height * percentage)))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = self
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.render(in: context)
+        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        return result
+    }
+    func resizeWithWidthOrHeight(_ widthOrHeight: CGFloat) -> UIImage? {
+        var swidth = size.width
+        var sheight = size.height
+        
+        if size.width > size.height {
+            swidth = widthOrHeight
+            sheight = CGFloat(ceil(widthOrHeight/size.width * size.height))
+        }
+        else {
+            swidth = CGFloat(ceil(widthOrHeight/size.height * size.width))
+            sheight = widthOrHeight
+        }
+        
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: swidth, height: sheight)))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = self
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.render(in: context)
+        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        return result
+    }
+}
 extension Date {
     var string: String {
         return DateFormatter.formate.string(from: self)

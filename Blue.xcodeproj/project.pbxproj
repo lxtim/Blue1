@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		84BD232A5D20A7C3D6FEBAE8 /* Pods_BlueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D3A07F7BE2C4044665C064C /* Pods_BlueTests.framework */; };
 		A08203B8907F72F10CF15DF1 /* Pods_Blue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A73353AD66EE59D635B97A72 /* Pods_Blue.framework */; };
-		D934FE6D2115DD0200A5F66F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D934FE6C2115DD0200A5F66F /* PostCell.swift */; };
 		D934FE6F2117647500A5F66F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D934FE6E2117647500A5F66F /* ProfileViewController.swift */; };
 		D959983120ED478E00982DBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D959983020ED478E00982DBC /* AppDelegate.swift */; };
 		D959983320ED478E00982DBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D959983220ED478E00982DBC /* ViewController.swift */; };
@@ -21,6 +20,11 @@
 		D959985F20ED47FF00982DBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D959985E20ED47FF00982DBC /* GoogleService-Info.plist */; };
 		D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D959986420ED4FBC00982DBC /* SignUpViewController.swift */; };
 		D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9751A6D20EFA24300BD0EDC /* PageViewController.swift */; };
+		F183D69D21254060009DF2AC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D69C21254060009DF2AC /* PostCell.swift */; };
+		F183D6A121254097009DF2AC /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D69F21254097009DF2AC /* PostCell.xib */; };
+		F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */; };
+		F183D6A8212554D3009DF2AC /* PostWithOutImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */; };
+		F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */; };
 		F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4C211D4D78008ED448 /* BasicStuff.swift */; };
 		F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4E211D6D29008ED448 /* FeedViewController.swift */; };
 		F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A50211D7590008ED448 /* NewPostViewController.swift */; };
@@ -28,6 +32,8 @@
 		F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95B21243C2800D24606 /* FollwersViewController.swift */; };
 		F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95D21244A8A00D24606 /* SettingViewController.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
+		F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A221258CC300CB7197 /* FollowingViewController.swift */; };
+		F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A62125984A00CB7197 /* LikeViewController.swift */; };
 		F348C51360C5A6AB1087E384 /* Pods_BlueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3845367C3D286815F72E9B7 /* Pods_BlueUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +60,6 @@
 		9001489DA10AD7EE70D209C7 /* Pods-BlueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A73353AD66EE59D635B97A72 /* Pods_Blue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Blue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3845367C3D286815F72E9B7 /* Pods_BlueUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D934FE6C2115DD0200A5F66F /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		D934FE6E2117647500A5F66F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D959982D20ED478E00982DBC /* Blue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D959983020ED478E00982DBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +79,11 @@
 		D9751A6D20EFA24300BD0EDC /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		E800B4E7BA3F0269D6857BAA /* Pods-Blue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.release.xcconfig"; sourceTree = "<group>"; };
 		EEC394C6615F20333D53C7F1 /* Pods-Blue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.debug.xcconfig"; sourceTree = "<group>"; };
+		F183D69C21254060009DF2AC /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		F183D69F21254097009DF2AC /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
+		F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NibInstance.swift"; sourceTree = "<group>"; };
+		F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithOutImageCell.swift; sourceTree = "<group>"; };
+		F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostWithOutImageCell.xib; sourceTree = "<group>"; };
 		F18A4A4C211D4D78008ED448 /* BasicStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStuff.swift; sourceTree = "<group>"; };
 		F18A4A4E211D6D29008ED448 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		F18A4A50211D7590008ED448 /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +92,8 @@
 		F1A1B95D21244A8A00D24606 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
+		F1E809A221258CC300CB7197 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
+		F1E809A62125984A00CB7197 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
 		F8B48E2977AA251FCEEE0A64 /* Pods-BlueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueUITests/Pods-BlueUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,9 +207,21 @@
 			path = BlueUITests;
 			sourceTree = "<group>";
 		};
+		F183D69B21254040009DF2AC /* PostCell */ = {
+			isa = PBXGroup;
+			children = (
+				F183D69C21254060009DF2AC /* PostCell.swift */,
+				F183D69F21254097009DF2AC /* PostCell.xib */,
+				F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */,
+				F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */,
+			);
+			path = PostCell;
+			sourceTree = "<group>";
+		};
 		F18A4A4B211D4D56008ED448 /* BasicStuff */ = {
 			isa = PBXGroup;
 			children = (
+				F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */,
 				F18A4A4C211D4D78008ED448 /* BasicStuff.swift */,
 			);
 			path = BasicStuff;
@@ -215,10 +239,11 @@
 		F18A4A53211DDABE008ED448 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				F183D69B21254040009DF2AC /* PostCell */,
 				F18A4A50211D7590008ED448 /* NewPostViewController.swift */,
 				F18A4A4E211D6D29008ED448 /* FeedViewController.swift */,
-				D934FE6C2115DD0200A5F66F /* PostCell.swift */,
 				F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */,
+				F1E809A62125984A00CB7197 /* LikeViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -228,6 +253,7 @@
 			children = (
 				D934FE6E2117647500A5F66F /* ProfileViewController.swift */,
 				F1A1B95B21243C2800D24606 /* FollwersViewController.swift */,
+				F1E809A221258CC300CB7197 /* FollowingViewController.swift */,
 				F1A1B95D21244A8A00D24606 /* SettingViewController.swift */,
 			);
 			path = Profile;
@@ -343,7 +369,9 @@
 			files = (
 				D959983B20ED479100982DBC /* LaunchScreen.storyboard in Resources */,
 				D959985F20ED47FF00982DBC /* GoogleService-Info.plist in Resources */,
+				F183D6A121254097009DF2AC /* PostCell.xib in Resources */,
 				D959983820ED479100982DBC /* Assets.xcassets in Resources */,
+				F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */,
 				D959983620ED478E00982DBC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,18 +487,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */,
-				D934FE6D2115DD0200A5F66F /* PostCell.swift in Sources */,
 				D934FE6F2117647500A5F66F /* ProfileViewController.swift in Sources */,
 				F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */,
 				F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */,
 				D959983320ED478E00982DBC /* ViewController.swift in Sources */,
 				F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */,
+				F183D69D21254060009DF2AC /* PostCell.swift in Sources */,
 				D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */,
+				F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */,
+				F183D6A8212554D3009DF2AC /* PostWithOutImageCell.swift in Sources */,
+				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,
 				F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */,
 				D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */,
 				F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */,
+				F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,7 +689,7 @@
 				PROVISIONING_PROFILE = "7cf7f82d-de21-4fe8-b7aa-09e424906d19";
 				PROVISIONING_PROFILE_SPECIFIER = JDBTechsALL;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -679,7 +711,7 @@
 				PROVISIONING_PROFILE = "7cf7f82d-de21-4fe8-b7aa-09e424906d19";
 				PROVISIONING_PROFILE_SPECIFIER = JDBTechsALL;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

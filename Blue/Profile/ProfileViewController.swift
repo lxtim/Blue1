@@ -12,7 +12,7 @@ import Firebase
 import SDWebImage
 
 
-class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource{
+class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource , FeedPostCellDelegate {
     
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
+        self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
         
         self.tableView.isHidden = true
         if isOtherUserProfile {
@@ -66,9 +68,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         super.viewWillAppear(animated)
         
         if let parent = self.parent as? PageViewController {
-            
             let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
-            
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
             parent.navigationItem.rightBarButtonItem = settingItem
@@ -81,6 +81,20 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.getFollowers()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let parent = self.parent as? PageViewController {
+            
+            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
+            
+            parent.navigationItem.title = "Profile"
+            parent.navigationItem.leftBarButtonItem = nil
+            parent.navigationItem.rightBarButtonItem = settingItem
+        }
+        else {
+            self.navigationItem.title = "Profile"
+        }
+    }
     @objc func btnSettingAction(_ sender:UIButton) {
         let object = Object(SettingViewController.self)
         self.navigationController?.pushViewController(object, animated: true)
@@ -141,6 +155,35 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         action.followers = followers
         self.navigationController?.pushViewController(action, animated: true)
     }
+    
+    @IBAction func btnFollowingAction(_ sender:UIButton) {
+        if self.isOtherUserProfile {
+            if let following = userProfileData.value(forKey: ConstantKey.follow) as? NSArray {
+                if following.count > 0 {
+                    let followingVC = Object(FollowingViewController.self)
+                    followingVC.followingUsers = following.map({$0 as! String})
+                    self.navigationController?.pushViewController(followingVC, animated: true)
+                }
+                else {
+                    return
+                }
+            }
+            else {
+                return
+            }
+        }
+        else {
+            if BasicStuff.shared.followArray.count > 0 {
+                let followingVC = Object(FollowingViewController.self)
+                followingVC.followingUsers = BasicStuff.shared.followArray.map({$0 as! String})
+                self.navigationController?.pushViewController(followingVC, animated: true)
+            }
+            else {
+                return
+            }
+        }
+    }
+    
     func checkFollow() {
         if BasicStuff.shared.followArray.contains(userProfileData.value(forKey: ConstantKey.id) as! String) {
             self.btnFollow.tag = 1
@@ -199,7 +242,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     }
     
     func getFollowers() {
-         self.followers = [[String:Any]]()
+        self.followers = [[String:Any]]()
         self.userRef.observe(.value) { (snapshot) in
             if let value = snapshot.value as? NSDictionary {
                 if let allUsersValue = value.allValues as? [[String:Any]] {
@@ -297,13 +340,29 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         let feed = self.feedData[indexPath.row]
-        cell.object = feed
-        cell.likeImg.isUserInteractionEnabled = false
-        return cell
+        if feed[ConstantKey.image] != nil {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+            cell.object = feed
+            cell.delegate = self
+            cell.likeImg.isUserInteractionEnabled = false
+            return cell
+        }
+        else {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
+            cell.object = feed
+            cell.delegate = self
+            cell.likeImg.isUserInteractionEnabled = false
+            return cell
+        }
     }
     
+    //MARK:- FeedPostCellDelegate
+    func postcellDidSelectLike(user: [String : Any]) {
+        let likeVC = Object(LikeViewController.self)
+        likeVC.user = user
+        self.navigationController?.pushViewController(likeVC, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

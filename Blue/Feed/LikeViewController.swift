@@ -1,44 +1,71 @@
 //
-//  FollwersViewController.swift
+//  LikeViewController.swift
 //  Blue
 //
-//  Created by DK on 8/15/18.
+//  Created by DK on 8/16/18.
 //  Copyright © 2018 Tim. All rights reserved.
 //
 
 import UIKit
+import Firebase
 
-class FollwersViewController: UIViewController , UITableViewDelegate , UITableViewDataSource {
-
-    @IBOutlet weak var tableView: UITableView!
+class LikeViewController: UIViewController , UITableViewDelegate , UITableViewDataSource{
     
-    var followers:[[String:Any]] = [[String:Any]]()
+    private var likes:[[String:Any]] = [[String:Any]]()
+    
+    var userRef = Database.database().reference().child(ConstantKey.Users)
+    var user:[String:Any] = [String:Any]()
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        var likeUsers:[String] = [String]()
+        if let like = user[ConstantKey.likes] as? [String] {
+            likeUsers = like
+        }
+        
+        self.userRef.observeSingleEvent(of: DataEventType.value) { (snap) in
+            if let value = snap.value as? [String:Any] {
+                for (k,v) in value {
+                    if likeUsers.contains(k) {
+                        if let user = v as? [String:Any] {
+                            self.likes.append(user)
+                        }
+                    }
+                }
+            }
+            self.tableView.reloadData()
+        }
+        
         // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "Followers"
+        if let userData = user[ConstantKey.user] as? [String:Any] {
+            self.navigationItem.title = userData[ConstantKey.username] as? String
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.title = "Followers"
+        if let userData = user[ConstantKey.user] as? [String:Any] {
+            self.navigationItem.title = userData[ConstantKey.username] as? String
+        }
     }
+    
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.followers.count
+        return self.likes.count
     }
     
     //MARK:- UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserSearchCell", for: indexPath) as! UserSearchCell
-        let data = self.followers[indexPath.row]
+        let data = self.likes[indexPath.row]
         cell.title = data[ConstantKey.username] as! String
         cell.imageURLString = data[ConstantKey.image] as! String
         return cell
@@ -56,7 +83,7 @@ class FollwersViewController: UIViewController , UITableViewDelegate , UITableVi
     
     //MARK:- UItableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = self.followers[indexPath.row]
+        let user = self.likes[indexPath.row]
         let profile = Object(ProfileViewController.self)
         if let id = user[ConstantKey.id] as? String ,id == firebaseUser.uid {
             profile.isOtherUserProfile = false
