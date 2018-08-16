@@ -24,6 +24,10 @@ class FollwersViewController: UIViewController , UITableViewDelegate , UITableVi
         super.viewWillAppear(animated)
         self.navigationItem.title = "Followers"
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationItem.title = "Followers"
+    }
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows

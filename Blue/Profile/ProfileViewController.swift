@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
+        self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
         
         self.tableView.isHidden = true
         if isOtherUserProfile {
@@ -81,6 +83,20 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.getFollowers()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let parent = self.parent as? PageViewController {
+            
+            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
+            
+            parent.navigationItem.title = "Profile"
+            parent.navigationItem.leftBarButtonItem = nil
+            parent.navigationItem.rightBarButtonItem = settingItem
+        }
+        else {
+            self.navigationItem.title = "Profile"
+        }
+    }
     @objc func btnSettingAction(_ sender:UIButton) {
         let object = Object(SettingViewController.self)
         self.navigationController?.pushViewController(object, animated: true)
@@ -297,11 +313,19 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         let feed = self.feedData[indexPath.row]
-        cell.object = feed
-        cell.likeImg.isUserInteractionEnabled = false
-        return cell
+        if feed[ConstantKey.image] != nil {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+            cell.object = feed
+            cell.likeImg.isUserInteractionEnabled = false
+            return cell
+        }
+        else {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
+            cell.object = feed
+            cell.likeImg.isUserInteractionEnabled = false
+            return cell
+        }
     }
     
     override func didReceiveMemoryWarning() {
