@@ -13,19 +13,20 @@ class SignInViewController: ViewController, UITextFieldDelegate{
 
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var SignInPressed: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-//        SignInPressed.isEnabled = false
         
         self.emailField.text = "dharmesh.kathiriya304@gmail.com"
         self.passwordField.text = "123456"
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     
-    
-    @IBOutlet weak var SignInPressed: UIButton!
-    
+
     @IBAction func SignInPressed(_ sender: Any) {
         let email = emailField.text
         let password = passwordField.text
@@ -34,6 +35,13 @@ class SignInViewController: ViewController, UITextFieldDelegate{
             handleSignIn()
         }
     }
+    
+    @IBAction func btnForgotPasswordAction(_ sender: UIButton) {
+        let forgotPassVC = Object(ForgotPasswordVC.self)
+        self.navigationController?.pushViewController(forgotPassVC, animated: true)
+    }
+    
+    //MARK:- UITextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         self.textFieldChanged(textField)
@@ -68,7 +76,7 @@ class SignInViewController: ViewController, UITextFieldDelegate{
     
     
     
-    
+    //MARK:- Handle Sign in
     func setSignInPressed(enabled:Bool) {
         if enabled {
             SignInPressed.isEnabled = true

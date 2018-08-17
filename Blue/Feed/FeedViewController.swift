@@ -165,11 +165,25 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     //MARK:- FeedPostCellDelegate
-    func postcellDidSelectLike(user: [String : Any]) {
+    
+    func feedLikeDidSelect(user: [String : Any]) {
         let likeVC = Object(LikeViewController.self)
         likeVC.user = user
         self.navigationController?.pushViewController(likeVC, animated: true)
     }
+    
+    func feedProfileDidSelect(user: [String : Any]) {
+        let profile = Object(ProfileViewController.self)
+        if let id = user[ConstantKey.userid] as? String ,id == firebaseUser.uid {
+            profile.isOtherUserProfile = false
+        }
+        else {
+            profile.isOtherUserProfile = true
+            profile.userProfileData = NSMutableDictionary(dictionary: user)
+        }
+        self.navigationController?.pushViewController(profile, animated: true)
+    }
+    
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {
         let profileVC = Object(ProfileViewController.self)

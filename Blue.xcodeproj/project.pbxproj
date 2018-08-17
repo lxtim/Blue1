@@ -20,6 +20,7 @@
 		D959985F20ED47FF00982DBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D959985E20ED47FF00982DBC /* GoogleService-Info.plist */; };
 		D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D959986420ED4FBC00982DBC /* SignUpViewController.swift */; };
 		D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9751A6D20EFA24300BD0EDC /* PageViewController.swift */; };
+		F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */; };
 		F183D69D21254060009DF2AC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D69C21254060009DF2AC /* PostCell.swift */; };
 		F183D6A121254097009DF2AC /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D69F21254097009DF2AC /* PostCell.xib */; };
 		F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */; };
@@ -79,6 +80,7 @@
 		D9751A6D20EFA24300BD0EDC /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		E800B4E7BA3F0269D6857BAA /* Pods-Blue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.release.xcconfig"; sourceTree = "<group>"; };
 		EEC394C6615F20333D53C7F1 /* Pods-Blue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.debug.xcconfig"; sourceTree = "<group>"; };
+		F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		F183D69C21254060009DF2AC /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		F183D69F21254097009DF2AC /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
 		F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NibInstance.swift"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			children = (
 				F1BEB80D211B0C0A006472DA /* SignInViewController.swift */,
 				D959986420ED4FBC00982DBC /* SignUpViewController.swift */,
+				F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,
 				F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */,
+				F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */,
 				D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */,
 				F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */,
 				F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */,

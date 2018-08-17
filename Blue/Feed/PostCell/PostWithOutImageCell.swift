@@ -73,7 +73,18 @@ class PostWithOutImageCell: UITableViewCell {
     @IBAction func btnUserProfileAction(_ sender: UIButton) {
         if object[ConstantKey.userid] != nil {
             if let delegate = self.delegate {
-                delegate.feedLikeDidSelect(user: object)
+                if let id = object[ConstantKey.userid] as? String {
+                    if id == firebaseUser.uid {
+                        delegate.feedProfileDidSelect(user: object)
+                    }
+                    else {
+                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                            if let value = snapshot.value as? [String:Any] {
+                                self.delegate?.feedProfileDidSelect(user: value)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
