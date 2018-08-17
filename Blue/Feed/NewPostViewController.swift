@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate{
+class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITextViewDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -138,6 +138,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
     
+    //MARK:- UIImagePicker Controller Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -147,7 +148,14 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         self.dismiss(animated: true, completion: { () -> Void in
         })
     }
-    
+    //MARK:- UITextViewDelegate
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        
+        if numberOfChars > 5000 { return false }
+        else { return true }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

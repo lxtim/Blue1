@@ -84,10 +84,13 @@ class SignInViewController: ViewController, UITextFieldDelegate{
         setSignInPressed(enabled: false)
         self.view.endEditing(true)
         HUD.show()
-        Auth.auth().signIn(withEmail: email, password: pass) { user, error in
+        Auth.auth().signIn(withEmail: email, password: pass) { authDataResult, error in
             HUD.dismiss()
-            if error == nil && user != nil {
-                self.setPageController()
+            if error == nil && authDataResult != nil {
+                if let result = authDataResult {
+                    firebaseUser = result.user
+                    self.setPageController()
+                }
             } else {
                 self.showAlert(error!.localizedDescription)
                 JDB.error("logging in:", error!.localizedDescription)

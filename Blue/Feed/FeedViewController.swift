@@ -71,7 +71,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     func getFeed() {
         self.feedData = [[String:Any]]()
         self.userRef.observe(.childAdded) { (snapshot) in
-            if BasicStuff.shared.followArray.contains(snapshot.key) {
+            if BasicStuff.shared.followArray.contains(snapshot.key) || firebaseUser.uid == snapshot.key {
                 self.feedRef.child(snapshot.key).observe(.value, with: { (snap) in
                     if let value = snap.value as? [String:Any] {
                         for (k,v) in value {

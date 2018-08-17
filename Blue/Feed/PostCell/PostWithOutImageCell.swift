@@ -42,7 +42,12 @@ class PostWithOutImageCell: UITableViewCell {
                     self.likeImg.tag = 0
                 }
                 
-                self.likebtn.setTitle("\(likes.count) Likes", for: .normal)
+                if likes.count == 1 {
+                    self.likebtn.setTitle("\(likes.count) Like", for: .normal)
+                }
+                else {
+                    self.likebtn.setTitle("\(likes.count) Likes", for: .normal)
+                }
             }
             else {
                 self.likeImg.setImage(#imageLiteral(resourceName: "Heart unfilled"), for: .normal)
@@ -61,11 +66,17 @@ class PostWithOutImageCell: UITableViewCell {
     @IBAction func btnLikeAction(_ sender: UIButton) {
         if object[ConstantKey.likes] != nil {
             if let delegate = self.delegate {
-                delegate.postcellDidSelectLike(user: object)
+                delegate.feedLikeDidSelect(user: object)
             }
         }
     }
-    
+    @IBAction func btnUserProfileAction(_ sender: UIButton) {
+        if object[ConstantKey.userid] != nil {
+            if let delegate = self.delegate {
+                delegate.feedLikeDidSelect(user: object)
+            }
+        }
+    }
     @IBAction func btnLikeHeartAction(_ sender: UIButton) {
         var likes = NSMutableArray()
         if let like = object[ConstantKey.likes] as? NSArray {

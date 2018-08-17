@@ -18,8 +18,9 @@ class SettingViewController: UIViewController {
     }
 
     @IBAction func btnLogountAction(_ sender: UIButton) {
+        let firebaseAuth = Auth.auth()
         do {
-            try Auth.auth().signOut()
+            try firebaseAuth.signOut()
             let signInViewController = Object(SignInViewController.self)
             self.navigationController?.setViewControllers([signInViewController], animated: true)
         } catch let error {

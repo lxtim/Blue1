@@ -12,7 +12,8 @@ import UIKit
 import SDWebImage
 
 protocol FeedPostCellDelegate {
-    func postcellDidSelectLike(user:[String:Any])
+    func feedLikeDidSelect(user:[String:Any])
+    func feedProfileDidSelect(user:[String:Any])
 }
 class PostCell: UITableViewCell {
 
@@ -52,7 +53,12 @@ class PostCell: UITableViewCell {
                     self.likeImg.tag = 0
                 }
                 
-                self.likebtn.setTitle("\(likes.count) Likes", for: .normal)
+                if likes.count == 1 {
+                    self.likebtn.setTitle("\(likes.count) Like", for: .normal)
+                }
+                else {
+                    self.likebtn.setTitle("\(likes.count) Likes", for: .normal)
+                }
             }
             else {
                 self.likeImg.isSelected = true
@@ -71,11 +77,18 @@ class PostCell: UITableViewCell {
     @IBAction func btnLikeAction(_ sender: UIButton) {
         if object[ConstantKey.likes] != nil {
             if let delegate = self.delegate {
-                delegate.postcellDidSelectLike(user: object)
+                delegate.feedLikeDidSelect(user: object)
             }
         }
     }
     
+    @IBAction func btnUserProfileAction(_ sender: UIButton) {
+        if object[ConstantKey.userid] != nil {
+            if let delegate = self.delegate {
+                delegate.feedLikeDidSelect(user: object)
+            }
+        }
+    }
     
     @IBAction func btnLikeHeartAction(_ sender: UIButton) {
         var likes = NSMutableArray()
