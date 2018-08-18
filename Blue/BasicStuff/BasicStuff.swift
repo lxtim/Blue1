@@ -188,7 +188,15 @@ extension Date {
         if years(from: date)   > 0 { return "\(years(from: date)) years"   }
         if months(from: date)  > 0 { return "\(months(from: date)) months"  }
         if weeks(from: date)   > 0 { return "\(weeks(from: date)) weeks"   }
-        if days(from: date)    > 0 { return "\(days(from: date)) days"    }
+        if days(from: date)    > 0 {
+            let day = days(from: date)
+            if day == 1 {
+                return "\(day) day"
+            }
+            else {
+                return "\(day) days"
+            }
+        }
         if hours(from: date)   > 0 { return "\(hours(from: date)) hr"   }
         if minutes(from: date) > 0 { return "\(minutes(from: date)) min" }
         if seconds(from: date) > 0 { return "\(seconds(from: date)) sec" }
