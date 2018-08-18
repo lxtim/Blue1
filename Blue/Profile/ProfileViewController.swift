@@ -246,6 +246,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.userRef.observe(.value) { (snapshot) in
             if let value = snapshot.value as? NSDictionary {
                 if let allUsersValue = value.allValues as? [[String:Any]] {
+                    self.followers = [[String:Any]]()
                     for item in allUsersValue {
                         if let follow = item[ConstantKey.follow] as? [String] {
                             var id = firebaseUser.uid
