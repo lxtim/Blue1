@@ -30,7 +30,7 @@ class ForgotPasswordVC: UIViewController {
                     let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { (ok) in
                         self.navigationController?.popViewController(animated: true)
                     })
-                    self.showAlert(message: "We sent password reset link to your mail.Please check your email.", actions: okAction)
+                    self.showAlert(message: "We sent password reset link to your mail. Please check your email.", actions: okAction)
                 }
             }
         }
