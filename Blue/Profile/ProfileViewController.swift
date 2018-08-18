@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
+    @IBOutlet weak var postLabel: UILabel!
     
     @IBOutlet weak var followStackView: UIStackView!
 
@@ -49,6 +50,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.tableView.isHidden = true
         if isOtherUserProfile {
             self.checkFollow()
+            self.getNumberOfPost()
             if let url = userProfileData.value(forKey: ConstantKey.image) as? String {
                 self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
@@ -223,6 +225,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                     else {
                         self.tableView.isHidden = true
                     }
+                    self.postLabel.text = "\(self.feedData.count)"
                 })
             })
         }
@@ -261,6 +264,13 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 }
             }
             self.followersLabel.text = "\(self.followers.count)"
+        }
+    }
+    
+    func getNumberOfPost() {
+        let userID = userProfileData.value(forKey: ConstantKey.id) as! String
+        self.feedRef.child(userID).observeSingleEvent(of: .value) { (snap) in
+            self.postLabel.text = "\(snap.childrenCount)"
         }
     }
     //MARK:- UIImagepickerDelegate
