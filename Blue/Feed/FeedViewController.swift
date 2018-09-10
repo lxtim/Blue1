@@ -31,6 +31,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.getMyFollowers()
         self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
         self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
+        self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -145,11 +147,20 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let feed = self.feedData[indexPath.row]
+        
         if feed[ConstantKey.image] != nil {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
-            cell.object = feed
-            cell.delegate = self
-            return cell
+            if let type = feed[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as! VideoCell
+                cell.object = feed
+                cell.delegate = self
+                return cell
+            }
+            else {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+                cell.object = feed
+                cell.delegate = self
+                return cell
+            }
         }
         else {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
@@ -184,6 +195,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.navigationController?.pushViewController(profile, animated: true)
     }
     
+    func feedCommentDidSelect(post: [String : Any], user: [String : Any]) {
+        let commentVC = Object(CommentVC.self)
+        commentVC.post = post
+        commentVC.user = user
+        
+        self.navigationController?.pushViewController(commentVC, animated: true)
+    }
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {
         let profileVC = Object(ProfileViewController.self)

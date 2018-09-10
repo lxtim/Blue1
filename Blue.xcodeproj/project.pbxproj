@@ -20,6 +20,9 @@
 		D959985F20ED47FF00982DBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D959985E20ED47FF00982DBC /* GoogleService-Info.plist */; };
 		D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D959986420ED4FBC00982DBC /* SignUpViewController.swift */; };
 		D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9751A6D20EFA24300BD0EDC /* PageViewController.swift */; };
+		F107D7CF2143F25C00057001 /* video_Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = F107D7CE2143F25B00057001 /* video_Compression.swift */; };
+		F107D7DA214413FC00057001 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F107D7D8214413FC00057001 /* VideoCell.swift */; };
+		F107D7DB214413FC00057001 /* VideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F107D7D9214413FC00057001 /* VideoCell.xib */; };
 		F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */; };
 		F183D69D21254060009DF2AC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D69C21254060009DF2AC /* PostCell.swift */; };
 		F183D6A121254097009DF2AC /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D69F21254097009DF2AC /* PostCell.xib */; };
@@ -33,6 +36,7 @@
 		F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95B21243C2800D24606 /* FollwersViewController.swift */; };
 		F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95D21244A8A00D24606 /* SettingViewController.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
+		F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E3D1652146814C00D417D3 /* CommentVC.swift */; };
 		F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A221258CC300CB7197 /* FollowingViewController.swift */; };
 		F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A62125984A00CB7197 /* LikeViewController.swift */; };
 		F348C51360C5A6AB1087E384 /* Pods_BlueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3845367C3D286815F72E9B7 /* Pods_BlueUITests.framework */; };
@@ -80,6 +84,9 @@
 		D9751A6D20EFA24300BD0EDC /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		E800B4E7BA3F0269D6857BAA /* Pods-Blue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.release.xcconfig"; sourceTree = "<group>"; };
 		EEC394C6615F20333D53C7F1 /* Pods-Blue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.debug.xcconfig"; sourceTree = "<group>"; };
+		F107D7CE2143F25B00057001 /* video_Compression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = video_Compression.swift; sourceTree = "<group>"; };
+		F107D7D8214413FC00057001 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		F107D7D9214413FC00057001 /* VideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCell.xib; sourceTree = "<group>"; };
 		F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		F183D69C21254060009DF2AC /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		F183D69F21254097009DF2AC /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
@@ -94,6 +101,7 @@
 		F1A1B95D21244A8A00D24606 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
+		F1E3D1652146814C00D417D3 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		F1E809A221258CC300CB7197 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		F1E809A62125984A00CB7197 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
 		F8B48E2977AA251FCEEE0A64 /* Pods-BlueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueUITests/Pods-BlueUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -180,6 +188,7 @@
 				D9751A6D20EFA24300BD0EDC /* PageViewController.swift */,
 				F18A4A54211DDAD5008ED448 /* Profile */,
 				F18A4A53211DDABE008ED448 /* Feed */,
+				F1E3D1642146812400D417D3 /* Comment */,
 				F18A4A52211DDA98008ED448 /* Authentication */,
 				F18A4A4B211D4D56008ED448 /* BasicStuff */,
 				D959983720ED479100982DBC /* Assets.xcassets */,
@@ -216,6 +225,8 @@
 				F183D69F21254097009DF2AC /* PostCell.xib */,
 				F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */,
 				F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */,
+				F107D7D8214413FC00057001 /* VideoCell.swift */,
+				F107D7D9214413FC00057001 /* VideoCell.xib */,
 			);
 			path = PostCell;
 			sourceTree = "<group>";
@@ -224,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */,
+				F107D7CE2143F25B00057001 /* video_Compression.swift */,
 				F18A4A4C211D4D78008ED448 /* BasicStuff.swift */,
 			);
 			path = BasicStuff;
@@ -260,6 +272,14 @@
 				F1A1B95D21244A8A00D24606 /* SettingViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		F1E3D1642146812400D417D3 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				F1E3D1652146814C00D417D3 /* CommentVC.swift */,
+			);
+			path = Comment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -372,6 +392,7 @@
 			files = (
 				D959983B20ED479100982DBC /* LaunchScreen.storyboard in Resources */,
 				D959985F20ED47FF00982DBC /* GoogleService-Info.plist in Resources */,
+				F107D7DB214413FC00057001 /* VideoCell.xib in Resources */,
 				F183D6A121254097009DF2AC /* PostCell.xib in Resources */,
 				D959983820ED479100982DBC /* Assets.xcassets in Resources */,
 				F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */,
@@ -461,8 +482,10 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MRProgress/MRProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoidingSwift/TPKeyboardAvoidingSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
+				"${BUILT_PRODUCTS_DIR}/VGPlayer/VGPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -472,8 +495,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MRProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoidingSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VGPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -494,11 +519,14 @@
 				F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */,
 				F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */,
 				D959983320ED478E00982DBC /* ViewController.swift in Sources */,
+				F107D7DA214413FC00057001 /* VideoCell.swift in Sources */,
+				F107D7CF2143F25C00057001 /* video_Compression.swift in Sources */,
 				F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */,
 				F183D69D21254060009DF2AC /* PostCell.swift in Sources */,
 				D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */,
 				F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */,
 				F183D6A8212554D3009DF2AC /* PostWithOutImageCell.swift in Sources */,
+				F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */,
 				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,

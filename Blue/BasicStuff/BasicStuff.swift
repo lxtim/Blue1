@@ -19,12 +19,15 @@ struct ConstantKey {
     static let userid:String = "userid"
     static let id:String = "id"
     static let image:String = "image"
+    static let contentType:String = "contentType"
     static let user:String = "user"
     static let caption:String = "caption"
     static let likes:String = "likes"
     static let email:String = "email"
     static let follow:String = "follow"
     static let date:String = "date"
+    static let video:String = "video"
+    static let comment:String = "comment"
     
 }
 
@@ -135,9 +138,29 @@ extension UIImage {
         return result
     }
 }
+extension UITextView{
+    
+    func numberOfLines() -> Int{
+        if let fontUnwrapped = self.font{
+            return Int(self.contentSize.height / fontUnwrapped.lineHeight)
+        }
+        return 0
+    }
+    
+}
 extension Date {
     var string: String {
         return DateFormatter.formate.string(from: self)
+    }
+    var timeStamp: Double {
+        let timedate = DateFormatter.formate.string(from: self)
+        if let date = DateFormatter.formate.date(from: timedate) {
+            return date.timeIntervalSince1970
+        }
+        else {
+            return Date().timeIntervalSince1970
+        }
+        
     }
     func interval(ofComponent comp: Calendar.Component, fromDate date: Date) -> Int {
         
@@ -329,4 +352,43 @@ extension String {
         return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 }
-
+extension FileManager {
+    var document: String {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    }
+    var library: String {
+        return NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+    }
+    var temp:String {
+        return NSTemporaryDirectory()
+    }
+    var tempFilePath:String {
+        return self.temp.stringByAppendingPathComponent(path: "Files").stringByAppendingPathComponent(path: "movFile.mp4")
+    }
+}
+extension String {
+    
+    var lastPathComponent: String {
+        return (self as NSString).lastPathComponent
+    }
+    var pathExtension: String {
+        return (self as NSString).pathExtension
+    }
+    var stringByDeletingLastPathComponent: String {
+        return (self as NSString).deletingLastPathComponent
+    }
+    var stringByDeletingPathExtension: String {
+        return (self as NSString).deletingPathExtension
+    }
+    var pathComponents: [String] {
+        return (self as NSString).pathComponents
+    }
+    func stringByAppendingPathComponent(path: String) -> String {
+        let nsSt = self as NSString
+        return nsSt.appendingPathComponent(path)
+    }
+    func stringByAppendingPathExtension(ext: String) -> String? {
+        let nsSt = self as NSString
+        return nsSt.appendingPathExtension(ext)
+    }
+}

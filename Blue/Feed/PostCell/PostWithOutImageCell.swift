@@ -118,4 +118,23 @@ class PostWithOutImageCell: UITableViewCell {
         }
     }
     
+    @IBAction func btnCommentAction(_ sender: UIButton) {
+        if object[ConstantKey.userid] != nil {
+            if let delegate = self.delegate {
+                if let id = object[ConstantKey.userid] as? String {
+                    if id == firebaseUser.uid {
+                        self.delegate?.feedCommentDidSelect(post: self.object, user: object)
+                    }
+                    else {
+                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                            if let value = snapshot.value as? [String:Any] {
+                                self.delegate?.feedCommentDidSelect(post: self.object, user: value)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }

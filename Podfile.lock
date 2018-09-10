@@ -1,19 +1,19 @@
 PODS:
-  - Firebase/Auth (5.5.0):
+  - Firebase/Auth (5.7.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.3)
-  - Firebase/Core (5.5.0):
+  - Firebase/Core (5.7.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.1.0)
-  - Firebase/CoreOnly (5.5.0):
-    - FirebaseCore (= 5.1.0)
-  - Firebase/Database (5.5.0):
+    - FirebaseAnalytics (= 5.1.1)
+  - Firebase/CoreOnly (5.7.0):
+    - FirebaseCore (= 5.1.2)
+  - Firebase/Database (5.7.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (= 5.0.2)
-  - Firebase/Storage (5.5.0):
+  - Firebase/Storage (5.7.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (= 3.0.0)
-  - FirebaseAnalytics (5.1.0):
+    - FirebaseStorage (= 3.0.1)
+  - FirebaseAnalytics (5.1.1):
     - FirebaseCore (~> 5.1)
     - FirebaseInstanceID (~> 3.2)
     - GoogleAppMeasurement (~> 5.1)
@@ -28,38 +28,38 @@ PODS:
     - GoogleUtilities/Environment (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (5.1.0):
+  - FirebaseCore (5.1.2):
     - GoogleUtilities/Logger (~> 5.2)
   - FirebaseDatabase (5.0.2):
     - FirebaseCore (~> 5.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (3.2.0):
+  - FirebaseInstanceID (3.2.1):
     - FirebaseCore (~> 5.1)
     - GoogleUtilities/Environment (~> 5.2)
-  - FirebaseStorage (3.0.0):
+  - FirebaseStorage (3.0.1):
     - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleAppMeasurement (5.1.0):
+  - GoogleAppMeasurement (5.1.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
     - GoogleUtilities/MethodSwizzler (~> 5.2.0)
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (5.2.2):
+  - GoogleUtilities/AppDelegateSwizzler (5.2.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.2.2)
-  - GoogleUtilities/Logger (5.2.2):
+  - GoogleUtilities/Environment (5.2.3)
+  - GoogleUtilities/Logger (5.2.3):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.2.2):
+  - GoogleUtilities/MethodSwizzler (5.2.3):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.2.2):
+  - GoogleUtilities/Network (5.2.3):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.2.2)"
-  - GoogleUtilities/Reachability (5.2.2):
+  - "GoogleUtilities/NSData+zlib (5.2.3)"
+  - GoogleUtilities/Reachability (5.2.3):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.0)
   - leveldb-library (1.20)
@@ -99,8 +99,11 @@ PODS:
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
+  - SnapKit (4.0.0)
   - TPKeyboardAvoidingSwift (1.0)
   - "UITextView+Placeholder (1.2.1)"
+  - VGPlayer (0.2.0):
+    - SnapKit (~> 4.0.0)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -111,6 +114,7 @@ DEPENDENCIES:
   - SDWebImage
   - TPKeyboardAvoidingSwift
   - "UITextView+Placeholder"
+  - VGPlayer (~> 0.2.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -129,28 +133,32 @@ SPEC REPOS:
     - MRProgress
     - nanopb
     - SDWebImage
+    - SnapKit
     - TPKeyboardAvoidingSwift
     - "UITextView+Placeholder"
+    - VGPlayer
 
 SPEC CHECKSUMS:
-  Firebase: 8c957f9cb3852b519180fb378801b7eeeba4d288
-  FirebaseAnalytics: d4a260c114aec0d765ab5b9c404ac63de1d29381
+  Firebase: 734a4f92957aa6c40e7ae3fda3d9359e1890aa87
+  FirebaseAnalytics: 993577e91157feb40945abedd6ab346d8a4b6ac8
   FirebaseAuth: 657a25e4be044d2d333663ebf515a861c5a59cd7
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: ee4b35cf8c8e781da296cc7c15125e4608bb954d
+  FirebaseCore: 3a97432acb324b439fbed338e642f9cbb516a63d
   FirebaseDatabase: 27be5ac5bc75e0b17537b2bbfada8258addcc8cd
-  FirebaseInstanceID: 8cd2c6cfe7b9ab65ce7e248f6da7f26f6775b9be
-  FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
-  GoogleAppMeasurement: e785bdb86d3d280abc778156cec323a975f11d1d
-  GoogleUtilities: 06b66f9567769a7958db20a92f0128b2843e49d5
+  FirebaseInstanceID: ea5af6920d0a4a29b40459d055bebe4a6c1333c4
+  FirebaseStorage: 43f823b96b72a08539eba21a7de043348a69d4c6
+  GoogleAppMeasurement: f7507b39b70ad0bd80b3d81518b2f43868974307
+  GoogleUtilities: 6f681e27050c5e130325e89fa0316dfca826f954
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   TPKeyboardAvoidingSwift: 1a5823ef8bf6d97d140c89b38ff4377276eaeb8f
   "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
+  VGPlayer: a1787135559aa3b9201ebdc733ee283315492289
 
-PODFILE CHECKSUM: fcae84506db9c4607617cd30f61025161c785e1d
+PODFILE CHECKSUM: cd2ecee606b95fc53dfab299e37937ed2b2d66df
 
 COCOAPODS: 1.5.3

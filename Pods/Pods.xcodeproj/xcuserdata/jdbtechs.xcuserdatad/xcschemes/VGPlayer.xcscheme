@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "488CA9079247B8F25888405871FCF2F4"
-               BuildableName = "GoogleToolboxForMac.framework"
-               BlueprintName = "GoogleToolboxForMac"
+               BlueprintIdentifier = "89B505C3C49D3520EF21606A63293496"
+               BuildableName = "VGPlayer.framework"
+               BlueprintName = "VGPlayer"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "488CA9079247B8F25888405871FCF2F4"
-            BuildableName = "GoogleToolboxForMac.framework"
-            BlueprintName = "GoogleToolboxForMac"
+            BlueprintIdentifier = "89B505C3C49D3520EF21606A63293496"
+            BuildableName = "VGPlayer.framework"
+            BlueprintName = "VGPlayer"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

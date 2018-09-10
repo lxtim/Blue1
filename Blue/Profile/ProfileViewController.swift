@@ -10,9 +10,12 @@ import Foundation
 import UIKit
 import Firebase
 import SDWebImage
+import VGPlayer
 
 
 class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource , FeedPostCellDelegate {
+    
+    
     
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -387,6 +390,11 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.navigationController?.pushViewController(profile, animated: true)
     }
     
+    func feedCommentDidSelect(post: [String : Any], user: [String : Any]) {
+        let commentVC = Object(CommentVC.self)
+        commentVC.post = post
+        self.navigationController?.pushViewController(commentVC, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
