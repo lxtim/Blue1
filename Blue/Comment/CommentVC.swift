@@ -9,37 +9,6 @@
 import UIKit
 import Firebase
 
-class CommentTableViewCell:UITableViewCell {
-    
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var commentLabel: UILabel!
-    
-    var userRef = Database.database().reference().child(ConstantKey.Users)
-    
-    var comment:[String:Any] = [String:Any]() {
-        didSet {
-            
-            if let timeStamp = comment[ConstantKey.date] as? Double {
-                let date = Date(timeIntervalSince1970: timeStamp)
-                
-                self.dateLabel.text = Date().offset(from: date) + " ago"
-                
-            }
-            self.commentLabel.text = comment[ConstantKey.comment] as? String
-            guard let userid = comment[ConstantKey.userid] as? String else {return}
-            
-            self.userRef.child(userid).observeSingleEvent(of: .value) { (snapshot) in
-                guard let value = snapshot.value as? [String:Any] else {return}
-                self.userNameLabel.text = value[ConstantKey.username] as? String
-                if let url = value[ConstantKey.image] as? String {
-                    self.profileImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
-                }
-            }
-        }
-    }
-}
 class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource , UITextViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -51,9 +20,11 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
     var commentRef = Database.database().reference().child(ConstantKey.comment)
+    
     var post:[String:Any] = [String:Any]()
     var user:[String:Any] = [String:Any]()
     var comments:[[String:Any]] = [[String:Any]]()
+    private var commentIDs:[String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,25 +35,41 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
        // JDB.log("Post data ==>%@ \n User data ==>%@", post,user)
         
+        if let comment =  self.post[ConstantKey.comment] as? [String] {
+            self.commentIDs = comment
+        }
+        
         guard let postID = post[ConstantKey.id] as? String else {return}
-        self.commentRef.child(postID).observeSingleEvent(of: .value) { (snapshot) in
+        self.commentRef.child(postID).queryOrdered(byChild: ConstantKey.date).observeSingleEvent(of: .value) { (snapshot) in
             guard let value = snapshot.value as? [String:Any] else {return}
-            for (_,v) in value.reversed() {
+            for (_,v) in value {
                 if let cmnt = v as? [String:Any] {
                     self.comments.append(cmnt)
                 }
             }
+            self.comments = self.comments.sorted(by: {($0[ConstantKey.date] as! Double) < ($1[ConstantKey.date] as! Double) })
             self.tableView.reloadData()
+            self.setTableViewLastPathIndexPath()
+        }
+    }
+    
+    func setTableViewLastPathIndexPath() {
+        DispatchQueue.main.async {
+            if self.comments.count > 0 {
+                let indexPath = IndexPath(row: (self.comments.count - 1), section: 0)
+                self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: true)
+            }
         }
     }
     
     @objc func keyBoardWillShow(_ notification:Notification) {
         guard let userInfo = (notification as NSNotification).userInfo else {return}
         guard let endKeyBoardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
+        
         UIView.animate(withDuration: 0.3) {
             self.bottomConstraint.constant = endKeyBoardFrame.height
+            self.setTableViewLastPathIndexPath()
         }
-        
     }
     @objc func keyBoardWillHide(_ notification:Notification) {
         UIView.animate(withDuration: 0.3) {
@@ -106,32 +93,29 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
             comment[ConstantKey.comment] = commentText
             comment[ConstantKey.date] = Date().timeStamp
             comment[ConstantKey.userid] = firebaseUser.uid
-            
+            HUD.show("Posting...")
             self.commentRef.child(postID).childByAutoId().setValue(comment) { (error, ref) in
                 if error == nil {
                     ref.observe(DataEventType.value, with: { (snapshot) in
                         guard let commentSnapValue = snapshot.value as? [String:Any] else {return}
                         guard let userID = self.post[ConstantKey.userid] as? String else {return}
                         
-                        var commnetID:[String] = [String]()
-                        if let commentIDs = self.post[ConstantKey.comment] as? [String] {
-                            commnetID = commentIDs
-                        }
-                        commnetID.append(snapshot.key)
+                        self.commentIDs.append(snapshot.key)
                         
                         self.comments.append(commentSnapValue)
                         self.tableView.reloadData()
                         
-                        self.feedRef.child(userID).child(postID).updateChildValues([ConstantKey.comment:commnetID], withCompletionBlock: { (error, ref) in
+                        self.feedRef.child(userID).child(postID).updateChildValues([ConstantKey.comment:self.commentIDs], withCompletionBlock: { (error, ref) in
+                            HUD.dismiss()
                             if error == nil {
-                                self.showAlert("post successfully")
+                                self.textFieldComment.text = ""
+                                self.setTableViewLastPathIndexPath()
                             }
                         })
                     }, withCancel: nil)
                 }
             }
         }
-        
     }
     
     // MARK: - Table view data source

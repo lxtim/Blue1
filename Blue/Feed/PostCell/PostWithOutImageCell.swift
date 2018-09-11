@@ -17,6 +17,7 @@ class PostWithOutImageCell: UITableViewCell {
     @IBOutlet weak var likebtn: UIButton!
     @IBOutlet weak var likeImg: UIButton!
     @IBOutlet weak var timeAgoLabel: UILabel!
+    @IBOutlet weak var btnComment: UIButton!
     
     var ref: DatabaseReference = Database.database().reference()
     
@@ -53,6 +54,19 @@ class PostWithOutImageCell: UITableViewCell {
                 self.likeImg.setImage(#imageLiteral(resourceName: "Heart unfilled"), for: .normal)
                 self.likeImg.tag = 0
                 self.likebtn.setTitle("0 Likes", for: .normal)
+            }
+            
+            //Set Comment button
+            if let comment = object[ConstantKey.comment] as? [String] {
+                if comment.count == 1 {
+                    self.btnComment.setTitle("1 comment", for: .normal)
+                }
+                else {
+                    self.btnComment.setTitle("\(comment.count) comments", for: .normal)
+                }
+            }
+            else {
+                self.btnComment.setTitle("comment", for: .normal)
             }
         }
     }
@@ -123,12 +137,12 @@ class PostWithOutImageCell: UITableViewCell {
             if let delegate = self.delegate {
                 if let id = object[ConstantKey.userid] as? String {
                     if id == firebaseUser.uid {
-                        self.delegate?.feedCommentDidSelect(post: self.object, user: object)
+                        delegate.feedCommentDidSelect(post: self.object, user: object)
                     }
                     else {
                         self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
                             if let value = snapshot.value as? [String:Any] {
-                                self.delegate?.feedCommentDidSelect(post: self.object, user: value)
+                                delegate.feedCommentDidSelect(post: self.object, user: value)
                             }
                         }
                     }

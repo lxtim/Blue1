@@ -23,6 +23,8 @@ class VideoCell: UITableViewCell {
     @IBOutlet weak var likebtn: UIButton!
     var player:VGPlayer?
     @IBOutlet weak var playerView: VGPlayerView!
+    @IBOutlet weak var btnComment: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.player = VGPlayer(playerView: playerView)
@@ -68,6 +70,19 @@ class VideoCell: UITableViewCell {
                 self.likeImg.isSelected = true
                 self.likeImg.tag = 0
                 self.likebtn.setTitle("0 Like", for: .normal)
+            }
+            
+            //Set Comment button
+            if let comment = object[ConstantKey.comment] as? [String] {
+                if comment.count == 1 {
+                    self.btnComment.setTitle("1 comment", for: .normal)
+                }
+                else {
+                    self.btnComment.setTitle("\(comment.count) comments", for: .normal)
+                }
+            }
+            else {
+                self.btnComment.setTitle("comment", for: .normal)
             }
         }
     }
@@ -131,16 +146,14 @@ class VideoCell: UITableViewCell {
     
     @IBAction func btnCommentAction(_ sender: UIButton) {
         if object[ConstantKey.userid] != nil {
-            if let delegate = self.delegate {
-                if let id = object[ConstantKey.userid] as? String {
-                    if id == firebaseUser.uid {
-                        self.delegate?.feedCommentDidSelect(post: self.object, user: object)
-                    }
-                    else {
-                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
-                            if let value = snapshot.value as? [String:Any] {
-                                self.delegate?.feedCommentDidSelect(post: self.object, user: value)
-                            }
+            if let id = object[ConstantKey.userid] as? String {
+                if id == firebaseUser.uid {
+                    self.delegate?.feedCommentDidSelect(post: self.object, user: object)
+                }
+                else {
+                    self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                        if let value = snapshot.value as? [String:Any] {
+                            self.delegate?.feedCommentDidSelect(post: self.object, user: value)
                         }
                     }
                 }

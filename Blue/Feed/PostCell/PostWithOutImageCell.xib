@@ -149,6 +149,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="btnComment" destination="Ltz-VZ-GsD" id="5ec-ND-QCC"/>
                 <outlet property="caption" destination="jbp-EM-mxy" id="dAq-aF-YTt"/>
                 <outlet property="likeImg" destination="U7r-pT-6St" id="Jst-Gj-ho2"/>
                 <outlet property="likebtn" destination="7YT-HT-S1e" id="Oiw-Ea-L9N"/>

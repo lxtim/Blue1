@@ -40,10 +40,16 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
         let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
         
-        self.parent?.navigationItem.rightBarButtonItem = addFeedItem
+        let image = #imageLiteral(resourceName: "Star").withRenderingMode(.alwaysOriginal)
+        
+       let shared = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(btnShareAction(_:)))
+        
+        
+        self.parent?.navigationItem.rightBarButtonItems = [addFeedItem,shared]
         self.parent?.navigationItem.leftBarButtonItem = searchFeed
         self.parent?.navigationItem.title = "Feed"
         
+        self.tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -70,6 +76,9 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         }
     }
     
+    @objc func btnShareAction(_ sender:UIBarButtonItem) {
+        
+    }
     func getFeed() {
         self.feedData = [[String:Any]]()
         self.userRef.observe(.childAdded) { (snapshot) in

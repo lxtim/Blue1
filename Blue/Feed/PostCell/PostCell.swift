@@ -25,6 +25,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likeImg: UIButton!
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var likebtn: UIButton!
+    @IBOutlet weak var btnComment: UIButton!
     //var post: Post!
     var ref: DatabaseReference = Database.database().reference()
     var delegate:FeedPostCellDelegate? = nil
@@ -43,6 +44,8 @@ class PostCell: UITableViewCell {
             
             self.caption.text = object[ConstantKey.caption] as? String
             self.timeAgoLabel.text = Date().offset(from: (object[ConstantKey.date] as! String).date) + " ago"
+            
+            //Set Like Button
             if let likes = object[ConstantKey.likes] as? NSArray {
                 if likes.contains(firebaseUser.uid) {
                     self.likeImg.isSelected = false
@@ -64,6 +67,19 @@ class PostCell: UITableViewCell {
                 self.likeImg.isSelected = true
                 self.likeImg.tag = 0
                 self.likebtn.setTitle("0 Like", for: .normal)
+            }
+            
+            //Set Comment button
+            if let comment = object[ConstantKey.comment] as? [String] {
+                if comment.count == 1 {
+                    self.btnComment.setTitle("1 comment", for: .normal)
+                }
+                else {
+                    self.btnComment.setTitle("\(comment.count) comments", for: .normal)
+                }
+            }
+            else {
+                self.btnComment.setTitle("comment", for: .normal)
             }
         }
     }
