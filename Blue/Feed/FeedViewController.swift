@@ -160,20 +160,23 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         
         if feed[ConstantKey.image] != nil {
             if let type = feed[ConstantKey.contentType] as? String , type == ConstantKey.video {
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as! VideoCell
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "VideoCell") as! PostCell
+                cell.type = .video
                 cell.object = feed
                 cell.delegate = self
                 return cell
             }
             else {
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+                cell.type = .image
                 cell.object = feed
                 cell.delegate = self
                 return cell
             }
         }
         else {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell") as! PostCell
+            cell.type = .caption
             cell.object = feed
             cell.delegate = self
             return cell

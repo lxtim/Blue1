@@ -19,6 +19,7 @@ class SignInViewController: ViewController, UITextFieldDelegate{
         super.viewDidLoad()
         
         self.emailField.text = "dharmesh.kathiriya304@gmail.com"
+//        self.emailField.text = "ketansangani@gmail.com"
         self.passwordField.text = "123456"
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -93,20 +94,26 @@ class SignInViewController: ViewController, UITextFieldDelegate{
         self.view.endEditing(true)
         HUD.show()
         Auth.auth().signIn(withEmail: email, password: pass) { authDataResult, error in
-            HUD.dismiss()
             if error == nil && authDataResult != nil {
                 if let result = authDataResult {
                     firebaseUser = result.user
                     self.setPageController()
                 }
+                else {
+                    HUD.dismiss()
+                }
             } else {
                 self.showAlert(error!.localizedDescription)
                 JDB.error("logging in:", error!.localizedDescription)
+                HUD.dismiss()
             }
         }
     }
     func setPageController() {
-        let object = Object(PageViewController.self)
-        self.navigationController?.setViewControllers([object], animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+            let object = Object(PageViewController.self)
+            self.navigationController?.setViewControllers([object], animated: true)
+            HUD.dismiss()
+        }
     }
 }

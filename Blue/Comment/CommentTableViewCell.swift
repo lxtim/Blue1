@@ -27,6 +27,7 @@ class CommentTableViewCell: UITableViewCell {
                 self.dateLabel.text = Date().offset(from: date) + " ago"
                 
             }
+            
             self.commentLabel.text = comment[ConstantKey.comment] as? String
             guard let userid = comment[ConstantKey.userid] as? String else {return}
             

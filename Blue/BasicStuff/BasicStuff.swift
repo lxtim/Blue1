@@ -27,8 +27,8 @@ struct ConstantKey {
     static let follow:String = "follow"
     static let date:String = "date"
     static let video:String = "video"
-    static let comment:String = "comment"
-    
+    static let comment:String = "Comment"
+    static let notification:String = "Notification"
 }
 
 class BasicStuff : NSObject {

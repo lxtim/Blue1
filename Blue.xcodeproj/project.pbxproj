@@ -21,13 +21,15 @@
 		D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D959986420ED4FBC00982DBC /* SignUpViewController.swift */; };
 		D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9751A6D20EFA24300BD0EDC /* PageViewController.swift */; };
 		F107D7CF2143F25C00057001 /* video_Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = F107D7CE2143F25B00057001 /* video_Compression.swift */; };
-		F107D7DA214413FC00057001 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F107D7D8214413FC00057001 /* VideoCell.swift */; };
 		F107D7DB214413FC00057001 /* VideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F107D7D9214413FC00057001 /* VideoCell.xib */; };
+		F112077F214A66E8007F0535 /* ShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F112077D214A66E8007F0535 /* ShareTableViewCell.swift */; };
+		F1120780214A66E8007F0535 /* ShareTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F112077E214A66E8007F0535 /* ShareTableViewCell.xib */; };
+		F1120782214A6A19007F0535 /* ShareImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */; };
+		F1120784214A6AF2007F0535 /* ShareVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */; };
 		F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */; };
 		F183D69D21254060009DF2AC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D69C21254060009DF2AC /* PostCell.swift */; };
 		F183D6A121254097009DF2AC /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D69F21254097009DF2AC /* PostCell.xib */; };
 		F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */; };
-		F183D6A8212554D3009DF2AC /* PostWithOutImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */; };
 		F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */; };
 		F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4C211D4D78008ED448 /* BasicStuff.swift */; };
 		F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4E211D6D29008ED448 /* FeedViewController.swift */; };
@@ -90,13 +92,15 @@
 		E800B4E7BA3F0269D6857BAA /* Pods-Blue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.release.xcconfig"; sourceTree = "<group>"; };
 		EEC394C6615F20333D53C7F1 /* Pods-Blue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blue/Pods-Blue.debug.xcconfig"; sourceTree = "<group>"; };
 		F107D7CE2143F25B00057001 /* video_Compression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = video_Compression.swift; sourceTree = "<group>"; };
-		F107D7D8214413FC00057001 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		F107D7D9214413FC00057001 /* VideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCell.xib; sourceTree = "<group>"; };
+		F112077D214A66E8007F0535 /* ShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTableViewCell.swift; sourceTree = "<group>"; };
+		F112077E214A66E8007F0535 /* ShareTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTableViewCell.xib; sourceTree = "<group>"; };
+		F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareImageTableViewCell.xib; sourceTree = "<group>"; };
+		F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareVideoTableViewCell.xib; sourceTree = "<group>"; };
 		F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		F183D69C21254060009DF2AC /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		F183D69F21254097009DF2AC /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
 		F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NibInstance.swift"; sourceTree = "<group>"; };
-		F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithOutImageCell.swift; sourceTree = "<group>"; };
 		F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostWithOutImageCell.xib; sourceTree = "<group>"; };
 		F18A4A4C211D4D78008ED448 /* BasicStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStuff.swift; sourceTree = "<group>"; };
 		F18A4A4E211D6D29008ED448 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -229,14 +233,24 @@
 			path = BlueUITests;
 			sourceTree = "<group>";
 		};
+		F112077A214A6681007F0535 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				F1B206952148E896004955E1 /* ShareVC.swift */,
+				F112077D214A66E8007F0535 /* ShareTableViewCell.swift */,
+				F112077E214A66E8007F0535 /* ShareTableViewCell.xib */,
+				F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */,
+				F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
 		F183D69B21254040009DF2AC /* PostCell */ = {
 			isa = PBXGroup;
 			children = (
 				F183D69C21254060009DF2AC /* PostCell.swift */,
 				F183D69F21254097009DF2AC /* PostCell.xib */,
-				F183D6A6212554D3009DF2AC /* PostWithOutImageCell.swift */,
 				F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */,
-				F107D7D8214413FC00057001 /* VideoCell.swift */,
 				F107D7D9214413FC00057001 /* VideoCell.xib */,
 			);
 			path = PostCell;
@@ -291,7 +305,7 @@
 				F1B206912148DCE1004955E1 /* NotificationContentVC.swift */,
 				F1B206932148E796004955E1 /* NotificationVC.swift */,
 				F1B206972148F331004955E1 /* NotificationTableViewCell.swift */,
-				F1B206952148E896004955E1 /* ShareVC.swift */,
+				F112077A214A6681007F0535 /* Share */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -418,8 +432,11 @@
 				F107D7DB214413FC00057001 /* VideoCell.xib in Resources */,
 				F183D6A121254097009DF2AC /* PostCell.xib in Resources */,
 				D959983820ED479100982DBC /* Assets.xcassets in Resources */,
+				F1120784214A6AF2007F0535 /* ShareVideoTableViewCell.xib in Resources */,
+				F1120780214A66E8007F0535 /* ShareTableViewCell.xib in Resources */,
 				F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */,
 				D959983620ED478E00982DBC /* Main.storyboard in Resources */,
+				F1120782214A6A19007F0535 /* ShareImageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +562,6 @@
 				F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */,
 				F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */,
 				D959983320ED478E00982DBC /* ViewController.swift in Sources */,
-				F107D7DA214413FC00057001 /* VideoCell.swift in Sources */,
 				F107D7CF2143F25C00057001 /* video_Compression.swift in Sources */,
 				F1B206942148E796004955E1 /* NotificationVC.swift in Sources */,
 				F1B206922148DCE1004955E1 /* NotificationContentVC.swift in Sources */,
@@ -554,7 +570,7 @@
 				D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */,
 				F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */,
 				F1B92AA72147D0C0003C560E /* CommentTableViewCell.swift in Sources */,
-				F183D6A8212554D3009DF2AC /* PostWithOutImageCell.swift in Sources */,
+				F112077F214A66E8007F0535 /* ShareTableViewCell.swift in Sources */,
 				F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */,
 				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,

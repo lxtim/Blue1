@@ -17,6 +17,7 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    var ref = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
     var commentRef = Database.database().reference().child(ConstantKey.comment)
@@ -47,7 +48,7 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     self.comments.append(cmnt)
                 }
             }
-            self.comments = self.comments.sorted(by: {($0[ConstantKey.date] as! Double) < ($1[ConstantKey.date] as! Double) })
+            self.comments = self.comments.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double) })
             self.tableView.reloadData()
             self.setTableViewLastPathIndexPath()
         }
@@ -110,9 +111,33 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
                             if error == nil {
                                 self.textFieldComment.text = ""
                                 self.setTableViewLastPathIndexPath()
+                                self.sendCommentNotification()
                             }
                         })
                     }, withCancel: nil)
+                }
+            }
+        }
+    }
+    
+    func sendCommentNotification() {
+        let adminUserID = post[ConstantKey.userid] as! String
+        let commentUserID = firebaseUser.uid
+        if adminUserID != commentUserID {
+            var json = [String:Any]()
+            if post[ConstantKey.image] != nil {
+                if let type = post[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                }
+                else {
+                    json[ConstantKey.image] = post[ConstantKey.image]
+                }
+            }
+            json[ConstantKey.id] = commentUserID
+            json[ConstantKey.date] = Date().timeStamp
+            json[ConstantKey.contentType] = NotificationType.comment.rawValue
+            self.ref.child(ConstantKey.notification).child(adminUserID).childByAutoId().setValue(json) { (error, ref) in
+                if error == nil {
+                    
                 }
             }
         }

@@ -7,16 +7,25 @@
 //
 
 import UIKit
+import Firebase
 
 class NotificationVC: UIViewController , UITableViewDelegate , UITableViewDataSource {
 
     
     @IBOutlet weak var tableView: UITableView!
+
+    var ref = Database.database().reference()
+    var notification:[[String:Any]] = [[String:Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.ref.child(ConstantKey.notification).child(firebaseUser.uid).observe(.value) { (snapshot) in
+            guard let value = snapshot.value as? [String:Any] else { return }
+            self.notification = value.map({$1 as! [String:Any]})
+            self.notification = self.notification.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double) })
+            self.tableView.reloadData()
+        }
     }
     
     //MARK:- UItableViewDelegate
@@ -28,10 +37,11 @@ class NotificationVC: UIViewController , UITableViewDelegate , UITableViewDataSo
         return UITableViewAutomaticDimension
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return self.notification.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
+        cell.object = self.notification[indexPath.row]
         return cell
     }
     

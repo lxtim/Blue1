@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     @IBOutlet weak var followStackView: UIStackView!
 
-    
+    var ref = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
     
@@ -49,6 +49,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
         self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
+        self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
         
         self.tableView.isHidden = true
         if isOtherUserProfile {
@@ -140,6 +141,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     @IBAction func btnFollowAction(_ sender: UIButton) {
         if sender.tag == 0 {
             BasicStuff.shared.followArray.add(userProfileData.value(forKey: ConstantKey.id) as! String)
+            self.sendFollowNotification()
         }
         else {
             BasicStuff.shared.followArray.remove(userProfileData.value(forKey: ConstantKey.id) as! String)
@@ -155,6 +157,23 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
 
+    func sendFollowNotification() {
+        let adminUserID = userProfileData[ConstantKey.id] as! String
+        let followUserID = firebaseUser.uid
+        if adminUserID != followUserID {
+            var json = [String:Any]()
+            json[ConstantKey.image] = userProfileData[ConstantKey.image]
+            json[ConstantKey.id] = followUserID
+            json[ConstantKey.date] = Date().timeStamp
+            json[ConstantKey.contentType] = NotificationType.follow.rawValue
+            self.ref.child(ConstantKey.notification).child(adminUserID).childByAutoId().setValue(json) { (error, ref) in
+                if error == nil {
+
+                }
+            }
+        }
+    }
+    
     @IBAction func btnFollowersAction(_ sender: UIButton) {
         let action = Object(FollwersViewController.self)
         action.followers = followers
@@ -356,19 +375,33 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let feed = self.feedData[indexPath.row]
         if feed[ConstantKey.image] != nil {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
-            cell.object = feed
-            cell.delegate = self
-            cell.likeImg.isUserInteractionEnabled = false
-            return cell
+            if let type = feed[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "VideoCell") as! PostCell
+                cell.type = .video
+                cell.object = feed
+                cell.delegate = self
+                cell.likeImg.isUserInteractionEnabled = false
+                return cell
+            }
+            else {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+                cell.type = .image
+                cell.object = feed
+                cell.delegate = self
+                
+                cell.likeImg.isUserInteractionEnabled = false
+                return cell
+            }
         }
         else {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell", for: indexPath) as! PostWithOutImageCell
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostWithOutImageCell") as! PostCell
+            cell.type = .caption
             cell.object = feed
             cell.delegate = self
             cell.likeImg.isUserInteractionEnabled = false
             return cell
         }
+        
     }
     
     //MARK:- FeedPostCellDelegate

@@ -10,6 +10,19 @@ import Foundation
 import Firebase
 import UIKit
 import SDWebImage
+import VGPlayer
+
+enum PostType:Int {
+    case caption = 0
+    case image
+    case video
+}
+
+enum NotificationType:Int {
+    case follow = 0
+    case like
+    case comment
+}
 
 protocol FeedPostCellDelegate {
     func feedLikeDidSelect(user:[String:Any])
@@ -20,16 +33,31 @@ class PostCell: UITableViewCell {
 
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
-    @IBOutlet weak var postImg: UIImageView!
     @IBOutlet weak var caption: UITextView!
     @IBOutlet weak var likeImg: UIButton!
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var likebtn: UIButton!
     @IBOutlet weak var btnComment: UIButton!
+    
+    
+    @IBOutlet weak var postImg: UIImageView!
+    @IBOutlet weak var videoPlayerView: VGPlayerView!
+    var player:VGPlayer?
+    
+    
+    var type:PostType = .caption
+    
     //var post: Post!
     var ref: DatabaseReference = Database.database().reference()
     var delegate:FeedPostCellDelegate? = nil
     
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        if let playerView = videoPlayerView {
+            self.player = VGPlayer(playerView: playerView)
+        }
+    }
     var object:[String:Any]  = [String:Any]() {
         didSet(newValue) {
             if let user = object[ConstantKey.user] as? [String:Any] {
@@ -38,8 +66,14 @@ class PostCell: UITableViewCell {
                     self.profileImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
+            
             if let url = object[ConstantKey.image] as? String {
-                self.postImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                if type == .video {
+                    self.player?.replaceVideo(URL(string: url)!)
+                }
+                else if type == .image {
+                    self.postImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                }
             }
             
             self.caption.text = object[ConstantKey.caption] as? String
@@ -85,10 +119,7 @@ class PostCell: UITableViewCell {
     }
     
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
+    
     
     @IBAction func btnLikeAction(_ sender: UIButton) {
         if object[ConstantKey.likes] != nil {
@@ -132,6 +163,7 @@ class PostCell: UITableViewCell {
                 if error == nil {
                     self.likeImg.isSelected = false
                     self.likeImg.tag = 1
+                    self.sendLikeNotification()
                 }
             }
         }
@@ -161,6 +193,30 @@ class PostCell: UITableViewCell {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    
+    func sendLikeNotification() {
+        let adminUserID = object[ConstantKey.userid] as! String
+        let likedUserID = firebaseUser.uid
+        if adminUserID != likedUserID {
+            var json = [String:Any]()
+            if object[ConstantKey.image] != nil {
+                if let type = object[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                }
+                else {
+                    json[ConstantKey.image] = object[ConstantKey.image]
+                }
+            }
+            json[ConstantKey.id] = likedUserID
+            json[ConstantKey.date] = Date().timeStamp
+            json[ConstantKey.contentType] = NotificationType.like.rawValue
+            self.ref.child(ConstantKey.notification).child(adminUserID).childByAutoId().setValue(json) { (error, ref) in
+                if error == nil {
+                    
                 }
             }
         }
