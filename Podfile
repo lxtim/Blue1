@@ -15,7 +15,8 @@ target 'Blue' do
     pod 'MRProgress'
     pod 'UITextView+Placeholder'
     pod 'SDWebImage'
-    pod 'VGPlayer', '~> 0.2.0'
+    pod 'VGPlayer'
+    pod 'ScrollableSegmentedControl'
     
 
   target 'BlueTests' do

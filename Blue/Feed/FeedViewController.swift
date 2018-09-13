@@ -77,7 +77,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     @objc func btnShareAction(_ sender:UIBarButtonItem) {
-        
+        let notificationVC = Object(NotificationContentVC.self)
+        self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     func getFeed() {
         self.feedData = [[String:Any]]()

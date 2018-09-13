@@ -35,6 +35,10 @@
 		F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */; };
 		F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95B21243C2800D24606 /* FollwersViewController.swift */; };
 		F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A1B95D21244A8A00D24606 /* SettingViewController.swift */; };
+		F1B206922148DCE1004955E1 /* NotificationContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206912148DCE1004955E1 /* NotificationContentVC.swift */; };
+		F1B206942148E796004955E1 /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206932148E796004955E1 /* NotificationVC.swift */; };
+		F1B206962148E896004955E1 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206952148E896004955E1 /* ShareVC.swift */; };
+		F1B206982148F331004955E1 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206972148F331004955E1 /* NotificationTableViewCell.swift */; };
 		F1B92AA72147D0C0003C560E /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
 		F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E3D1652146814C00D417D3 /* CommentVC.swift */; };
@@ -100,6 +104,10 @@
 		F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
 		F1A1B95B21243C2800D24606 /* FollwersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollwersViewController.swift; sourceTree = "<group>"; };
 		F1A1B95D21244A8A00D24606 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		F1B206912148DCE1004955E1 /* NotificationContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationContentVC.swift; sourceTree = "<group>"; };
+		F1B206932148E796004955E1 /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
+		F1B206952148E896004955E1 /* ShareVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
+		F1B206972148F331004955E1 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +199,7 @@
 				F18A4A54211DDAD5008ED448 /* Profile */,
 				F18A4A53211DDABE008ED448 /* Feed */,
 				F1E3D1642146812400D417D3 /* Comment */,
+				F1B206902148DC9A004955E1 /* Notification */,
 				F18A4A52211DDA98008ED448 /* Authentication */,
 				F18A4A4B211D4D56008ED448 /* BasicStuff */,
 				D959983720ED479100982DBC /* Assets.xcassets */,
@@ -274,6 +283,17 @@
 				F1A1B95D21244A8A00D24606 /* SettingViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		F1B206902148DC9A004955E1 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				F1B206912148DCE1004955E1 /* NotificationContentVC.swift */,
+				F1B206932148E796004955E1 /* NotificationVC.swift */,
+				F1B206972148F331004955E1 /* NotificationTableViewCell.swift */,
+				F1B206952148E896004955E1 /* ShareVC.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		F1E3D1642146812400D417D3 /* Comment */ = {
@@ -485,6 +505,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MRProgress/MRProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/ScrollableSegmentedControl/ScrollableSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoidingSwift/TPKeyboardAvoidingSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
@@ -498,6 +519,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MRProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoidingSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
@@ -519,11 +541,14 @@
 			files = (
 				F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */,
 				D934FE6F2117647500A5F66F /* ProfileViewController.swift in Sources */,
+				F1B206982148F331004955E1 /* NotificationTableViewCell.swift in Sources */,
 				F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */,
 				F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */,
 				D959983320ED478E00982DBC /* ViewController.swift in Sources */,
 				F107D7DA214413FC00057001 /* VideoCell.swift in Sources */,
 				F107D7CF2143F25C00057001 /* video_Compression.swift in Sources */,
+				F1B206942148E796004955E1 /* NotificationVC.swift in Sources */,
+				F1B206922148DCE1004955E1 /* NotificationContentVC.swift in Sources */,
 				F18A4A58211DDB63008ED448 /* UserSearchViewController.swift in Sources */,
 				F183D69D21254060009DF2AC /* PostCell.swift in Sources */,
 				D9751A6E20EFA24300BD0EDC /* PageViewController.swift in Sources */,
@@ -539,6 +564,7 @@
 				D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */,
 				F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */,
 				F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */,
+				F1B206962148E896004955E1 /* ShareVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

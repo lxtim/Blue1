@@ -20,6 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         FirebaseApp.configure()
+        
+//        for familyName in UIFont.familyNames {
+//            
+//            print("\(familyName)")
+//            
+//            for fontName in UIFont.fontNames(forFamilyName: familyName) as [String] {
+//                print("\tFont: \(fontName)")
+//            }
+//        }
         // Override point for customization after application launch.
         return true
     }

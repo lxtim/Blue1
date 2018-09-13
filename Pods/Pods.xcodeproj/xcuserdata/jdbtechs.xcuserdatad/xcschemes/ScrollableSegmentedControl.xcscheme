@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "185A774B99E88C3B453393FC305CA651"
-               BuildableName = "TPKeyboardAvoidingSwift.framework"
-               BlueprintName = "TPKeyboardAvoidingSwift"
+               BlueprintIdentifier = "ED7AB4E9CFA8A44580AFBA29819B537A"
+               BuildableName = "ScrollableSegmentedControl.framework"
+               BlueprintName = "ScrollableSegmentedControl"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "185A774B99E88C3B453393FC305CA651"
-            BuildableName = "TPKeyboardAvoidingSwift.framework"
-            BlueprintName = "TPKeyboardAvoidingSwift"
+            BlueprintIdentifier = "ED7AB4E9CFA8A44580AFBA29819B537A"
+            BuildableName = "ScrollableSegmentedControl.framework"
+            BlueprintName = "ScrollableSegmentedControl"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
