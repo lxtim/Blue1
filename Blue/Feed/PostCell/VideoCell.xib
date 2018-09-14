@@ -121,21 +121,30 @@
                                     <action selector="btnCommentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pf5-Km-xWi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gq-mp-sbT">
+                                <rect key="frame" x="180" y="416" width="47" height="22"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="btn_share"/>
+                                <connections>
+                                    <action selector="btnShareAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lAa-bZ-YwK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ajf-VJ-VRI" firstAttribute="top" secondItem="gPk-we-WC3" secondAttribute="bottom" constant="8" id="0aU-VH-6Gt"/>
                             <constraint firstItem="vsR-XQ-rf7" firstAttribute="trailing" secondItem="ngq-BC-wVt" secondAttribute="trailing" id="1sX-ff-TwU"/>
                             <constraint firstItem="vsR-XQ-rf7" firstAttribute="bottom" secondItem="v2y-f8-QwW" secondAttribute="bottom" id="2uy-Xg-ega"/>
+                            <constraint firstItem="4gq-mp-sbT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="clR-Qw-S77" secondAttribute="trailing" constant="10" id="5r4-39-gzN"/>
                             <constraint firstItem="ngq-BC-wVt" firstAttribute="bottom" secondItem="v2y-f8-QwW" secondAttribute="bottom" id="988-Kd-gL4"/>
                             <constraint firstItem="vsR-XQ-rf7" firstAttribute="top" secondItem="v2y-f8-QwW" secondAttribute="top" id="CnS-aG-KDC"/>
                             <constraint firstAttribute="bottom" secondItem="cEx-Lx-aCy" secondAttribute="bottom" constant="15" id="EyF-Un-bgW"/>
                             <constraint firstItem="vsR-XQ-rf7" firstAttribute="leading" secondItem="v2y-f8-QwW" secondAttribute="leading" id="G6R-Zl-ufa"/>
                             <constraint firstAttribute="trailing" secondItem="Ajf-VJ-VRI" secondAttribute="trailing" constant="10" id="HIJ-nJ-rAx"/>
-                            <constraint firstItem="Sxi-KZ-2ad" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="clR-Qw-S77" secondAttribute="trailing" constant="10" id="PRw-u8-g4L"/>
                             <constraint firstItem="v2y-f8-QwW" firstAttribute="top" secondItem="WMI-Ik-fZ9" secondAttribute="top" constant="15" id="QKi-Pm-euM"/>
                             <constraint firstItem="gPk-we-WC3" firstAttribute="centerX" secondItem="WMI-Ik-fZ9" secondAttribute="centerX" id="QUd-H2-rXr"/>
                             <constraint firstItem="cEx-Lx-aCy" firstAttribute="leading" secondItem="Sxi-KZ-2ad" secondAttribute="trailing" constant="10" id="R3b-YX-Fcn"/>
+                            <constraint firstItem="Sxi-KZ-2ad" firstAttribute="leading" secondItem="4gq-mp-sbT" secondAttribute="trailing" constant="10" id="Uvp-g8-jWi"/>
                             <constraint firstItem="ngq-BC-wVt" firstAttribute="top" secondItem="v2y-f8-QwW" secondAttribute="top" id="Wqj-oU-p8f"/>
                             <constraint firstItem="clR-Qw-S77" firstAttribute="top" secondItem="Ajf-VJ-VRI" secondAttribute="bottom" constant="15" id="j5d-69-k8s"/>
                             <constraint firstItem="Sxi-KZ-2ad" firstAttribute="top" secondItem="Ajf-VJ-VRI" secondAttribute="bottom" constant="15" id="jU5-a0-2x4"/>
@@ -144,6 +153,7 @@
                             <constraint firstItem="v2y-f8-QwW" firstAttribute="leading" secondItem="WMI-Ik-fZ9" secondAttribute="leading" constant="10" id="nkW-gL-fnm"/>
                             <constraint firstItem="ngq-BC-wVt" firstAttribute="leading" secondItem="v2y-f8-QwW" secondAttribute="trailing" constant="15" id="nnG-sZ-Ygm"/>
                             <constraint firstItem="Ajf-VJ-VRI" firstAttribute="leading" secondItem="WMI-Ik-fZ9" secondAttribute="leading" constant="10" id="pMg-np-NLD"/>
+                            <constraint firstItem="4gq-mp-sbT" firstAttribute="centerY" secondItem="Sxi-KZ-2ad" secondAttribute="centerY" id="qmn-71-Y5b"/>
                             <constraint firstAttribute="trailing" secondItem="cEx-Lx-aCy" secondAttribute="trailing" constant="10" id="wgB-zo-cpi"/>
                             <constraint firstItem="cEx-Lx-aCy" firstAttribute="top" secondItem="Ajf-VJ-VRI" secondAttribute="bottom" constant="15" id="xE7-LR-Ekb"/>
                         </constraints>
@@ -170,7 +180,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Filledheart" width="35" height="35"/>
-        <image name="Heart unfilled" width="35" height="35"/>
+        <image name="Filledheart" width="25" height="21"/>
+        <image name="Heart unfilled" width="25" height="22"/>
+        <image name="btn_share" width="27" height="18"/>
     </resources>
 </document>

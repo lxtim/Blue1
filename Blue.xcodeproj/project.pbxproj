@@ -41,6 +41,7 @@
 		F1B206942148E796004955E1 /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206932148E796004955E1 /* NotificationVC.swift */; };
 		F1B206962148E896004955E1 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206952148E896004955E1 /* ShareVC.swift */; };
 		F1B206982148F331004955E1 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B206972148F331004955E1 /* NotificationTableViewCell.swift */; };
+		F1B21565214B88E60076AAD7 /* SharePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B21564214B88E60076AAD7 /* SharePostViewController.swift */; };
 		F1B92AA72147D0C0003C560E /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
 		F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E3D1652146814C00D417D3 /* CommentVC.swift */; };
@@ -112,6 +113,7 @@
 		F1B206932148E796004955E1 /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
 		F1B206952148E896004955E1 /* ShareVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
 		F1B206972148F331004955E1 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		F1B21564214B88E60076AAD7 /* SharePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePostViewController.swift; sourceTree = "<group>"; };
 		F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				F18A4A53211DDABE008ED448 /* Feed */,
 				F1E3D1642146812400D417D3 /* Comment */,
 				F1B206902148DC9A004955E1 /* Notification */,
+				F1B21563214B88990076AAD7 /* SharePost */,
 				F18A4A52211DDA98008ED448 /* Authentication */,
 				F18A4A4B211D4D56008ED448 /* BasicStuff */,
 				D959983720ED479100982DBC /* Assets.xcassets */,
@@ -308,6 +311,14 @@
 				F112077A214A6681007F0535 /* Share */,
 			);
 			path = Notification;
+			sourceTree = "<group>";
+		};
+		F1B21563214B88990076AAD7 /* SharePost */ = {
+			isa = PBXGroup;
+			children = (
+				F1B21564214B88E60076AAD7 /* SharePostViewController.swift */,
+			);
+			path = SharePost;
 			sourceTree = "<group>";
 		};
 		F1E3D1642146812400D417D3 /* Comment */ = {
@@ -556,6 +567,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1B21565214B88E60076AAD7 /* SharePostViewController.swift in Sources */,
 				F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */,
 				D934FE6F2117647500A5F66F /* ProfileViewController.swift in Sources */,
 				F1B206982148F331004955E1 /* NotificationTableViewCell.swift in Sources */,

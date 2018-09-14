@@ -29,6 +29,16 @@ struct ConstantKey {
     static let video:String = "video"
     static let comment:String = "Comment"
     static let notification:String = "Notification"
+    static let share:String = "Share"
+    static let postID:String = "postID"
+}
+struct Platform {
+    static let isSimulator: Bool = {
+        #if arch(i386) || arch(x86_64)
+        return true
+        #endif
+        return false
+    }()
 }
 
 class BasicStuff : NSObject {

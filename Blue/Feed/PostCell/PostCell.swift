@@ -28,6 +28,7 @@ protocol FeedPostCellDelegate {
     func feedLikeDidSelect(user:[String:Any])
     func feedProfileDidSelect(user:[String:Any])
     func feedCommentDidSelect(post:[String:Any],user:[String:Any])
+    func feedShareDidSelect(post:[String:Any],user:[String:Any])
 }
 class PostCell: UITableViewCell {
 
@@ -184,7 +185,7 @@ class PostCell: UITableViewCell {
             if let delegate = self.delegate {
                 if let id = object[ConstantKey.userid] as? String {
                     if id == firebaseUser.uid {
-                        delegate.feedCommentDidSelect(post: object, user: object)
+                        delegate.feedCommentDidSelect(post: object, user: object[ConstantKey.user] as! [String:Any])
                     }
                     else {
                         self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
@@ -221,12 +222,23 @@ class PostCell: UITableViewCell {
             }
         }
     }
+    
+    @IBAction func btnShareAction(_ sender: UIButton) {
+        if object[ConstantKey.userid] != nil {
+            if let delegate = self.delegate {
+                if let id = object[ConstantKey.userid] as? String {
+                    if id == firebaseUser.uid {
+                        delegate.feedShareDidSelect(post: object, user: object[ConstantKey.user] as! [String:Any])
+                    }
+                    else {
+                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                            if let value = snapshot.value as? [String:Any] {
+                                self.delegate?.feedShareDidSelect(post: self.object, user: value)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-
-
-    
-    
-    
-    
-
-

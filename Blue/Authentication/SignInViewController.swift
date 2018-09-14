@@ -18,8 +18,13 @@ class SignInViewController: ViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.emailField.text = "dharmesh.kathiriya304@gmail.com"
-//        self.emailField.text = "ketansangani@gmail.com"
+        if Platform.isSimulator {
+            self.emailField.text = "dharmesh.kathiriya304@gmail.com"
+        }
+        else {
+            self.emailField.text = "ketansangani@gmail.com"
+        }
+        
         self.passwordField.text = "123456"
     }
     override func viewWillAppear(_ animated: Bool) {

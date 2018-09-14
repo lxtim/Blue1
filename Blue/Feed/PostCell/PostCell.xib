@@ -123,14 +123,23 @@
                                     <action selector="btnCommentAction:" destination="pY5-UZ-4Eu" eventType="touchUpInside" id="Zji-he-PmO"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eB-rm-Kz0">
+                                <rect key="frame" x="209" y="457" width="47" height="22"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="btn_share"/>
+                                <connections>
+                                    <action selector="btnShareAction:" destination="pY5-UZ-4Eu" eventType="touchUpInside" id="ZAK-EL-hYc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="yAr-M4-Dwb" secondAttribute="trailing" constant="10" id="2As-7I-50G"/>
+                            <constraint firstItem="2eB-rm-Kz0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xZB-Xs-SYD" secondAttribute="trailing" constant="10" id="3I5-0a-h4o"/>
                             <constraint firstItem="Iq5-HK-mfD" firstAttribute="top" secondItem="yAr-M4-Dwb" secondAttribute="bottom" constant="15" id="4oD-Yl-Gd4"/>
                             <constraint firstItem="OMl-ad-bTE" firstAttribute="top" secondItem="6cg-gM-CyC" secondAttribute="bottom" constant="15" id="63J-I9-kPE"/>
-                            <constraint firstItem="Nm8-4R-beR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xZB-Xs-SYD" secondAttribute="trailing" constant="15" id="EHs-Kh-IKI"/>
                             <constraint firstItem="yAr-M4-Dwb" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" constant="10" id="EoR-Ry-Q1A"/>
+                            <constraint firstItem="2eB-rm-Kz0" firstAttribute="centerY" secondItem="Nm8-4R-beR" secondAttribute="centerY" id="Fts-f6-3j8"/>
                             <constraint firstAttribute="trailing" secondItem="Iq5-HK-mfD" secondAttribute="trailing" constant="10" id="MxI-fH-BPf"/>
                             <constraint firstItem="40S-1o-RUw" firstAttribute="top" secondItem="6cg-gM-CyC" secondAttribute="top" id="NB6-R3-DIN"/>
                             <constraint firstItem="40S-1o-RUw" firstAttribute="bottom" secondItem="6cg-gM-CyC" secondAttribute="bottom" id="OxI-JL-unI"/>
@@ -141,6 +150,7 @@
                             <constraint firstAttribute="bottom" secondItem="Iq5-HK-mfD" secondAttribute="bottom" constant="15" id="Vsy-LG-YT9"/>
                             <constraint firstItem="yAr-M4-Dwb" firstAttribute="top" secondItem="OMl-ad-bTE" secondAttribute="bottom" constant="8" id="Wtd-uO-eDI"/>
                             <constraint firstItem="6cG-xj-xgn" firstAttribute="bottom" secondItem="6cg-gM-CyC" secondAttribute="bottom" id="aJ7-Rf-Paq"/>
+                            <constraint firstItem="Nm8-4R-beR" firstAttribute="leading" secondItem="2eB-rm-Kz0" secondAttribute="trailing" constant="15" id="bqw-qv-Mqe"/>
                             <constraint firstItem="40S-1o-RUw" firstAttribute="trailing" secondItem="6cG-xj-xgn" secondAttribute="trailing" id="btB-Q4-Z6s"/>
                             <constraint firstItem="xZB-Xs-SYD" firstAttribute="leading" secondItem="4tJ-jK-kBw" secondAttribute="leading" constant="10" id="eto-bb-7ks"/>
                             <constraint firstItem="6cG-xj-xgn" firstAttribute="leading" secondItem="6cg-gM-CyC" secondAttribute="trailing" constant="15" id="gtZ-ha-kuo"/>
@@ -174,7 +184,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Filledheart" width="35" height="35"/>
-        <image name="Heart unfilled" width="35" height="35"/>
+        <image name="Filledheart" width="25" height="21"/>
+        <image name="Heart unfilled" width="25" height="22"/>
+        <image name="btn_share" width="27" height="18"/>
     </resources>
 </document>

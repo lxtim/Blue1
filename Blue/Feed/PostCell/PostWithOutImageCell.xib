@@ -114,6 +114,14 @@
                                     <action selector="btnLikeAction:" destination="APD-4n-lZo" eventType="touchUpInside" id="6XS-Y4-0oy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZW1-7o-59b">
+                                <rect key="frame" x="214" y="153.5" width="47" height="22"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="btn_share"/>
+                                <connections>
+                                    <action selector="btnShareAction:" destination="APD-4n-lZo" eventType="touchUpInside" id="vT4-Tg-cTf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -126,13 +134,15 @@
                             <constraint firstAttribute="trailing" secondItem="U7r-pT-6St" secondAttribute="trailing" constant="10" id="KJA-Zm-FqY"/>
                             <constraint firstItem="7YT-HT-S1e" firstAttribute="top" secondItem="jbp-EM-mxy" secondAttribute="bottom" constant="15" id="KfZ-AE-6BC"/>
                             <constraint firstItem="pCq-NQ-Pdd" firstAttribute="bottom" secondItem="BPQ-9z-qJz" secondAttribute="bottom" id="Pi8-Al-UUH"/>
+                            <constraint firstItem="ZW1-7o-59b" firstAttribute="centerY" secondItem="7YT-HT-S1e" secondAttribute="centerY" id="QtX-77-KZA"/>
                             <constraint firstItem="BPQ-9z-qJz" firstAttribute="leading" secondItem="erW-8Y-evl" secondAttribute="leading" constant="10" id="SbB-Qc-siZ"/>
                             <constraint firstItem="jbp-EM-mxy" firstAttribute="leading" secondItem="erW-8Y-evl" secondAttribute="leading" constant="10" id="WgU-YI-nlZ"/>
+                            <constraint firstItem="ZW1-7o-59b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ltz-VZ-GsD" secondAttribute="trailing" constant="10" id="Zu5-Lh-4Ae"/>
                             <constraint firstItem="Q9w-dJ-JSH" firstAttribute="top" secondItem="BPQ-9z-qJz" secondAttribute="top" id="dQY-nz-Ceq"/>
                             <constraint firstItem="pCq-NQ-Pdd" firstAttribute="top" secondItem="BPQ-9z-qJz" secondAttribute="top" id="dmW-Bu-XrZ"/>
-                            <constraint firstItem="7YT-HT-S1e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ltz-VZ-GsD" secondAttribute="trailing" constant="15" id="eTb-wp-cgX"/>
                             <constraint firstItem="U7r-pT-6St" firstAttribute="top" secondItem="jbp-EM-mxy" secondAttribute="bottom" constant="15" id="gIe-do-92v"/>
                             <constraint firstItem="jbp-EM-mxy" firstAttribute="top" secondItem="BPQ-9z-qJz" secondAttribute="bottom" constant="15" id="hzE-4r-JIO"/>
+                            <constraint firstItem="7YT-HT-S1e" firstAttribute="leading" secondItem="ZW1-7o-59b" secondAttribute="trailing" constant="10" id="nSK-vv-Q60"/>
                             <constraint firstItem="U7r-pT-6St" firstAttribute="leading" secondItem="7YT-HT-S1e" secondAttribute="trailing" constant="10" id="oUQ-Fx-HvM"/>
                             <constraint firstAttribute="trailing" secondItem="jbp-EM-mxy" secondAttribute="trailing" constant="10" id="q0B-On-H1q"/>
                             <constraint firstAttribute="bottom" secondItem="U7r-pT-6St" secondAttribute="bottom" constant="15" id="qQU-HQ-dv9"/>
@@ -161,6 +171,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Filledheart" width="35" height="35"/>
+        <image name="Filledheart" width="25" height="21"/>
+        <image name="btn_share" width="27" height="18"/>
     </resources>
 </document>

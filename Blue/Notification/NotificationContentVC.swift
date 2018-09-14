@@ -29,8 +29,8 @@ class NotificationContentVC: UIViewController {
         segmentView.selectedSegmentContentColor = UIColor("4A4A4A")
         segmentView.backgroundColor = UIColor.white
         
-        let normalColorAttribute = [NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Thin", size: 14)!, NSAttributedStringKey.foregroundColor: UIColor("4A4A4A")]
-        let selectedColorAttribute = [NSAttributedStringKey.font: UIFont(name: "HelveticaNeue", size: 14)!, NSAttributedStringKey.foregroundColor: UIColor("4A4A4A")]
+        let normalColorAttribute = [NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Light", size: 18)!, NSAttributedStringKey.foregroundColor: UIColor("4A4A4A")]
+        let selectedColorAttribute = [NSAttributedStringKey.font: UIFont(name: "HelveticaNeue", size: 18)!, NSAttributedStringKey.foregroundColor: UIColor("4A4A4A")]
         
         
         segmentView.setTitleTextAttributes(normalColorAttribute, for: .normal)

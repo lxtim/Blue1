@@ -90,7 +90,7 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
     @IBAction func btnPostAction(_ sender: UIButton) {
         guard let postID = post[ConstantKey.id] as? String else {return}
         var comment:[String:Any] = [String:Any]()
-        if let commentText = self.textFieldComment.text , commentText != "" {
+        if let commentText = self.textFieldComment.text , commentText.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
             comment[ConstantKey.comment] = commentText
             comment[ConstantKey.date] = Date().timeStamp
             comment[ConstantKey.userid] = firebaseUser.uid

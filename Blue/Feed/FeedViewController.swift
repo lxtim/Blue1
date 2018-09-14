@@ -212,8 +212,14 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         let commentVC = Object(CommentVC.self)
         commentVC.post = post
         commentVC.user = user
-        
         self.navigationController?.pushViewController(commentVC, animated: true)
+    }
+    
+    func feedShareDidSelect(post: [String : Any], user: [String : Any]) {
+        let sharePostVC = Object(SharePostViewController.self)
+        sharePostVC.post = post
+        sharePostVC.user = user
+        self.navigationController?.pushViewController(sharePostVC, animated: true)
     }
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {

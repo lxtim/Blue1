@@ -428,6 +428,10 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         commentVC.post = post
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
+    
+    func feedShareDidSelect(post: [String : Any], user: [String : Any]) {
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
