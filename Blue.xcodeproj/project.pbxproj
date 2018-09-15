@@ -47,6 +47,10 @@
 		F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E3D1652146814C00D417D3 /* CommentVC.swift */; };
 		F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A221258CC300CB7197 /* FollowingViewController.swift */; };
 		F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A62125984A00CB7197 /* LikeViewController.swift */; };
+		F1EACD92214D37BB00BB7349 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACD91214D37BB00BB7349 /* ProfileCollectionViewCell.swift */; };
+		F1EACD99214D46BA00BB7349 /* ProfileTextCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1EACD98214D46BA00BB7349 /* ProfileTextCollectionViewCell.xib */; };
+		F1EACD9B214D479500BB7349 /* ProfileImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1EACD9A214D479400BB7349 /* ProfileImageCollectionViewCell.xib */; };
+		F1EACD9D214D47D400BB7349 /* ProfileVideoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1EACD9C214D47D400BB7349 /* ProfileVideoCollectionViewCell.xib */; };
 		F348C51360C5A6AB1087E384 /* Pods_BlueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3845367C3D286815F72E9B7 /* Pods_BlueUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +124,10 @@
 		F1E3D1652146814C00D417D3 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		F1E809A221258CC300CB7197 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		F1E809A62125984A00CB7197 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
+		F1EACD91214D37BB00BB7349 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
+		F1EACD98214D46BA00BB7349 /* ProfileTextCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTextCollectionViewCell.xib; sourceTree = "<group>"; };
+		F1EACD9A214D479400BB7349 /* ProfileImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		F1EACD9C214D47D400BB7349 /* ProfileVideoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileVideoCollectionViewCell.xib; sourceTree = "<group>"; };
 		F8B48E2977AA251FCEEE0A64 /* Pods-BlueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueUITests/Pods-BlueUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -294,6 +302,7 @@
 		F18A4A54211DDAD5008ED448 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				F1EACD93214D466700BB7349 /* ProfileGrid */,
 				D934FE6E2117647500A5F66F /* ProfileViewController.swift */,
 				F1A1B95B21243C2800D24606 /* FollwersViewController.swift */,
 				F1E809A221258CC300CB7197 /* FollowingViewController.swift */,
@@ -328,6 +337,17 @@
 				F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */,
 			);
 			path = Comment;
+			sourceTree = "<group>";
+		};
+		F1EACD93214D466700BB7349 /* ProfileGrid */ = {
+			isa = PBXGroup;
+			children = (
+				F1EACD9C214D47D400BB7349 /* ProfileVideoCollectionViewCell.xib */,
+				F1EACD9A214D479400BB7349 /* ProfileImageCollectionViewCell.xib */,
+				F1EACD98214D46BA00BB7349 /* ProfileTextCollectionViewCell.xib */,
+				F1EACD91214D37BB00BB7349 /* ProfileCollectionViewCell.swift */,
+			);
+			path = ProfileGrid;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -439,14 +459,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D959983B20ED479100982DBC /* LaunchScreen.storyboard in Resources */,
+				F1EACD99214D46BA00BB7349 /* ProfileTextCollectionViewCell.xib in Resources */,
 				D959985F20ED47FF00982DBC /* GoogleService-Info.plist in Resources */,
 				F107D7DB214413FC00057001 /* VideoCell.xib in Resources */,
+				F1EACD9D214D47D400BB7349 /* ProfileVideoCollectionViewCell.xib in Resources */,
 				F183D6A121254097009DF2AC /* PostCell.xib in Resources */,
 				D959983820ED479100982DBC /* Assets.xcassets in Resources */,
 				F1120784214A6AF2007F0535 /* ShareVideoTableViewCell.xib in Resources */,
 				F1120780214A66E8007F0535 /* ShareTableViewCell.xib in Resources */,
 				F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */,
 				D959983620ED478E00982DBC /* Main.storyboard in Resources */,
+				F1EACD9B214D479500BB7349 /* ProfileImageCollectionViewCell.xib in Resources */,
 				F1120782214A6A19007F0535 /* ShareImageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,6 +609,7 @@
 				F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */,
 				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,
+				F1EACD92214D37BB00BB7349 /* ProfileCollectionViewCell.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,
 				F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */,
 				F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */,

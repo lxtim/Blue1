@@ -31,6 +31,8 @@ struct ConstantKey {
     static let notification:String = "Notification"
     static let share:String = "Share"
     static let postID:String = "postID"
+    static let layout:String = "layout"
+    
 }
 struct Platform {
     static let isSimulator: Bool = {
@@ -139,16 +141,16 @@ extension DateFormatter {
         return dateformater
     }
 }
-extension String {
-    var date:Date {
-        if let sdate = DateFormatter.formate.date(from: self) {
-            return sdate
-        }
-        else {
-            return Date()
-        }
-    }
-}
+//extension String {
+//    var date:Date {
+//        if let sdate = DateFormatter.formate.date(from: self) {
+//            return sdate
+//        }
+//        else {
+//            return Date()
+//        }
+//    }
+//}
 extension UIImage {
     func resizeWithPercent(percentage: CGFloat) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: size.width * percentage, height: size.height * percentage)))

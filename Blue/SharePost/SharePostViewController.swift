@@ -66,7 +66,11 @@ class SharePostViewController: UIViewController {
         }
         
         self.feedCaptionLabel.text = post[ConstantKey.caption] as? String
-        self.dateLabel.text = Date().offset(from: (post[ConstantKey.date] as! String).date) + " ago"
+        
+        if let timeStamp = post[ConstantKey.date] as? Double {
+            let date = Date(timeIntervalSince1970: timeStamp)
+            self.dateLabel.text = Date().offset(from: date) + " ago"
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -23,9 +23,7 @@ class CommentTableViewCell: UITableViewCell {
             
             if let timeStamp = comment[ConstantKey.date] as? Double {
                 let date = Date(timeIntervalSince1970: timeStamp)
-                
                 self.dateLabel.text = Date().offset(from: date) + " ago"
-                
             }
             
             self.commentLabel.text = comment[ConstantKey.comment] as? String

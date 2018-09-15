@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otN-3K-jw2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="JDf-au-d8J">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="JDf-au-d8J">
                                 <rect key="frame" x="5" y="10" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="BGS-4y-By1"/>
@@ -68,7 +68,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLY-LG-PCg">
                         <rect key="frame" x="25" y="96" width="295" height="65"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="wag-8N-3gP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="wag-8N-3gP">
                                 <rect key="frame" x="5" y="10" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="3kc-wr-zKj"/>
@@ -116,6 +116,9 @@
                                 <state key="normal" title="Button">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnLikeAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="SVo-9u-9d3"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLW-Xj-IT4">
                                 <rect key="frame" x="270" y="5" width="35" height="35"/>
@@ -125,6 +128,9 @@
                                 </constraints>
                                 <state key="normal" image="Filledheart"/>
                                 <state key="selected" image="Heart unfilled"/>
+                                <connections>
+                                    <action selector="btnLikeHeartAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="182-iu-4aT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
                                 <rect key="frame" x="10" y="9.5" width="58" height="26"/>
@@ -144,6 +150,9 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnCommentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nST-rf-uW8"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

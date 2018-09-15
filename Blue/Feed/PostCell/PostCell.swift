@@ -78,10 +78,15 @@ class PostCell: UITableViewCell {
             }
             
             self.caption.text = object[ConstantKey.caption] as? String
-            self.timeAgoLabel.text = Date().offset(from: (object[ConstantKey.date] as! String).date) + " ago"
+            
+            if let timeStamp = object[ConstantKey.date] as? Double {
+                let date = Date(timeIntervalSince1970: timeStamp)
+                self.timeAgoLabel.text = Date().offset(from: date) + " ago"
+            }
+            
             
             //Set Like Button
-            if let likes = object[ConstantKey.likes] as? NSArray {
+            if let likes = object[ConstantKey.likes] as? [String] {
                 if likes.contains(firebaseUser.uid) {
                     self.likeImg.isSelected = false
                     self.likeImg.tag = 1
@@ -160,7 +165,7 @@ class PostCell: UITableViewCell {
         if self.likeImg.tag == 0 {
             likes.add(firebaseUser.uid)
             object[ConstantKey.likes] = likes
-            self.ref.child(ConstantKey.feed).child(userID).child(feedID).setValue(object) { (error, refrance) in
+            self.ref.child(ConstantKey.feed).child(userID).child(feedID).updateChildValues([ConstantKey.likes:likes]) { (error, refrance) in
                 if error == nil {
                     self.likeImg.isSelected = false
                     self.likeImg.tag = 1
@@ -171,7 +176,7 @@ class PostCell: UITableViewCell {
         else {
             likes.remove(firebaseUser.uid)
             object[ConstantKey.likes] = likes
-            self.ref.child(ConstantKey.feed).child(userID).child(feedID).setValue(object) { (error, refrance) in
+            self.ref.child(ConstantKey.feed).child(userID).child(feedID).updateChildValues([ConstantKey.likes:likes]) { (error, refrance) in
                 if error == nil {
                     self.likeImg.isSelected = true
                     self.likeImg.tag = 0
@@ -215,7 +220,7 @@ class PostCell: UITableViewCell {
             json[ConstantKey.id] = likedUserID
             json[ConstantKey.date] = Date().timeStamp
             json[ConstantKey.contentType] = NotificationType.like.rawValue
-            self.ref.child(ConstantKey.notification).child(adminUserID).childByAutoId().setValue(json) { (error, ref) in
+            self.ref.child(ConstantKey.notification).child(adminUserID).child(object[ConstantKey.id] as! String).setValue(json) { (error, ref) in
                 if error == nil {
                     
                 }

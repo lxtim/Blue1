@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="erW-8Y-evl">
                         <rect key="frame" x="0.0" y="0.5" width="375" height="199"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BPQ-9z-qJz">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BPQ-9z-qJz">
                                 <rect key="frame" x="10" y="15.5" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="2zi-Ed-4DN"/>
@@ -78,6 +78,7 @@
                                     <constraint firstAttribute="height" constant="35" id="Wkz-ev-EAf"/>
                                 </constraints>
                                 <state key="normal" image="Filledheart"/>
+                                <state key="selected" image="Heart unfilled"/>
                                 <connections>
                                     <action selector="btnLikeHeartAction:" destination="APD-4n-lZo" eventType="touchUpInside" id="94h-VW-rdJ"/>
                                 </connections>
@@ -172,6 +173,7 @@
     </objects>
     <resources>
         <image name="Filledheart" width="25" height="21"/>
+        <image name="Heart unfilled" width="25" height="22"/>
         <image name="btn_share" width="27" height="18"/>
     </resources>
 </document>

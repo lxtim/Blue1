@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otN-3K-jw2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="JDf-au-d8J">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="JDf-au-d8J">
                                 <rect key="frame" x="5" y="10" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="BGS-4y-By1"/>
@@ -69,7 +69,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLY-LG-PCg">
                         <rect key="frame" x="25" y="102" width="295" height="65"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="wag-8N-3gP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="wag-8N-3gP">
                                 <rect key="frame" x="5" y="10" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="3kc-wr-zKj"/>
@@ -102,6 +102,18 @@
                             <constraint firstItem="wag-8N-3gP" firstAttribute="leading" secondItem="TLY-LG-PCg" secondAttribute="leading" constant="5" id="qeA-Rj-AOo"/>
                         </constraints>
                     </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VFl-Ce-c0g">
+                        <rect key="frame" x="30" y="177" width="275" height="148"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="148" id="0Xf-Eu-6Ew"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53y-dP-pTw">
+                        <rect key="frame" x="30" y="335" width="275" height="13.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZy-Aq-LIW">
                         <rect key="frame" x="0.0" y="358.5" width="320" height="45"/>
                         <subviews>
@@ -111,6 +123,9 @@
                                 <state key="normal" title="Button">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnLikeAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LP8-tr-1oW"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLW-Xj-IT4">
                                 <rect key="frame" x="270" y="5" width="35" height="35"/>
@@ -120,6 +135,9 @@
                                 </constraints>
                                 <state key="normal" image="Filledheart"/>
                                 <state key="selected" image="Heart unfilled"/>
+                                <connections>
+                                    <action selector="btnLikeHeartAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="q0f-JF-MD7"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
                                 <rect key="frame" x="10" y="9.5" width="58" height="26"/>
@@ -139,6 +157,9 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnCommentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wfG-bz-H6r"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -153,18 +174,6 @@
                             <constraint firstItem="8y1-i8-IX0" firstAttribute="leading" secondItem="mZy-Aq-LIW" secondAttribute="leading" constant="10" id="kBR-FA-iAl"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VFl-Ce-c0g">
-                        <rect key="frame" x="30" y="177" width="275" height="148"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="148" id="0Xf-Eu-6Ew"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53y-dP-pTw">
-                        <rect key="frame" x="30" y="335" width="275" height="13.5"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="mZy-Aq-LIW" secondAttribute="trailing" id="5rK-h0-mSe"/>

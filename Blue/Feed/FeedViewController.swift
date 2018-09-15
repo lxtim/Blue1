@@ -32,7 +32,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
         self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
         self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,13 +81,42 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     func getFeed() {
         self.feedData = [[String:Any]]()
-        self.userRef.observe(.childAdded) { (snapshot) in
-            if BasicStuff.shared.followArray.contains(snapshot.key) || firebaseUser.uid == snapshot.key {
-                self.feedRef.child(snapshot.key).observe(.value, with: { (snap) in
+        self.userRef.observe(.value) { (snapshot) in
+            if  let value = snapshot.value as? [String:Any] {
+                let keys = value.keys.map({$0})
+                self.getFeedData(keys, value, index: 0)
+            }
+        }
+    }
+    
+    func getFeedData(_ keys:[String], _ sender:[String:Any] , index:Int) {
+        if index >= sender.count {
+            let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+            self.feedData = sortedArray
+            if self.isFirstTime {
+                self.isFirstTime = false
+                self.tableView.reloadData()
+            }
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+                if self.feedData.count > 0 {
+                    self.tableView.isHidden = false
+                }
+                else {
+                    self.tableView.isHidden = true
+                }
+//            })
+            return
+        }
+        else {
+            let key = keys[index]
+            let userValue = sender[key] as! [String:Any]
+            
+            if BasicStuff.shared.followArray.contains(key) || firebaseUser.uid == key {
+                self.feedRef.child(key).observe(.value, with: { (snap) in
                     if let value = snap.value as? [String:Any] {
                         for (k,v) in value {
                             if var data = v as? [String:Any] {
-                                data[ConstantKey.user] = snapshot.value
+                                data[ConstantKey.user] = userValue
                                 data[ConstantKey.id] = k
                                 if let index = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
                                     self.feedData.remove(at: index)
@@ -99,31 +127,23 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                                     self.isFirstTime = true
                                 }
                             }
+                            self.tableView.reloadData()
+                            let next = index + 1
+                            DispatchQueue.main.async {
+                                self.getFeedData(keys, sender, index: next)
+                            }
                         }
                     }
-                    
-                    let sortedArray = self.feedData.sorted(by: {(one , two) in
-                        return  (one["date"] as! String).date > (two["date"] as! String).date
-                    })
-                    self.feedData = sortedArray
-                    if self.isFirstTime {
-                        self.isFirstTime = false
-                        self.tableView.reloadData()
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
-                        if self.feedData.count > 0 {
-                            self.tableView.isHidden = false
-                        }
-                        else {
-                            self.tableView.isHidden = true
-                        }
-                    })
-                    
                 })
+            }
+            else {
+                let next = index + 1
+                DispatchQueue.main.async {
+                    self.getFeedData(keys, sender, index: next)
+                }
             }
         }
     }
-    
     func getMyFollowers() {
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
             if let snap = snapshot.value as? NSDictionary {
@@ -221,6 +241,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         sharePostVC.user = user
         self.navigationController?.pushViewController(sharePostVC, animated: true)
     }
+    
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {
         let profileVC = Object(ProfileViewController.self)

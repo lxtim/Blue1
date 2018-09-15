@@ -48,6 +48,7 @@ class NotificationVC: UIViewController , UITableViewDelegate , UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.5
     }

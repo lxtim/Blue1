@@ -102,18 +102,17 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                         json[ConstantKey.contentType] = ConstantKey.video
                                         json[ConstantKey.caption] = caption
                                         json[ConstantKey.likes] = []
-                                        json[ConstantKey.date] = Date().string
+                                        json[ConstantKey.date] = Date().timeStamp
                                         
                                         self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
-                                            HUD.dismiss()
-                                            guard let error = error else {
+                                            databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                                databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                                                HUD.dismiss()
                                                 let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
                                                     self.navigationController?.popViewController(animated: true)
                                                 })
                                                 self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
-                                                return
-                                            }
-                                            JDB.error("Data base error ==>%@", error.localizedDescription)
+                                            })
                                         })
                                     }
                                 })
@@ -169,18 +168,17 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                 json[ConstantKey.contentType] = ConstantKey.image
                                 json[ConstantKey.caption] = caption
                                 json[ConstantKey.likes] = []
-                                json[ConstantKey.date] = Date().string
+                                json[ConstantKey.date] = Date().timeStamp
                                 
                                 self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
-                                    HUD.dismiss()
-                                    guard let error = error else {
+                                    databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                        databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                                        HUD.dismiss()
                                         let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
                                             self.navigationController?.popViewController(animated: true)
                                         })
                                         self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
-                                        return
-                                    }
-                                    JDB.error("Data base error ==>%@", error.localizedDescription)
+                                    })
                                 })
                             }
                         })
@@ -193,18 +191,17 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                     json[ConstantKey.userid] = firebaseUser.uid
                     json[ConstantKey.caption] = caption
                     json[ConstantKey.likes] = []
-                    json[ConstantKey.date] = Date().string
+                    json[ConstantKey.date] = Date().timeStamp
                     
                     self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
-                        HUD.dismiss()
-                        guard let error = error else {
+                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                            HUD.dismiss()
                             let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
                                 self.navigationController?.popViewController(animated: true)
                             })
                             self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
-                            return
-                        }
-                        JDB.error("Data base error ==>%@", error.localizedDescription)
+                        })
                     })
                 }
             }

@@ -13,9 +13,8 @@ import SDWebImage
 import VGPlayer
 
 
-class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource , FeedPostCellDelegate {
-    
-    
+class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource , FeedPostCellDelegate , UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+
     
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -31,6 +30,10 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     @IBOutlet weak var followStackView: UIStackView!
 
+    @IBOutlet weak var captionLabel: UILabel!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     var ref = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
@@ -43,6 +46,21 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     var followers:[[String:Any]] = [[String:Any]]()
     
+    var layoutType:FeedLayout = FeedLayout.list {
+        didSet(newValue) {
+            if self.layoutType == .list {
+                self.collectionView.isHidden = true
+                self.tableView.isHidden = false
+                self.tableView.reloadData()
+            }
+            else {
+                self.collectionView.isHidden = false
+                self.tableView.isHidden = true
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
     //MARK:-
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +69,17 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
         self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
         
+        
+        self.collectionView.register(UINib(nibName: "ProfileTextCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "ProfileTextCollectionViewCell")
+        self.collectionView.register(UINib(nibName: "ProfileImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "ProfileImageCollectionViewCell")
+        self.collectionView.register(UINib(nibName: "ProfileVideoCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "ProfileVideoCollectionViewCell")
+        
+        //    ProfileImageCollectionViewCell
+        //    ProfileTextCollectionViewCell
+        //    ProfileVideoCollectionViewCell
+        
         self.tableView.isHidden = true
+        self.collectionView.isHidden = true
         if isOtherUserProfile {
             self.checkFollow()
             self.getNumberOfPost()
@@ -62,22 +90,38 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.btnFollow.isHidden = false
         }
         else {
-            if let url = firebaseUser.photoURL {
-                self.profileImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
-            }
-            self.userNameLabel.text = firebaseUser.displayName
             self.btnFollow.isHidden = true
             self.getFeed()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if isOtherUserProfile {
+            self.captionLabel.text = userProfileData[ConstantKey.caption] as? String
+//            if let layout = userProfileData[ConstantKey.layout] as? Int {
+//                self.layoutType = FeedLayout(rawValue: layout)!
+//            }
+        }
+        else {
+            self.userRef.child(firebaseUser.uid).observeSingleEvent(of: .value) { (snapshot) in
+                guard let userData = snapshot.value as? [String:Any] else {return}
+                if let image = userData[ConstantKey.image] as? String {
+                    self.profileImageView.sd_setImage(with: URL(string: image)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                }
+                self.captionLabel.text = userData[ConstantKey.caption] as? String
+                self.userNameLabel.text = userData[ConstantKey.username] as? String
+                
+                if let layout = userData[ConstantKey.layout] as? Int {
+                    self.layoutType = FeedLayout(rawValue: layout)!
+                }
+            }
+        }
         
         if let parent = self.parent as? PageViewController {
             let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
-            parent.navigationItem.rightBarButtonItem = settingItem
+            parent.navigationItem.rightBarButtonItems = [settingItem]
         }
         else {
             self.navigationItem.title = "Profile"
@@ -95,7 +139,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
-            parent.navigationItem.rightBarButtonItem = settingItem
+            parent.navigationItem.rightBarButtonItems = [settingItem]
         }
         else {
             self.navigationItem.title = "Profile"
@@ -166,7 +210,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             json[ConstantKey.id] = followUserID
             json[ConstantKey.date] = Date().timeStamp
             json[ConstantKey.contentType] = NotificationType.follow.rawValue
-            self.ref.child(ConstantKey.notification).child(adminUserID).childByAutoId().setValue(json) { (error, ref) in
+            self.ref.child(ConstantKey.notification).child(adminUserID).child(adminUserID).setValue(json) { (error, ref) in
                 if error == nil {
 
                 }
@@ -235,18 +279,17 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                     }
                 }
                 
-                let sortedArray = self.feedData.sorted(by: {(one , two) in
-                    return  (one["date"] as! String).date > (two["date"] as! String).date
-                })
+                let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
                 self.feedData = sortedArray
                 self.tableView.reloadData()
+                self.collectionView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
-                    if self.feedData.count > 0 {
-                        self.tableView.isHidden = false
-                    }
-                    else {
-                        self.tableView.isHidden = true
-                    }
+//                    if self.feedData.count > 0 {
+//                        self.tableView.isHidden = false
+//                    }
+//                    else {
+//                        self.tableView.isHidden = true
+//                    }
                     self.postLabel.text = "\(self.feedData.count)"
                 })
             })
@@ -437,15 +480,60 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK:- UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.size.width - 15)/2
+        return CGSize(width: width, height: width)
+    }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.feedData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let feed = self.feedData[indexPath.row]
+        if feed[ConstantKey.image] != nil {
+            if let type = feed[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                let cell = collectionView.dequeueReusableCell(.video, indexPath: indexPath)
+                cell.object = feed
+                return cell
+            }
+            else {
+                let cell = collectionView.dequeueReusableCell(.image, indexPath: indexPath)
+                cell.object = feed
+                return cell
+            }
+        }
+        else {
+            let cell = collectionView.dequeueReusableCell(.caption, indexPath: indexPath)
+            cell.object = feed
+            return cell
+        }
+    }
+    
+    //ColectionView
+//    ProfileImageCollectionViewCell
+//    ProfileTextCollectionViewCell
+//    ProfileVideoCollectionViewCell
+}
+
+extension UICollectionView {
+    func dequeueReusableCell(_ postType:PostType , indexPath:IndexPath) -> ProfileCollectionViewCell {
+        var identifire = ""
+        switch postType {
+        case .caption:
+            identifire = "ProfileTextCollectionViewCell"
+            break
+        case .image:
+            identifire = "ProfileImageCollectionViewCell"
+            break
+        case .video:
+            identifire = "ProfileVideoCollectionViewCell"
+            break
+        }
+        let cell = self.dequeueReusableCell(withReuseIdentifier: identifire, for: indexPath) as! ProfileCollectionViewCell
+        cell.postType = postType
+        return cell
+    }
 }
 
