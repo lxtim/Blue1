@@ -349,10 +349,10 @@ extension VGPlayerView {
     }
     
     internal func configurationVolumeSlider() {
-        let volumeView = MPVolumeView()
-        if let view = volumeView.subviews.first as? UISlider {
-            volumeSlider = view
-        }
+//        let volumeView = MPVolumeView()
+//        if let view = volumeView.subviews.first as? UISlider {
+//            volumeSlider = view
+//        }
     }
 }
 
@@ -544,7 +544,7 @@ extension VGPlayerView {
     }
     
     internal func panGestureVertical(_ velocityY: CGFloat) {
-        isVolume ? (volumeSlider.value -= Float(velocityY / 10000)) : (UIScreen.main.brightness -= velocityY / 10000)
+       // isVolume ? (volumeSlider.value -= Float(velocityY / 10000)) : (UIScreen.main.brightness -= velocityY / 10000)
     }
 
     @objc internal func onCloseView(_ sender: UIButton) {

@@ -95,16 +95,16 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             self.feedData = sortedArray
             if self.isFirstTime {
                 self.isFirstTime = false
-                self.tableView.reloadData()
             }
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
-                if self.feedData.count > 0 {
-                    self.tableView.isHidden = false
-                }
-                else {
-                    self.tableView.isHidden = true
-                }
-//            })
+            
+            if self.feedData.count > 0 {
+                self.tableView.isHidden = false
+            }
+            else {
+                self.tableView.isHidden = true
+            }
+            
+            self.tableView.reloadData()
             return
         }
         else {
@@ -114,19 +114,30 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             if BasicStuff.shared.followArray.contains(key) || firebaseUser.uid == key {
                 self.feedRef.child(key).observe(.value, with: { (snap) in
                     if let value = snap.value as? [String:Any] {
+                        var isItemChanged:Bool = false
+                        var changedIndex:[Int] = [Int]()
                         for (k,v) in value {
                             if var data = v as? [String:Any] {
                                 data[ConstantKey.user] = userValue
                                 data[ConstantKey.id] = k
-                                if let index = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
-                                    self.feedData.remove(at: index)
-                                    self.feedData.insert(data, at: index)
+                                if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
+                                    self.feedData.remove(at: itemIndex)
+                                    self.feedData.insert(data, at: itemIndex)
+                                    changedIndex.append(itemIndex)
+                                    isItemChanged = true
                                 }
                                 else {
                                     self.feedData.append(data)
                                     self.isFirstTime = true
                                 }
                             }
+                        }
+                        
+                        if isItemChanged {
+                            let indexPaths = changedIndex.map({IndexPath(row: $0, section: 0)})
+                            self.tableView.reloadRows(at: indexPaths, with: .none)
+                        }
+                        else {
                             self.tableView.reloadData()
                             let next = index + 1
                             DispatchQueue.main.async {
