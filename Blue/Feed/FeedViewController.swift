@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-
+import YTBarButtonItemWithBadge
 
 class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UserSearchDelegate , FeedPostCellDelegate {
 
@@ -24,6 +24,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var currentObserver:UInt?
     var isFirstTime:Bool = true
     
+    var searchFeedItem:YTBarButtonItemWithBadge?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -36,30 +37,44 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
+        
         let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
-        
-        let image = #imageLiteral(resourceName: "Star").withRenderingMode(.alwaysOriginal)
-        
-       let shared = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(btnShareAction(_:)))
-        
-        
-        self.parent?.navigationItem.rightBarButtonItems = [addFeedItem,shared]
         self.parent?.navigationItem.leftBarButtonItem = searchFeed
         self.parent?.navigationItem.title = "Feed"
         
+        setRightBar()
         self.tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
-        let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
-        
-        self.parent?.navigationItem.rightBarButtonItem = addFeedItem
-        self.parent?.navigationItem.leftBarButtonItem = searchFeed
+//        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
+//        let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
+//
+//        self.parent?.navigationItem.rightBarButtonItem = addFeedItem
+//        self.parent?.navigationItem.leftBarButtonItem = searchFeed
+        setRightBar()
         self.parent?.navigationItem.title = "Feed"
     }
     
+    
+    func setRightBar() {
+        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
+        let image = #imageLiteral(resourceName: "Star").withRenderingMode(.alwaysOriginal)
+        let buttonWithBadge = YTBarButtonItemWithBadge();
+        self.searchFeedItem = buttonWithBadge
+        buttonWithBadge.setHandler {
+            self.btnShareAction(UIBarButtonItem())
+        }
+        buttonWithBadge.setImage(image: image);
+        var badgeCount = 0
+        if let count = BasicStuff.shared.UserData[ConstantKey.unreadCount] as? Int {
+            badgeCount = count
+        }
+        if let searchFeed = self.searchFeedItem {
+            searchFeed.setBadge(value: "\(badgeCount)");
+        }
+        self.parent?.navigationItem.rightBarButtonItems = [addFeedItem,buttonWithBadge.getBarButtonItem()]
+    }
     @objc func btnAddFeedAction(_ sender: UIBarButtonItem) {
         let object = Object(NewPostViewController.self)
         self.navigationController?.pushViewController(object, animated: true)
@@ -159,6 +174,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
             if let snap = snapshot.value as? NSDictionary {
                 BasicStuff.shared.UserData = NSMutableDictionary(dictionary: snap)
+                self.setRightBar()
                 if let array = snap.value(forKey: ConstantKey.follow) as? NSArray {
                     BasicStuff.shared.followArray = NSMutableArray(array: array)
                 }
@@ -219,6 +235,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell  = cell as? PostCell {
+            if let player = cell.player {
+                player.pause()
+            }
+        }
+    }
     //MARK:- FeedPostCellDelegate
     
     func feedLikeDidSelect(user: [String : Any]) {

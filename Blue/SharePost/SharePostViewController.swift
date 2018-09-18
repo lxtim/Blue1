@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import VGPlayer
+import BMPlayer
 import Firebase
 
 class SharePostViewController: UIViewController {
@@ -19,14 +19,12 @@ class SharePostViewController: UIViewController {
     
     @IBOutlet weak var feedCaptionLabel: UILabel!
     @IBOutlet weak var feedImageView: UIImageView!
-    @IBOutlet weak var playerView: VGPlayerView!
     
-    
+    @IBOutlet weak var player: BMPlayer!
+
     var post:[String:Any] = [String:Any]()
     var user:[String:Any] = [String:Any]()
     
-    var player:VGPlayer?
-
     
     var ref: DatabaseReference = Database.database().reference()
     
@@ -44,23 +42,35 @@ class SharePostViewController: UIViewController {
         if let content = post[ConstantKey.image] as? String {
             if let type = post[ConstantKey.contentType] as? String , type == ConstantKey.video {
                 //Video
-                self.feedImageView.isHidden = true
-                self.playerView.isHidden = false
-                self.player = VGPlayer(playerView: self.playerView)
-                self.player?.replaceVideo(URL(string: content)!)
                 self.contentType = .video
+                self.feedImageView.isHidden = true
+                self.player.isHidden = false
+                
+                self.player.updateUI(false)
+                self.player.panGesture.isEnabled = false
+                self.player.controlView.timeSlider.isEnabled = false
+                self.player.controlView.fullscreenButton.isHidden = true
+                self.player.controlView.timeSlider.isHidden = true
+                self.player.controlView.totalTimeLabel.isHidden = true
+                self.player.controlView.progressView.isHidden = true
+                
+                let asset = BMPlayerResource(url: URL(string: content)!)
+                self.player.setVideo(resource: asset)
+                if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
+                    self.player?.play()
+                }
             }
             else {
                 
                 //Image
                 self.feedImageView.isHidden = false
-                self.playerView.isHidden = true
+                self.player.isHidden = true
                 self.feedImageView.sd_setImage(with: URL(string: content)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 self.contentType = .image
             }
         }
         else {
-            self.playerView.isHidden = true
+            self.player.isHidden = true
             self.feedImageView.isHidden = true
             self.contentType = .caption
         }

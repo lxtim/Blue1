@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WtC-Db-z92" customClass="VGPlayerView" customModule="VGPlayer">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WtC-Db-z92" customClass="BMPlayer" customModule="BMPlayer">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
@@ -34,7 +34,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="343" height="408"/>
             <connections>
-                <outlet property="playerView" destination="WtC-Db-z92" id="ROd-7m-0FF"/>
+                <outlet property="player" destination="WtC-Db-z92" id="8Mp-Yx-0fg"/>
             </connections>
             <point key="canvasLocation" x="-4" y="150"/>
         </collectionViewCell>

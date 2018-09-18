@@ -514,7 +514,7 @@
                                             <constraint firstAttribute="width" secondItem="6ao-TE-b5J" secondAttribute="height" multiplier="335:176" id="o7O-9o-Jii"/>
                                         </constraints>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rzs-zP-ms8" customClass="VGPlayerView" customModule="VGPlayer">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rzs-zP-ms8" customClass="BMPlayer" customModule="BMPlayer">
                                         <rect key="frame" x="20" y="98" width="335" height="176"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -588,7 +588,7 @@
                     <connections>
                         <outlet property="descriptionTextView" destination="9Lq-Tn-k8m" id="erc-Ql-oaj"/>
                         <outlet property="imageView" destination="6ao-TE-b5J" id="Dsa-Ub-wBO"/>
-                        <outlet property="videoPlayerView" destination="rzs-zP-ms8" id="dq9-gY-LPo"/>
+                        <outlet property="player" destination="rzs-zP-ms8" id="E1E-ZO-jU8"/>
                         <segue destination="PuJ-Vm-etm" kind="show" id="GKV-cs-sx5"/>
                     </connections>
                 </viewController>
@@ -670,15 +670,15 @@
                                                     <constraint firstAttribute="width" secondItem="Ho7-si-S7j" secondAttribute="height" multiplier="1.74" id="1G2-Ge-bGt"/>
                                                 </constraints>
                                             </imageView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfS-j0-0UD" customClass="VGPlayerView" customModule="VGPlayer">
-                                                <rect key="frame" x="30" y="255" width="375.5" height="216"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfS-j0-0UD" customClass="BMPlayer" customModule="BMPlayer">
+                                                <rect key="frame" x="30" y="255" width="325" height="187"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="hfS-j0-0UD" secondAttribute="height" multiplier="1.74" id="jGD-tR-zT4"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rq-Ye-u1W">
-                                                <rect key="frame" x="30" y="452" width="325" height="19"/>
+                                                <rect key="frame" x="30" y="452" width="39.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -687,10 +687,10 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="bfG-op-Tvj" secondAttribute="trailing" constant="20" id="0Cx-iR-fRe"/>
+                                            <constraint firstAttribute="trailing" secondItem="hfS-j0-0UD" secondAttribute="trailing" constant="20" id="16A-Bb-tGD"/>
                                             <constraint firstItem="Ho7-si-S7j" firstAttribute="top" secondItem="bfG-op-Tvj" secondAttribute="bottom" constant="10" id="1Zm-fB-aC8"/>
                                             <constraint firstAttribute="trailing" secondItem="Ho7-si-S7j" secondAttribute="trailing" constant="20" id="AyU-gG-Zpu"/>
-                                            <constraint firstAttribute="bottom" secondItem="hfS-j0-0UD" secondAttribute="bottom" constant="20" id="BFy-xo-SIx"/>
-                                            <constraint firstAttribute="trailing" secondItem="9rq-Ye-u1W" secondAttribute="trailing" constant="20" id="Ffd-n7-h1N"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9rq-Ye-u1W" secondAttribute="trailing" constant="20" id="Ffd-n7-h1N"/>
                                             <constraint firstAttribute="bottom" secondItem="9rq-Ye-u1W" secondAttribute="bottom" constant="20" id="Hjk-hp-Lem"/>
                                             <constraint firstAttribute="trailing" secondItem="bGV-2d-N65" secondAttribute="trailing" constant="20" id="Mew-bm-LhR"/>
                                             <constraint firstItem="9rq-Ye-u1W" firstAttribute="top" secondItem="Ho7-si-S7j" secondAttribute="bottom" constant="10" id="N5B-j2-6JW"/>
@@ -736,7 +736,7 @@
                         <outlet property="feedCaptionLabel" destination="9rq-Ye-u1W" id="3J9-3x-YSI"/>
                         <outlet property="feedImageView" destination="Ho7-si-S7j" id="aqQ-Ye-hbf"/>
                         <outlet property="nameLabel" destination="jsg-nI-SFP" id="prw-UJ-GF9"/>
-                        <outlet property="playerView" destination="hfS-j0-0UD" id="NGx-zC-nLS"/>
+                        <outlet property="player" destination="hfS-j0-0UD" id="jbO-FN-Og5"/>
                         <outlet property="profileImageView" destination="QvW-Dg-dUf" id="6yf-Jc-zNO"/>
                     </connections>
                 </viewController>

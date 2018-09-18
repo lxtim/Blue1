@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -64,18 +65,17 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-VJ-VRI">
-                                <rect key="frame" x="10" y="329" width="318" height="68"/>
+                                <rect key="frame" x="10" y="341.5" width="318" height="55.5"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPk-we-WC3" customClass="VGPlayerView" customModule="VGPlayer">
-                                <rect key="frame" x="9.5" y="91" width="320" height="230"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPk-we-WC3" customClass="BMPlayer" customModule="BMPlayer">
+                                <rect key="frame" x="0.0" y="91" width="338" height="242.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="230" id="IKY-jW-oSK"/>
-                                    <constraint firstAttribute="width" constant="320" id="xLo-AF-Cnb"/>
+                                    <constraint firstAttribute="width" secondItem="gPk-we-WC3" secondAttribute="height" multiplier="32:23" id="0Zp-Kg-p4O"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEx-Lx-aCy">
@@ -141,10 +141,12 @@
                             <constraint firstAttribute="bottom" secondItem="cEx-Lx-aCy" secondAttribute="bottom" constant="15" id="EyF-Un-bgW"/>
                             <constraint firstItem="vsR-XQ-rf7" firstAttribute="leading" secondItem="v2y-f8-QwW" secondAttribute="leading" id="G6R-Zl-ufa"/>
                             <constraint firstAttribute="trailing" secondItem="Ajf-VJ-VRI" secondAttribute="trailing" constant="10" id="HIJ-nJ-rAx"/>
+                            <constraint firstItem="gPk-we-WC3" firstAttribute="leading" secondItem="WMI-Ik-fZ9" secondAttribute="leading" id="L7F-Z9-f1Z"/>
                             <constraint firstItem="v2y-f8-QwW" firstAttribute="top" secondItem="WMI-Ik-fZ9" secondAttribute="top" constant="15" id="QKi-Pm-euM"/>
                             <constraint firstItem="gPk-we-WC3" firstAttribute="centerX" secondItem="WMI-Ik-fZ9" secondAttribute="centerX" id="QUd-H2-rXr"/>
                             <constraint firstItem="cEx-Lx-aCy" firstAttribute="leading" secondItem="Sxi-KZ-2ad" secondAttribute="trailing" constant="10" id="R3b-YX-Fcn"/>
                             <constraint firstItem="Sxi-KZ-2ad" firstAttribute="leading" secondItem="4gq-mp-sbT" secondAttribute="trailing" constant="10" id="Uvp-g8-jWi"/>
+                            <constraint firstAttribute="trailing" secondItem="gPk-we-WC3" secondAttribute="trailing" id="WU3-bq-OdL"/>
                             <constraint firstItem="ngq-BC-wVt" firstAttribute="top" secondItem="v2y-f8-QwW" secondAttribute="top" id="Wqj-oU-p8f"/>
                             <constraint firstItem="clR-Qw-S77" firstAttribute="top" secondItem="Ajf-VJ-VRI" secondAttribute="bottom" constant="15" id="j5d-69-k8s"/>
                             <constraint firstItem="Sxi-KZ-2ad" firstAttribute="top" secondItem="Ajf-VJ-VRI" secondAttribute="bottom" constant="15" id="jU5-a0-2x4"/>
@@ -171,10 +173,10 @@
                 <outlet property="caption" destination="Ajf-VJ-VRI" id="Kgt-7y-Rjz"/>
                 <outlet property="likeImg" destination="cEx-Lx-aCy" id="dNG-a1-zYJ"/>
                 <outlet property="likebtn" destination="Sxi-KZ-2ad" id="4sW-YB-GXg"/>
+                <outlet property="player" destination="gPk-we-WC3" id="iUq-fm-Vn2"/>
                 <outlet property="profileImg" destination="v2y-f8-QwW" id="Mvg-h1-3yz"/>
                 <outlet property="timeAgoLabel" destination="VG4-KP-mcb" id="9I6-8G-A66"/>
                 <outlet property="usernameLbl" destination="I80-r1-DaK" id="ms2-qF-Nzt"/>
-                <outlet property="videoPlayerView" destination="gPk-we-WC3" id="6AB-Yb-qL5"/>
             </connections>
             <point key="canvasLocation" x="9" y="92"/>
         </tableViewCell>

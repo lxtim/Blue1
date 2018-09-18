@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import VGPlayer
+import BMPlayer
 
 class ProfileCollectionViewCell: UICollectionViewCell {
     var postType:PostType = .caption
@@ -16,13 +16,19 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
-    @IBOutlet weak var playerView: VGPlayerView!
     
-    var player:VGPlayer? = nil
+    @IBOutlet weak var player: BMPlayer!
+    
     
     override func awakeFromNib() {
-        if let vgPlayerView = self.playerView {
-            self.player = VGPlayer(playerView: vgPlayerView)
+        if let playerView = player {
+            playerView.updateUI(false)
+            playerView.panGesture.isEnabled = false
+            playerView.controlView.timeSlider.isEnabled = false
+            playerView.controlView.fullscreenButton.isHidden = true
+            playerView.controlView.timeSlider.isHidden = true
+            playerView.controlView.totalTimeLabel.isHidden = true
+            playerView.controlView.progressView.isHidden = true
         }
     }
     
@@ -33,7 +39,11 @@ class ProfileCollectionViewCell: UICollectionViewCell {
             }
             if let url = object[ConstantKey.image] as? String {
                 if postType == .video {
-                    self.player?.replaceVideo(URL(string: url)!)
+                    let asset = BMPlayerResource(url: URL(string: url)!)
+                    player.setVideo(resource: asset)
+                    if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
+                        self.player?.play()
+                    }
                 }
                 else if postType == .image {
                     if let imageView = self.postImageView {

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MRProgress
 import Firebase
+import BMPlayer
 
 
 struct ConstantKey {
@@ -32,6 +33,8 @@ struct ConstantKey {
     static let share:String = "Share"
     static let postID:String = "postID"
     static let layout:String = "layout"
+    static let duration:String = "duration"
+    static let unreadCount:String = "unread"
     
 }
 struct Platform {
@@ -52,10 +55,30 @@ class BasicStuff : NSObject {
     
     override init() {
         super.init()
+        
+        // should print log, default false
+        BMPlayerConf.allowLog = false
+        // should auto play, default true
+        BMPlayerConf.shouldAutoPlay = false
+        // main tint color, default whiteColor
+        BMPlayerConf.tintColor = UIColor.white
+        // options to show header view (which include the back button, title and definition change button) , default .Always，options: .Always, .HorizantalOnly and .None
+        BMPlayerConf.topBarShowInCase = .none
+        // loader type, see detail：https://github.com/ninjaprox/NVActivityIndicatorView
+        BMPlayerConf.loaderType  = .ballRotateChase
+        // enable setting the brightness by touch gesture in the player
+        BMPlayerConf.enableBrightnessGestures = false
+        // enable setting the volume by touch gesture in the player
+        BMPlayerConf.enableVolumeGestures = false
+        // enable setting the playtime by touch gesture in the player
+        BMPlayerConf.enablePlaytimeGestures = false
     }
     
-    static func uniqueFileName() -> String {
+    static func uniqueImageFileName() -> String {
         return BasicStuff.getUniqueString().appending(".png")
+    }
+    static func uniqueVideoFileName() -> String {
+        return BasicStuff.getUniqueString().appending(".mp4")
     }
     static func getUniqueString() -> String {
         let randomString = BasicStuff.shared.randomString(length: 5)

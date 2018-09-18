@@ -102,7 +102,7 @@
                             <constraint firstItem="wag-8N-3gP" firstAttribute="leading" secondItem="TLY-LG-PCg" secondAttribute="leading" constant="5" id="qeA-Rj-AOo"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyo-u0-NHb" customClass="VGPlayerView" customModule="VGPlayer">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyo-u0-NHb" customClass="BMPlayer" customModule="BMPlayer">
                         <rect key="frame" x="30" y="172" width="275" height="148"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -203,11 +203,11 @@
                 <outlet property="btnLikeCount" destination="usW-07-RDB" id="XVZ-IY-kVf"/>
                 <outlet property="btnLikeImage" destination="XLW-Xj-IT4" id="L8g-hs-Oow"/>
                 <outlet property="captionLabel" destination="GVA-AY-jk2" id="s8j-ZL-rfp"/>
+                <outlet property="player" destination="oyo-u0-NHb" id="b4R-2d-fGg"/>
                 <outlet property="shareCaptionLabel" destination="418-0S-IRk" id="LJi-cp-Z0i"/>
                 <outlet property="shareUserDateLabel" destination="Qk1-DH-yqi" id="ZBj-Mm-4Y2"/>
                 <outlet property="shareUserImageView" destination="JDf-au-d8J" id="KeV-pf-Dez"/>
                 <outlet property="shareUserNameLabel" destination="f8I-wB-9rD" id="e1D-UJ-kqj"/>
-                <outlet property="videoPlayerView" destination="oyo-u0-NHb" id="WGW-KZ-doz"/>
             </connections>
             <point key="canvasLocation" x="31" y="304"/>
         </tableViewCell>

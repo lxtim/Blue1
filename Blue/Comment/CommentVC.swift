@@ -140,6 +140,15 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     
                 }
             }
+            self.ref.child(ConstantKey.Users).child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
+                guard let user = snapshot.value as? [String:Any] else {return}
+                var notificationCount = 0
+                if let count = user[ConstantKey.unreadCount] as? Int {
+                    notificationCount = count
+                }
+                notificationCount = notificationCount + 1
+                self.ref.child(ConstantKey.Users).child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
+            }
         }
     }
     

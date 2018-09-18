@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 import UIKit
 import SDWebImage
-import VGPlayer
+import BMPlayer
 
 enum PostType:Int {
     case caption = 0
@@ -42,9 +42,8 @@ class PostCell: UITableViewCell {
     
     
     @IBOutlet weak var postImg: UIImageView!
-    @IBOutlet weak var videoPlayerView: VGPlayerView!
-    var player:VGPlayer?
     
+    @IBOutlet weak var player: BMPlayer!
     
     var type:PostType = .caption
     
@@ -55,8 +54,15 @@ class PostCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        if let playerView = videoPlayerView {
-            self.player = VGPlayer(playerView: playerView)
+        
+        if let playerView = player {
+            playerView.updateUI(false)
+            playerView.panGesture.isEnabled = false
+            playerView.controlView.timeSlider.isEnabled = false
+            playerView.controlView.fullscreenButton.isHidden = true
+            playerView.controlView.timeSlider.isHidden = true
+            playerView.controlView.totalTimeLabel.isHidden = true
+            playerView.controlView.progressView.isHidden = true
         }
     }
     var object:[String:Any]  = [String:Any]() {
@@ -70,7 +76,11 @@ class PostCell: UITableViewCell {
             
             if let url = object[ConstantKey.image] as? String {
                 if type == .video {
-                    self.player?.replaceVideo(URL(string: url)!)
+                    let asset = BMPlayerResource(url: URL(string: url)!)
+                    player.setVideo(resource: asset)
+                    if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
+                        self.player?.play()
+                    }
                 }
                 else if type == .image {
                     self.postImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
@@ -208,6 +218,7 @@ class PostCell: UITableViewCell {
     func sendLikeNotification() {
         let adminUserID = object[ConstantKey.userid] as! String
         let likedUserID = firebaseUser.uid
+        
         if adminUserID != likedUserID {
             var json = [String:Any]()
             if object[ConstantKey.image] != nil {
@@ -225,6 +236,16 @@ class PostCell: UITableViewCell {
                     
                 }
             }
+        }
+        
+        self.ref.child(ConstantKey.Users).child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
+            guard let user = snapshot.value as? [String:Any] else {return}
+            var notificationCount = 0
+            if let count = user[ConstantKey.unreadCount] as? Int {
+                notificationCount = count
+            }
+            notificationCount = notificationCount + 1
+            self.ref.child(ConstantKey.Users).child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
         }
     }
     

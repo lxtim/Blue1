@@ -8,12 +8,14 @@
 
 import UIKit
 import ScrollableSegmentedControl
+import Firebase
 
 class NotificationContentVC: UIViewController {
 
     @IBOutlet weak var scrollVIew: UIScrollView!
     @IBOutlet weak var segmentView: ScrollableSegmentedControl!
     
+    var userRef = Database.database().reference().child(ConstantKey.Users)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +42,10 @@ class NotificationContentVC: UIViewController {
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.userRef.child(firebaseUser.uid).updateChildValues([ConstantKey.unreadCount:0])
+    }
     
     @objc func segmentSelected(sender:ScrollableSegmentedControl) {
         let index = sender.selectedSegmentIndex

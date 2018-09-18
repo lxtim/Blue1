@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import VGPlayer
+import BMPlayer
 import Firebase
 
 class ShareTableViewCell: UITableViewCell {
@@ -29,9 +29,9 @@ class ShareTableViewCell: UITableViewCell {
     @IBOutlet weak var captionLabel: UILabel!
     
     @IBOutlet weak var feedImageView: UIImageView!
-    @IBOutlet weak var videoPlayerView: VGPlayerView!
     
-    var player:VGPlayer?
+    @IBOutlet weak var player: BMPlayer!
+    
     
     var postType:PostType = .caption
     
@@ -61,7 +61,11 @@ class ShareTableViewCell: UITableViewCell {
                 
                 if let url = post[ConstantKey.image] as? String {
                     if self.postType == .video {
-                        self.player?.replaceVideo(URL(string: url)!)
+                        let asset = BMPlayerResource(url: URL(string: url)!)
+                        self.player.setVideo(resource: asset)
+                        if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
+                            self.player?.play()
+                        }
                     }
                     else if self.postType == .image {
                         self.feedImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
@@ -136,8 +140,14 @@ class ShareTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        if let playerView = videoPlayerView {
-            self.player = VGPlayer(playerView: playerView)
+        if let playerView = player {
+            playerView.updateUI(false)
+            playerView.panGesture.isEnabled = false
+            playerView.controlView.timeSlider.isEnabled = false
+            playerView.controlView.fullscreenButton.isHidden = true
+            playerView.controlView.timeSlider.isHidden = true
+            playerView.controlView.totalTimeLabel.isHidden = true
+            playerView.controlView.progressView.isHidden = true
         }
     }
     
@@ -237,25 +247,16 @@ class ShareTableViewCell: UITableViewCell {
                     
                 }
             }
+            
+            self.ref.child(ConstantKey.Users).child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
+                guard let user = snapshot.value as? [String:Any] else {return}
+                var notificationCount = 0
+                if let count = user[ConstantKey.unreadCount] as? Int {
+                    notificationCount = count
+                }
+                notificationCount = notificationCount + 1
+                self.ref.child(ConstantKey.Users).child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
+            }
         }
     }
-    
-//    @IBAction func btnShareAction(_ sender: UIButton) {
-//        if object[ConstantKey.userid] != nil {
-//            if let delegate = self.delegate {
-//                if let id = object[ConstantKey.userid] as? String {
-//                    if id == firebaseUser.uid {
-//                        delegate.feedShareDidSelect(post: object, user: object[ConstantKey.user] as! [String:Any])
-//                    }
-//                    else {
-//                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
-//                            if let value = snapshot.value as? [String:Any] {
-//                                self.delegate?.feedShareDidSelect(post: self.object, user: value)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 import SDWebImage
-import VGPlayer
+import BMPlayer
 
 
 class ProfileViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITableViewDelegate , UITableViewDataSource , FeedPostCellDelegate , UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
@@ -197,7 +197,8 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         BasicStuff.shared.UserData.setValue(BasicStuff.shared.followArray, forKey: ConstantKey.follow)
         
         HUD.show()
-        self.userRef.child(firebaseUser.uid).setValue(BasicStuff.shared.UserData) { (error, ref) in
+        
+        self.userRef.child(firebaseUser.uid).updateChildValues([ConstantKey.follow:BasicStuff.shared.followArray]) { (error, ref) in
             HUD.dismiss()
             if error == nil  {
                 self.checkFollow()
@@ -208,6 +209,13 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     func sendFollowNotification() {
         let adminUserID = userProfileData[ConstantKey.id] as! String
         let followUserID = firebaseUser.uid
+        var notificationCount = 0
+        if  let count = userProfileData[ConstantKey.unreadCount] as? Int {
+            notificationCount = count
+        }
+        
+        notificationCount = notificationCount + 1
+        
         if adminUserID != followUserID {
             var json = [String:Any]()
             json[ConstantKey.image] = userProfileData[ConstantKey.image]
@@ -219,6 +227,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
 
                 }
             }
+            self.ref.child(ConstantKey.Users).child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
         }
     }
     
@@ -357,7 +366,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             let storage = Storage.storage()
             let storageRef = storage.reference()
             
-            let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueFileName())
+            let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueImageFileName())
             let storageMetaData = StorageMetadata()
             storageMetaData.contentType = "image/png"
             
