@@ -71,7 +71,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPk-we-WC3" customClass="BMPlayer" customModule="BMPlayer">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPk-we-WC3">
                                 <rect key="frame" x="0.0" y="91" width="338" height="242.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -173,7 +173,7 @@
                 <outlet property="caption" destination="Ajf-VJ-VRI" id="Kgt-7y-Rjz"/>
                 <outlet property="likeImg" destination="cEx-Lx-aCy" id="dNG-a1-zYJ"/>
                 <outlet property="likebtn" destination="Sxi-KZ-2ad" id="4sW-YB-GXg"/>
-                <outlet property="player" destination="gPk-we-WC3" id="iUq-fm-Vn2"/>
+                <outlet property="playerContentView" destination="gPk-we-WC3" id="6ia-Hg-I0h"/>
                 <outlet property="profileImg" destination="v2y-f8-QwW" id="Mvg-h1-3yz"/>
                 <outlet property="timeAgoLabel" destination="VG4-KP-mcb" id="9I6-8G-A66"/>
                 <outlet property="usernameLbl" destination="I80-r1-DaK" id="ms2-qF-Nzt"/>

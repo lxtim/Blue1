@@ -15,9 +15,9 @@ target 'Blue' do
     pod 'MRProgress'
     pod 'UITextView+Placeholder'
     pod 'SDWebImage'
-    #pod 'VGPlayer'
+    pod 'VGPlayer'
     pod 'ScrollableSegmentedControl'
-    pod 'BMPlayer'
+#    pod 'BMPlayer'
     pod 'YTBarButtonItemWithBadge'
     
 

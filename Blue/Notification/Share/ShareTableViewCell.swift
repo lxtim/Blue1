@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import BMPlayer
+import VGPlayer
 import Firebase
 
 class ShareTableViewCell: UITableViewCell {
@@ -30,12 +30,19 @@ class ShareTableViewCell: UITableViewCell {
     
     @IBOutlet weak var feedImageView: UIImageView!
     
-    @IBOutlet weak var player: BMPlayer!
+    @IBOutlet weak var playerContentView: UIView!
     
+//    var player: VGPlayer?
+//
+//    var playerView:VGEmbedPlayerView = VGEmbedPlayerView()
+    var videoURL:URL?
+    var autoPlay:Bool = false
     
     var postType:PostType = .caption
     
     var delegate:FeedPostCellDelegate? = nil
+    
+    var indexPath:IndexPath?
     
     var ref: DatabaseReference = Database.database().reference()
     
@@ -61,10 +68,25 @@ class ShareTableViewCell: UITableViewCell {
                 
                 if let url = post[ConstantKey.image] as? String {
                     if self.postType == .video {
-                        let asset = BMPlayerResource(url: URL(string: url)!)
-                        self.player.setVideo(resource: asset)
+                        self.videoURL = URL(string: url)!
+                        
+//                        if self.player != nil {
+//                            self.player?.cleanPlayer()
+//                        }
+//
+//                        self.player = VGPlayer(playerView: self.playerView)
+//                        self.player?.backgroundMode = .suspend
+//
+//                        if let ply = self.player {
+//                            self.playerContentView.addSubview(ply.displayView)
+//                            ply.displayView.snp.makeConstraints {
+//                                $0.edges.equalTo(self.playerContentView)
+//                            }
+//                            ply.replaceVideo(URL(string:url)!)
+//                        }
+                        
                         if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
-                            self.player?.play()
+                            self.autoPlay = true
                         }
                     }
                     else if self.postType == .image {
@@ -140,15 +162,7 @@ class ShareTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        if let playerView = player {
-            playerView.updateUI(false)
-            playerView.panGesture.isEnabled = false
-            playerView.controlView.timeSlider.isEnabled = false
-            playerView.controlView.fullscreenButton.isHidden = true
-            playerView.controlView.timeSlider.isHidden = true
-            playerView.controlView.totalTimeLabel.isHidden = true
-            playerView.controlView.progressView.isHidden = true
-        }
+        
     }
     
     @IBAction func btnLikeAction(_ sender: UIButton) {

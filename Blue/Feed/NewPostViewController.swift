@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import BMPlayer
+import VGPlayer
 import MobileCoreServices
 import AVFoundation
 
@@ -16,22 +16,23 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var player: BMPlayer!
+    var player: VGPlayer!
+    
+    @IBOutlet weak var playerContentView: UIView!
     var isVideo = false
     
     var imagePicker = UIImagePickerController()
     var ref: DatabaseReference = Database.database().reference()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.player.isHidden = true
+        self.playerContentView.isHidden = true
+        let playerView = VGEmbedPlayerView()
+        self.player = VGPlayer(playerView: playerView)
         
-        self.player.updateUI(false)
-        self.player.panGesture.isEnabled = false
-        self.player.controlView.timeSlider.isEnabled = false
-        self.player.controlView.fullscreenButton.isHidden = true
-        self.player.controlView.timeSlider.isHidden = true
-        self.player.controlView.totalTimeLabel.isHidden = true
-        self.player.controlView.progressView.isHidden = true
+        self.playerContentView.addSubview(self.player.displayView)
+        self.player.displayView.snp.makeConstraints {
+            $0.edges.equalTo(self.playerContentView)
+        }
     }
 
     @IBAction func btnAddImageAction(_ sender: UIButton) {
@@ -73,7 +74,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         
         if self.isVideo {
             HUD.show()
-            if let curentItem = self.player.avPlayer?.currentItem {
+            if let curentItem = self.player.player?.currentItem {
                 guard let assetURL = curentItem.asset as? AVURLAsset else {return}
                 
                 let url = assetURL.url
@@ -158,6 +159,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                 let storageMetaData = StorageMetadata()
                 storageMetaData.contentType = "image/png"
                 imageRef.putData(UIImageJPEGRepresentation(img, 0.5)!, metadata: storageMetaData) { (metadata, error) in
+                    JDB.error("==>%@", error ?? "no error")
                     if metadata == nil {
                         HUD.dismiss()
                         return
@@ -226,9 +228,9 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         }
         else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
             JDB.log("video detected -==>%@",videoURL)
-            let asset = BMPlayerResource(url: videoURL)
-            self.player.setVideo(resource: asset)
-            self.player.isHidden = false
+            
+            self.player.replaceVideo(videoURL)
+            self.playerContentView.isHidden = false
             self.isVideo = true
         }
         

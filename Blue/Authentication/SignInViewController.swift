@@ -115,6 +115,16 @@ class SignInViewController: ViewController, UITextFieldDelegate{
         }
     }
     func setPageController() {
+        
+//        let storage = Storage.storage()
+//        let ref = storage.reference(forURL: "https://firebasestorage.googleapis.com/v0/b/blue-6a7f0.appspot.com/o/image%2FlDRis15092018121519.png?alt=media&token=62a10c86-4dd7-4b5c-aa82-5386a89dc3bd")
+//
+//        ref.delete { (error) in
+//            if let error = error {
+//                JDB.error("%@", error)
+//            }
+//        }
+        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
             let object = Object(PageViewController.self)
             self.navigationController?.setViewControllers([object], animated: true)

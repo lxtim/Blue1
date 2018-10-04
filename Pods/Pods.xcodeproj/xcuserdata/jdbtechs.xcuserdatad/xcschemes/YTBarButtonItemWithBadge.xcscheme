@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3AC3A189A1E374DA2CDE85E588B3220E"
+               BlueprintIdentifier = "682F5278A2C8306C4601B687F1A354EB"
                BuildableName = "YTBarButtonItemWithBadge.framework"
                BlueprintName = "YTBarButtonItemWithBadge"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3AC3A189A1E374DA2CDE85E588B3220E"
+            BlueprintIdentifier = "682F5278A2C8306C4601B687F1A354EB"
             BuildableName = "YTBarButtonItemWithBadge.framework"
             BlueprintName = "YTBarButtonItemWithBadge"
             ReferencedContainer = "container:Pods.xcodeproj">

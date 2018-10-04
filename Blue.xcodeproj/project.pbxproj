@@ -26,6 +26,7 @@
 		F1120780214A66E8007F0535 /* ShareTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F112077E214A66E8007F0535 /* ShareTableViewCell.xib */; };
 		F1120782214A6A19007F0535 /* ShareImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */; };
 		F1120784214A6AF2007F0535 /* ShareVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */; };
+		F14E71FC2162620300B8D8A4 /* VGEmbedPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E71FB2162620300B8D8A4 /* VGEmbedPlayerView.swift */; };
 		F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */; };
 		F183D69D21254060009DF2AC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D69C21254060009DF2AC /* PostCell.swift */; };
 		F183D6A121254097009DF2AC /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D69F21254097009DF2AC /* PostCell.xib */; };
@@ -102,6 +103,7 @@
 		F112077E214A66E8007F0535 /* ShareTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTableViewCell.xib; sourceTree = "<group>"; };
 		F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareImageTableViewCell.xib; sourceTree = "<group>"; };
 		F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareVideoTableViewCell.xib; sourceTree = "<group>"; };
+		F14E71FB2162620300B8D8A4 /* VGEmbedPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VGEmbedPlayerView.swift; sourceTree = "<group>"; };
 		F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		F183D69C21254060009DF2AC /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		F183D69F21254097009DF2AC /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */,
 				F107D7CE2143F25B00057001 /* video_Compression.swift */,
 				F18A4A4C211D4D78008ED448 /* BasicStuff.swift */,
+				F14E71FB2162620300B8D8A4 /* VGEmbedPlayerView.swift */,
 			);
 			path = BasicStuff;
 			sourceTree = "<group>";
@@ -552,32 +555,30 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Blue/Pods-Blue-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BMPlayer/BMPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MRProgress/MRProgress.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/ScrollableSegmentedControl/ScrollableSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoidingSwift/TPKeyboardAvoidingSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
+				"${BUILT_PRODUCTS_DIR}/VGPlayer/VGPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/YTBarButtonItemWithBadge/YTBarButtonItemWithBadge.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BMPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MRProgress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoidingSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VGPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YTBarButtonItemWithBadge.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -610,6 +611,7 @@
 				F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */,
 				F1B92AA72147D0C0003C560E /* CommentTableViewCell.swift in Sources */,
 				F112077F214A66E8007F0535 /* ShareTableViewCell.swift in Sources */,
+				F14E71FC2162620300B8D8A4 /* VGEmbedPlayerView.swift in Sources */,
 				F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */,
 				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,

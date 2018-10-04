@@ -22,16 +22,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blue/Profile/ProfileViewController.swift"
-            timestampString = "558967381.673395"
+            filePath = "Blue/Feed/NewPostViewController.swift"
+            timestampString = "560335851.37202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
-            landmarkName = "getFeed()"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "btnShareAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

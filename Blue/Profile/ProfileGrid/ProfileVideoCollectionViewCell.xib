@@ -19,9 +19,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WtC-Db-z92" customClass="BMPlayer" customModule="BMPlayer">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WtC-Db-z92">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rMl-cg-Ot7">
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gw5-Uj-8yH">
+                                <rect key="frame" x="159" y="192" width="25" height="23"/>
+                                <state key="normal" image="Star"/>
+                                <connections>
+                                    <action selector="btnPlayAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="brN-0v-gQB"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Gw5-Uj-8yH" firstAttribute="centerX" secondItem="WtC-Db-z92" secondAttribute="centerX" id="Fcu-s4-1Za"/>
+                            <constraint firstItem="rMl-cg-Ot7" firstAttribute="leading" secondItem="WtC-Db-z92" secondAttribute="leading" id="WCs-tM-7W5"/>
+                            <constraint firstItem="Gw5-Uj-8yH" firstAttribute="centerY" secondItem="WtC-Db-z92" secondAttribute="centerY" id="jCa-HV-nwr"/>
+                            <constraint firstItem="rMl-cg-Ot7" firstAttribute="top" secondItem="WtC-Db-z92" secondAttribute="top" id="t1O-wg-ztH"/>
+                            <constraint firstAttribute="bottom" secondItem="rMl-cg-Ot7" secondAttribute="bottom" id="t6g-9m-Faq"/>
+                            <constraint firstAttribute="trailing" secondItem="rMl-cg-Ot7" secondAttribute="trailing" id="zel-3c-z7Q"/>
+                        </constraints>
                     </view>
                 </subviews>
             </view>
@@ -34,9 +54,13 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="343" height="408"/>
             <connections>
-                <outlet property="player" destination="WtC-Db-z92" id="8Mp-Yx-0fg"/>
+                <outlet property="playerContentView" destination="WtC-Db-z92" id="mD7-BD-m93"/>
+                <outlet property="postImageView" destination="rMl-cg-Ot7" id="k9b-if-bJp"/>
             </connections>
             <point key="canvasLocation" x="-4" y="150"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="Star" width="25" height="23"/>
+    </resources>
 </document>

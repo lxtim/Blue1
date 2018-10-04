@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import MRProgress
 import Firebase
-import BMPlayer
+import VGPlayer
+import AVKit
 
 
 struct ConstantKey {
@@ -41,11 +42,34 @@ struct Platform {
     static let isSimulator: Bool = {
         #if arch(i386) || arch(x86_64)
         return true
-        #endif
+        #else
         return false
+        #endif
     }()
 }
 
+enum ScrollDirection : Int {
+    case none
+    case right
+    case left
+    case up
+    case down
+    case crazy
+}
+
+func getThumbnailImage(forUrl url: URL) -> UIImage? {
+    let asset: AVAsset = AVAsset(url: url)
+    let imageGenerator = AVAssetImageGenerator(asset: asset)
+    
+    do {
+        let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60) , actualTime: nil)
+        return UIImage(cgImage: thumbnailImage)
+    } catch let error {
+        print(error)
+    }
+    
+    return nil
+}
 class BasicStuff : NSObject {
     
     static let shared:BasicStuff = BasicStuff()
@@ -55,23 +79,6 @@ class BasicStuff : NSObject {
     
     override init() {
         super.init()
-        
-        // should print log, default false
-        BMPlayerConf.allowLog = false
-        // should auto play, default true
-        BMPlayerConf.shouldAutoPlay = false
-        // main tint color, default whiteColor
-        BMPlayerConf.tintColor = UIColor.white
-        // options to show header view (which include the back button, title and definition change button) , default .Always，options: .Always, .HorizantalOnly and .None
-        BMPlayerConf.topBarShowInCase = .none
-        // loader type, see detail：https://github.com/ninjaprox/NVActivityIndicatorView
-        BMPlayerConf.loaderType  = .ballRotateChase
-        // enable setting the brightness by touch gesture in the player
-        BMPlayerConf.enableBrightnessGestures = false
-        // enable setting the volume by touch gesture in the player
-        BMPlayerConf.enableVolumeGestures = false
-        // enable setting the playtime by touch gesture in the player
-        BMPlayerConf.enablePlaytimeGestures = false
     }
     
     static func uniqueImageFileName() -> String {
@@ -462,5 +469,11 @@ extension String {
     func stringByAppendingPathExtension(ext: String) -> String? {
         let nsSt = self as NSString
         return nsSt.appendingPathExtension(ext)
+    }
+}
+
+extension AVPlayer {
+    var isPlaying: Bool {
+        return rate != 0 && error == nil
     }
 }

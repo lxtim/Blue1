@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import BMPlayer
+import VGPlayer
 
 class ProfileCollectionViewCell: UICollectionViewCell {
     var postType:PostType = .caption
@@ -17,19 +17,14 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
     
-    @IBOutlet weak var player: BMPlayer!
+    var player: VGPlayer?
     
+    var playerView = VGEmbedPlayerView()
+    
+    @IBOutlet weak var playerContentView: UIView!
     
     override func awakeFromNib() {
-        if let playerView = player {
-            playerView.updateUI(false)
-            playerView.panGesture.isEnabled = false
-            playerView.controlView.timeSlider.isEnabled = false
-            playerView.controlView.fullscreenButton.isHidden = true
-            playerView.controlView.timeSlider.isHidden = true
-            playerView.controlView.totalTimeLabel.isHidden = true
-            playerView.controlView.progressView.isHidden = true
-        }
+       
     }
     
     var object:[String:Any] = [String:Any]() {
@@ -39,11 +34,16 @@ class ProfileCollectionViewCell: UICollectionViewCell {
             }
             if let url = object[ConstantKey.image] as? String {
                 if postType == .video {
-                    let asset = BMPlayerResource(url: URL(string: url)!)
-                    player.setVideo(resource: asset)
-                    if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
-                        self.player?.play()
-                    }
+                    self.player = VGPlayer(playerView: playerView)
+                    let url = URL(string: url)!
+                    self.player?.replaceVideo(url)
+                    self.playerContentView.addSubview((self.player?.displayView)!)
+                    self.player?.displayView.snp.remakeConstraints({
+                        $0.edges.equalTo(self.playerContentView)
+                    })
+//                    if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
+//                        self.player?.play()
+//                    }
                 }
                 else if postType == .image {
                     if let imageView = self.postImageView {

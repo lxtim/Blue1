@@ -1,11 +1,4 @@
 PODS:
-  - BMPlayer (1.0.1):
-    - BMPlayer/Full (= 1.0.1)
-  - BMPlayer/Core (1.0.1)
-  - BMPlayer/Full (1.0.1):
-    - BMPlayer/Core
-    - NVActivityIndicatorView (~> 4.0.0)
-    - SnapKit (~> 4.0.0)
   - Firebase/Auth (5.7.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.3)
@@ -103,9 +96,6 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - NVActivityIndicatorView (4.0.1):
-    - NVActivityIndicatorView/Presenter (= 4.0.1)
-  - NVActivityIndicatorView/Presenter (4.0.1)
   - ScrollableSegmentedControl (1.3.0)
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
@@ -113,10 +103,11 @@ PODS:
   - SnapKit (4.0.0)
   - TPKeyboardAvoidingSwift (1.0)
   - "UITextView+Placeholder (1.2.1)"
+  - VGPlayer (0.2.0):
+    - SnapKit (~> 4.0.0)
   - YTBarButtonItemWithBadge (0.1.0)
 
 DEPENDENCIES:
-  - BMPlayer
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -126,11 +117,11 @@ DEPENDENCIES:
   - SDWebImage
   - TPKeyboardAvoidingSwift
   - "UITextView+Placeholder"
+  - VGPlayer
   - YTBarButtonItemWithBadge
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - BMPlayer
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -145,16 +136,15 @@ SPEC REPOS:
     - leveldb-library
     - MRProgress
     - nanopb
-    - NVActivityIndicatorView
     - ScrollableSegmentedControl
     - SDWebImage
     - SnapKit
     - TPKeyboardAvoidingSwift
     - "UITextView+Placeholder"
+    - VGPlayer
     - YTBarButtonItemWithBadge
 
 SPEC CHECKSUMS:
-  BMPlayer: 44eebf06eb01450dd14ea74b27d07c5222f0eed1
   Firebase: 734a4f92957aa6c40e7ae3fda3d9359e1890aa87
   FirebaseAnalytics: 993577e91157feb40945abedd6ab346d8a4b6ac8
   FirebaseAuth: 657a25e4be044d2d333663ebf515a861c5a59cd7
@@ -169,14 +159,14 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
   ScrollableSegmentedControl: a90ae91537fd670a46b177301d035223e3bd149e
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   TPKeyboardAvoidingSwift: 1a5823ef8bf6d97d140c89b38ff4377276eaeb8f
   "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
+  VGPlayer: a1787135559aa3b9201ebdc733ee283315492289
   YTBarButtonItemWithBadge: 8d0bd605132cbf39c93c2c30926a466b1c82498c
 
-PODFILE CHECKSUM: 1b80f1bd8b1d473e2ab93b91dc33953975173181
+PODFILE CHECKSUM: 1c0f554ee40782fe374d84ecfafe50cbcbcb3de9
 
 COCOAPODS: 1.5.3

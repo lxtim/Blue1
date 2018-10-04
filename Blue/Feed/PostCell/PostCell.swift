@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 import UIKit
 import SDWebImage
-import BMPlayer
+import VGPlayer
 
 enum PostType:Int {
     case caption = 0
@@ -43,9 +43,13 @@ class PostCell: UITableViewCell {
     
     @IBOutlet weak var postImg: UIImageView!
     
-    @IBOutlet weak var player: BMPlayer!
+    @IBOutlet weak var playerContentView: UIView!
     
     var type:PostType = .caption
+    
+    var videoURL:URL?
+    var autoPlay:Bool = false
+    var indexPath:IndexPath!
     
     //var post: Post!
     var ref: DatabaseReference = Database.database().reference()
@@ -55,15 +59,6 @@ class PostCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if let playerView = player {
-            playerView.updateUI(false)
-            playerView.panGesture.isEnabled = false
-            playerView.controlView.timeSlider.isEnabled = false
-            playerView.controlView.fullscreenButton.isHidden = true
-            playerView.controlView.timeSlider.isHidden = true
-            playerView.controlView.totalTimeLabel.isHidden = true
-            playerView.controlView.progressView.isHidden = true
-        }
     }
     var object:[String:Any]  = [String:Any]() {
         didSet(newValue) {
@@ -76,10 +71,13 @@ class PostCell: UITableViewCell {
             
             if let url = object[ConstantKey.image] as? String {
                 if type == .video {
-                    let asset = BMPlayerResource(url: URL(string: url)!)
-                    player.setVideo(resource: asset)
+                    self.videoURL = URL(string: url)!
+
                     if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
-                        self.player?.play()
+                        self.autoPlay = true
+                    }
+                    else {
+                        self.autoPlay = false
                     }
                 }
                 else if type == .image {

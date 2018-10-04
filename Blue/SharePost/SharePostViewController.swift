@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import BMPlayer
+import VGPlayer
 import Firebase
 
 class SharePostViewController: UIViewController {
@@ -20,8 +20,8 @@ class SharePostViewController: UIViewController {
     @IBOutlet weak var feedCaptionLabel: UILabel!
     @IBOutlet weak var feedImageView: UIImageView!
     
-    @IBOutlet weak var player: BMPlayer!
-
+    @IBOutlet weak var playerContentView: UIView!
+    
     var post:[String:Any] = [String:Any]()
     var user:[String:Any] = [String:Any]()
     
@@ -30,6 +30,8 @@ class SharePostViewController: UIViewController {
     
     var contentType:PostType = .caption
     
+    var player : VGPlayer?
+    var playerView : VGEmbedPlayerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,18 +46,19 @@ class SharePostViewController: UIViewController {
                 //Video
                 self.contentType = .video
                 self.feedImageView.isHidden = true
-                self.player.isHidden = false
                 
-                self.player.updateUI(false)
-                self.player.panGesture.isEnabled = false
-                self.player.controlView.timeSlider.isEnabled = false
-                self.player.controlView.fullscreenButton.isHidden = true
-                self.player.controlView.timeSlider.isHidden = true
-                self.player.controlView.totalTimeLabel.isHidden = true
-                self.player.controlView.progressView.isHidden = true
+                self.playerContentView.isHidden = false
                 
-                let asset = BMPlayerResource(url: URL(string: content)!)
-                self.player.setVideo(resource: asset)
+                playerView = VGEmbedPlayerView()
+                player = VGPlayer(playerView: playerView!)
+                if let ply = player {
+                    ply.backgroundMode = .suspend
+                    self.playerContentView.addSubview(ply.displayView)
+                    ply.displayView.snp.makeConstraints {
+                        $0.edges.equalTo(self.playerContentView)
+                    }
+                    ply.replaceVideo(URL(string:content)!)
+                }
                 if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
                     self.player?.play()
                 }
@@ -64,13 +67,13 @@ class SharePostViewController: UIViewController {
                 
                 //Image
                 self.feedImageView.isHidden = false
-                self.player.isHidden = true
+                self.playerContentView.isHidden = true
                 self.feedImageView.sd_setImage(with: URL(string: content)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 self.contentType = .image
             }
         }
         else {
-            self.player.isHidden = true
+            self.playerContentView.isHidden = true
             self.feedImageView.isHidden = true
             self.contentType = .caption
         }

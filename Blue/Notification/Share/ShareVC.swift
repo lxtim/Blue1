@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import VGPlayer
 
 class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,FeedPostCellDelegate {
 
@@ -19,6 +20,13 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     
     var shareTableData:[[String:Any]] = [[String:Any]]()
     
+    var player : VGPlayer!
+    var playerView : VGEmbedPlayerView!
+    var currentPlayIndexPath : IndexPath?
+    var playerViewSize : CGSize?
+    
+    var tableViewContext:UnsafeMutableRawPointer = UnsafeMutableRawPointer(bitPattern: 0)!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +34,18 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         self.shareTableView.register(UINib(nibName: "ShareImageTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareImageTableViewCell")
         self.shareTableView.register(UINib(nibName: "ShareVideoTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareVideoTableViewCell")
         
+        self.addTableViewObservers()
+    }
+    
+    deinit {
+        player.cleanPlayer()
+        self.removeTableViewObservers()
+    }
+    
+    func configurePlayer() {
+        playerView = VGEmbedPlayerView()
+        player = VGPlayer(playerView: playerView)
+        player.backgroundMode = .suspend
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +54,22 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         self.shareTableData = [[String:Any]]()
         self.getShareData(count: 0)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player?.cleanPlayer()
+    }
+    
+    
+    func addTableViewObservers() {
+        let options = NSKeyValueObservingOptions([.new, .initial])
+        self.shareTableView.addObserver(self, forKeyPath: #keyPath(UITableView.contentOffset), options: options, context: &tableViewContext)
+    }
+    
+    func removeTableViewObservers() {
+        self.shareTableView.removeObserver(self, forKeyPath: #keyPath(UITableView.contentOffset))
+    }
+    
     
     //func get All FollowData
     func getShareData(count:Int) {
@@ -73,6 +109,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         let object = shareTableData[indexPath.row]
         let contentType:PostType = PostType(rawValue: object[ConstantKey.contentType] as! Int)!
         let cell = tableView.dequeueReusableCell(postType: contentType)
+        cell.indexPath = indexPath
         cell.object = object
         cell.delegate = self
         return cell
@@ -89,6 +126,12 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 0.5))
         view.backgroundColor = UIColor.lightGray
         return view
+    }
+    
+    func addPlayer(_ cell: UITableViewCell) {
+        if player != nil {
+            player.cleanPlayer()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -146,5 +189,57 @@ extension UITableView {
         let cell = self.dequeueReusableCell(withIdentifier: identifire) as! ShareTableViewCell
         cell.postType = postType
         return cell
+    }
+}
+
+extension ShareVC {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if (context == &tableViewContext) {
+            if keyPath == #keyPath(UITableView.contentOffset) {
+                
+                if let playIndexPath = currentPlayIndexPath {
+                    if let cell = shareTableView.cellForRow(at: playIndexPath) as? ShareTableViewCell {
+                        if player.displayView.isFullScreen { return }
+                        let visibleCells = shareTableView.visibleCells
+                        if visibleCells.contains(cell) {
+                            if cell.postType == .video {
+                                if let playing = self.player.player?.isPlaying , playing == true {
+                                    
+                                }
+                                else {
+                                    if let contentView = cell.playerContentView {
+                                        self.playerViewSize = contentView.bounds.size
+                                        self.addPlayer(cell)
+                                        self.currentPlayIndexPath = cell.indexPath
+                                        if let url = cell.videoURL {
+                                            self.player.replaceVideo(url)
+                                            if cell.autoPlay {
+                                                self.player.play()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+//                            smallScreenView.removeFromSuperview()
+                            cell.contentView.addSubview(player.displayView)
+                            player.displayView.snp.remakeConstraints {
+                                $0.edges.equalTo(cell.playerContentView)
+                            }
+//                            playerView.isSmallMode = false
+                        } else {
+                            
+                            //addSmallScreenView()
+                            JDB.log("Window gone")
+                        }
+                    } else {
+                        if isViewLoaded && (view.window != nil) {
+//                            if smallScreenView.superview != UIApplication.shared.keyWindow {
+//                                addSmallScreenView()
+//                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
