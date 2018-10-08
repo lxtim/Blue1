@@ -44,6 +44,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
         self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
         self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
+        
         self.configurePlayer()
         addTableViewObservers()
     }
@@ -371,36 +372,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-//        var scrollDirection: ScrollDirection!
-//
-//        if lastContentOffset < scrollView.contentOffset.y {
-//            print("Going up!")
-//            scrollDirection = ScrollDirection.up
-//        }else if lastContentOffset > scrollView.contentOffset.y {
-//            print("Going down!")
-//            scrollDirection = ScrollDirection.down
-//        }
-//        lastContentOffset = scrollView.contentOffset.y
-//
-//        var y = scrollView.contentOffset.y
-//
-//        if scrollDirection == .up {
-//            y = y + self.tableView.frame.size.height - 100
-//        }
-//        else {
-//            y = y + 100
-//        }
-//
-//
-//        let point = CGPoint(x: scrollView.contentOffset.x, y: y)
-//        if let indexPath = self.tableView.indexPathForRow(at: point) {
-//            if let cell = tableView.cellForRow(at: indexPath) as? PostCell {
-//                if cell.type == .video {
-//                    self.currentPlayIndexPath = indexPath
-//                }
-//            }
-//        }
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -432,37 +403,60 @@ extension FeedViewController {
                             if self.isViewShow == false {
                                 return
                             }
+                            
+                            //print("Current indexPath ==>%@", playIndexPath)
+                            if let dsPView = player.displayView as? VGEmbedPlayerView {
+                                if playIndexPath != dsPView.indexPath {
+                                    self.player.cleanPlayer()
+                                    self.player.displayView.removeFromSuperview()
+                                }
+                            }
+                            
                             if let ply = player.player?.isPlaying , ply == true {
                                 
                             }
                             else {
-                                if let url = cell.videoURL {
-                                    self.player.replaceVideo(url)
-                                    cell.playerContentView.addSubview(self.player.displayView)
-                                    if cell.autoPlay {
-                                        player.play()
-                                    }
+                                let feed = self.feedData[playIndexPath.row]
+                                if let type = feed[ConstantKey.contentType] as? String {
+                                    if let url = feed[ConstantKey.image] as? String {
+                                        if type == ConstantKey.video {
+                                            let videoURL = URL(string: url)!
                                     
-                                    self.player.displayView.snp.remakeConstraints {
-                                        $0.edges.equalTo(cell.playerContentView)
+                                            self.player.replaceVideo(videoURL)
+                                            if let view = self.player.displayView as? VGEmbedPlayerView {
+                                                view.indexPath = self.currentPlayIndexPath
+                                            }
+                                            cell.playerContentView.addSubview(self.player.displayView)
+                                            
+                                            if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
+                                                player.play()
+                                            }
+                                            
+                                            self.player.displayView.snp.remakeConstraints {
+                                                $0.edges.equalTo(cell.playerContentView)
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                         else {
                             self.player.displayView.removeFromSuperview()
+                            self.player.cleanPlayer()
                         }
                     } else {
                         self.player.displayView.removeFromSuperview()
+                        self.player.cleanPlayer()
                     }
                 } else {
                     player.cleanPlayer()
-                    if isViewLoaded && (view.window != nil) {
-                        //
-                    }
+                    self.player.displayView.removeFromSuperview()
                 }
+            }
+            else {
+                player.cleanPlayer()
+                self.player.displayView.removeFromSuperview()
             }
         }
     }
 }
-

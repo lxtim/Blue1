@@ -32,12 +32,6 @@ class ShareTableViewCell: UITableViewCell {
     
     @IBOutlet weak var playerContentView: UIView!
     
-//    var player: VGPlayer?
-//
-//    var playerView:VGEmbedPlayerView = VGEmbedPlayerView()
-    var videoURL:URL?
-    var autoPlay:Bool = false
-    
     var postType:PostType = .caption
     
     var delegate:FeedPostCellDelegate? = nil
@@ -54,89 +48,66 @@ class ShareTableViewCell: UITableViewCell {
         didSet(newValue){
             let shareUserID = object[ConstantKey.id] as! String
             let postUserID = object[ConstantKey.userid] as! String
-            let postID = object[ConstantKey.postID] as! String
             
             self.shareCaptionLabel.text = object[ConstantKey.caption] as? String
+            
             if let timeStamp = object[ConstantKey.date] as? Double {
                 let date = Date(timeIntervalSince1970: timeStamp)
                 self.shareUserDateLabel.text = Date().offset(from: date) + " ago"
             }
-            
-            self.ref.child(ConstantKey.feed).child(postUserID).child(postID).observe(.value) { (snapshot) in
-                guard let post = snapshot.value as? [String:Any] else {return}
-                self.post = post
-                
-                if let url = post[ConstantKey.image] as? String {
-                    if self.postType == .video {
-                        self.videoURL = URL(string: url)!
-                        
-//                        if self.player != nil {
-//                            self.player?.cleanPlayer()
-//                        }
-//
-//                        self.player = VGPlayer(playerView: self.playerView)
-//                        self.player?.backgroundMode = .suspend
-//
-//                        if let ply = self.player {
-//                            self.playerContentView.addSubview(ply.displayView)
-//                            ply.displayView.snp.makeConstraints {
-//                                $0.edges.equalTo(self.playerContentView)
-//                            }
-//                            ply.replaceVideo(URL(string:url)!)
-//                        }
-                        
-                        if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
-                            self.autoPlay = true
-                        }
-                    }
-                    else if self.postType == .image {
-                        self.feedImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
-                    }
-                }
-                
-                self.captionLabel.text = post[ConstantKey.caption] as? String
-                
-                if let timeStamp = post[ConstantKey.date] as? Double {
-                    let date = Date(timeIntervalSince1970: timeStamp)
-                    self.adminDateLabel.text = Date().offset(from: date) + " ago"
-                }
-                
-                //Set Like Button
-                if let likes = post[ConstantKey.likes] as? NSArray {
-                    if likes.contains(firebaseUser.uid) {
-                        self.btnLikeImage.isSelected = false
-                        self.btnLikeImage.tag = 1
-                    }
-                    else {
-                        self.btnLikeImage.isSelected = true
-                        self.btnLikeImage.tag = 0
-                    }
+            guard let cellPost = object[ConstantKey.post] as? [String:Any] else {return}
+            self.post = cellPost
+            if let url = post[ConstantKey.image] as? String {
+                if self.postType == .video {
                     
-                    if likes.count == 1 {
-                        self.btnLikeCount.setTitle("\(likes.count) Like", for: .normal)
-                    }
-                    else {
-                        self.btnLikeCount.setTitle("\(likes.count) Likes", for: .normal)
-                    }
+                }
+                else if self.postType == .image {
+                    self.feedImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                }
+            }
+            
+            self.captionLabel.text = post[ConstantKey.caption] as? String
+            
+            if let timeStamp = post[ConstantKey.date] as? Double {
+                let date = Date(timeIntervalSince1970: timeStamp)
+                self.adminDateLabel.text = Date().offset(from: date) + " ago"
+            }
+            
+            //Set Like Button
+            if let likes = post[ConstantKey.likes] as? NSArray {
+                if likes.contains(firebaseUser.uid) {
+                    self.btnLikeImage.isSelected = false
+                    self.btnLikeImage.tag = 1
                 }
                 else {
                     self.btnLikeImage.isSelected = true
                     self.btnLikeImage.tag = 0
-                    self.btnLikeCount.setTitle("0 Like", for: .normal)
                 }
                 
-                //Set Comment button
-                if let comment = post[ConstantKey.comment] as? [String] {
-                    if comment.count == 1 {
-                        self.btnFeedComment.setTitle("1 comment", for: .normal)
-                    }
-                    else {
-                        self.btnFeedComment.setTitle("\(comment.count) comments", for: .normal)
-                    }
+                if likes.count == 1 {
+                    self.btnLikeCount.setTitle("\(likes.count) Like", for: .normal)
                 }
                 else {
-                    self.btnFeedComment.setTitle("comment", for: .normal)
+                    self.btnLikeCount.setTitle("\(likes.count) Likes", for: .normal)
                 }
+            }
+            else {
+                self.btnLikeImage.isSelected = true
+                self.btnLikeImage.tag = 0
+                self.btnLikeCount.setTitle("0 Like", for: .normal)
+            }
+            
+            //Set Comment button
+            if let comment = post[ConstantKey.comment] as? [String] {
+                if comment.count == 1 {
+                    self.btnFeedComment.setTitle("1 comment", for: .normal)
+                }
+                else {
+                    self.btnFeedComment.setTitle("\(comment.count) comments", for: .normal)
+                }
+            }
+            else {
+                self.btnFeedComment.setTitle("comment", for: .normal)
             }
             
             self.ref.child(ConstantKey.Users).child(postUserID).observeSingleEvent(of: .value) { (snapshot) in

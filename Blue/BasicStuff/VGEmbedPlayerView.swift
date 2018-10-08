@@ -11,6 +11,8 @@ import VGPlayer
 
 class VGEmbedPlayerView: VGPlayerView {
 
+    var indexPath:IndexPath?
+    
     override func configurationUI() {
         super.configurationUI()
         titleLabel.removeFromSuperview()

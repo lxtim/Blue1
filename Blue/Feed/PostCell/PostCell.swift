@@ -72,12 +72,15 @@ class PostCell: UITableViewCell {
             if let url = object[ConstantKey.image] as? String {
                 if type == .video {
                     self.videoURL = URL(string: url)!
-
+                    
                     if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
                         self.autoPlay = true
                     }
                     else {
                         self.autoPlay = false
+                    }
+                    if let thumb = object[ConstantKey.thumb_image] as? String {
+                        self.postImg.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                     }
                 }
                 else if type == .image {
@@ -86,6 +89,10 @@ class PostCell: UITableViewCell {
             }
             
             self.caption.text = object[ConstantKey.caption] as? String
+            
+            if let caption = object[ConstantKey.caption] as? String {
+                JDB.log("%@", caption)
+            }
             
             if let timeStamp = object[ConstantKey.date] as? Double {
                 let date = Date(timeIntervalSince1970: timeStamp)

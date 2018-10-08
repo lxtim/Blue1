@@ -73,9 +73,18 @@
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPk-we-WC3">
                                 <rect key="frame" x="0.0" y="91" width="338" height="242.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-0W-p7t">
+                                        <rect key="frame" x="60" y="63" width="240" height="128"/>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gPk-we-WC3" secondAttribute="height" multiplier="32:23" id="0Zp-Kg-p4O"/>
+                                    <constraint firstItem="X2F-0W-p7t" firstAttribute="leading" secondItem="gPk-we-WC3" secondAttribute="leading" id="2zb-D7-7ki"/>
+                                    <constraint firstAttribute="bottom" secondItem="X2F-0W-p7t" secondAttribute="bottom" id="DVq-I0-P3I"/>
+                                    <constraint firstItem="X2F-0W-p7t" firstAttribute="top" secondItem="gPk-we-WC3" secondAttribute="top" id="itO-cn-fbP"/>
+                                    <constraint firstAttribute="trailing" secondItem="X2F-0W-p7t" secondAttribute="trailing" id="kL0-BE-ews"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEx-Lx-aCy">
@@ -174,6 +183,7 @@
                 <outlet property="likeImg" destination="cEx-Lx-aCy" id="dNG-a1-zYJ"/>
                 <outlet property="likebtn" destination="Sxi-KZ-2ad" id="4sW-YB-GXg"/>
                 <outlet property="playerContentView" destination="gPk-we-WC3" id="6ia-Hg-I0h"/>
+                <outlet property="postImg" destination="X2F-0W-p7t" id="3SW-XH-9qL"/>
                 <outlet property="profileImg" destination="v2y-f8-QwW" id="Mvg-h1-3yz"/>
                 <outlet property="timeAgoLabel" destination="VG4-KP-mcb" id="9I6-8G-A66"/>
                 <outlet property="usernameLbl" destination="I80-r1-DaK" id="ms2-qF-Nzt"/>

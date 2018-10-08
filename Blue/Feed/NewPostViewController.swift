@@ -79,65 +79,51 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                 
                 let url = assetURL.url
                 VideoCompressor.compressVideoWithQuality(inputURL: url) { (outputURL) in
-                    JDB.log("Output TempFile Directory ==>%@", outputURL)
-                    do {
-                        let data = try Data(contentsOf: url)
-                        
-                        let storage = Storage.storage()
-                        let storageRef = storage.reference()
-                        
-                        let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueVideoFileName())
-                        let storageMetaData = StorageMetadata()
-                        storageMetaData.contentType = "video/mp4"
-                        
-                        imageRef.putData(data, metadata: storageMetaData, completion: { (fileMetadata, error) in
-                            if fileMetadata == nil {
-                                HUD.dismiss()
-                                return
-                            }
-                            
-                            DispatchQueue.main.async {
-                                imageRef.downloadURL(completion: { (url, error) in
-                                    guard let downloadURL = url else {
-                                        HUD.dismiss()
-                                        return
-                                    }
-                                    DispatchQueue.main.async {
-                                        var json = [String:Any]()
-                                        json[ConstantKey.userid] = firebaseUser.uid
-                                        json[ConstantKey.image] = downloadURL.absoluteString
-                                        json[ConstantKey.contentType] = ConstantKey.video
-                                        json[ConstantKey.caption] = caption
-                                        json[ConstantKey.likes] = []
-                                        json[ConstantKey.date] = Date().timeStamp
-                                        json[ConstantKey.duration] = CMTimeGetSeconds(curentItem.duration)
-                                        
-                                        
-                                        self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
-                                            databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                                                databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
-                                                HUD.dismiss()
-                                                let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-                                                    self.navigationController?.popViewController(animated: true)
-                                                })
-                                                self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
-                                            })
-                                        })
-                                    }
-                                })
-                            }
-                            
-                        })
-                    }
-                    catch let error {
-                        if caption == "" {
-                            self.showAlert("Please set image/video or enter caption")
+                    
+                    self.uploadVideoTofirebase(outputURL, completion: { (firebaseVideoUrl) -> (Void) in
+                        guard let videoURL = firebaseVideoUrl else {
                             HUD.dismiss()
+                            self.showAlert("Error!!!")
                             return
-                            
                         }
-                        JDB.error("Video retrive ==>%@", error)
-                    }
+                        
+                        let image = self.imageView.image?.resizeWithWidthOrHeight(200)
+                        if let img = image {
+                            self.uploadThumbImage(img, completion: { (thumbURL:URL?) -> (Void) in
+                                guard let thumb = thumbURL else {
+                                    HUD.dismiss()
+                                    self.showAlert("Error!!!")
+                                    return
+                                }
+                                DispatchQueue.main.async {
+                                    var json = [String:Any]()
+                                    json[ConstantKey.userid] = firebaseUser.uid
+                                    json[ConstantKey.image] = videoURL.absoluteString
+                                    json[ConstantKey.thumb_image] = thumb.absoluteString
+                                    json[ConstantKey.contentType] = ConstantKey.video
+                                    json[ConstantKey.caption] = caption
+                                    json[ConstantKey.likes] = []
+                                    json[ConstantKey.date] = Date().timeStamp
+                                    json[ConstantKey.duration] = CMTimeGetSeconds(curentItem.duration)
+                                    
+                                    self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
+                                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                                            HUD.dismiss()
+                                            let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                                                self.navigationController?.popViewController(animated: true)
+                                            })
+                                            self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                        })
+                                    })
+                                }
+                            })
+                        }
+                        else {
+                            HUD.dismiss()
+                            self.showAlert("Error!!!")
+                        }
+                    })
                 }
             }
         }
@@ -218,6 +204,59 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
     
+    
+    func uploadVideoTofirebase(_ url:URL , completion:@escaping ((_ firebaseUrl:URL?)->(Void))) {
+        do {
+            let data = try Data(contentsOf: url)
+            
+            let storage = Storage.storage()
+            let storageRef = storage.reference()
+            
+            let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueVideoFileName())
+            let storageMetaData = StorageMetadata()
+            storageMetaData.contentType = "video/mp4"
+            
+            imageRef.putData(data, metadata: storageMetaData, completion: { (fileMetadata, error) in
+                if fileMetadata == nil {
+                    completion(nil)
+                    return
+                }
+                imageRef.downloadURL(completion: { (url, error) in
+                    guard let downloadURL = url else {
+                        completion(nil)
+                        return
+                    }
+                    completion(downloadURL)
+                })
+            })
+            
+        }
+        catch {
+            completion(nil)
+        }
+    }
+    
+    func uploadThumbImage(_ image:UIImage, completion:@escaping((_ thumbURL:URL?)->(Void))) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        
+        let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueImageFileName())
+        let storageMetaData = StorageMetadata()
+        storageMetaData.contentType = "image/png"
+        imageRef.putData(UIImageJPEGRepresentation(image, 0.5)!, metadata: storageMetaData) { (metadata, error) in
+            if metadata == nil {
+                completion(nil)
+                return
+            }
+            imageRef.downloadURL(completion: { (url, error) in
+                guard let downloadURL = url else {
+                    completion(nil)
+                    return
+                }
+                completion(downloadURL)
+            })
+        }
+    }
     //MARK:- UIImagePicker Controller Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
@@ -228,7 +267,9 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         }
         else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
             JDB.log("video detected -==>%@",videoURL)
-            
+            if let image = getThumbnailImage(forUrl: videoURL) {
+                self.imageView.image = image
+            }
             self.player.replaceVideo(videoURL)
             self.playerContentView.isHidden = false
             self.isVideo = true

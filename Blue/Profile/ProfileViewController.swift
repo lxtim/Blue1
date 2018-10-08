@@ -34,6 +34,10 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    
     var ref = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
@@ -93,6 +97,20 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.btnFollow.isHidden = true
             self.getFeed()
         }
+        self.addObserver()
+    }
+    
+    func addObserver() {
+        let option:NSKeyValueObservingOptions = [.new , .initial]
+        self.scrollView.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset), options: option, context: nil)
+    }
+    
+    func removeObjserver() {
+        self.scrollView.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+    }
+    
+    deinit {
+        self.removeObjserver()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -117,7 +135,6 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 else {
                     self.layoutType = .list
                 }
-            
             }
         }
         
@@ -131,6 +148,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.navigationItem.title = "Profile"
         }
         
+        self.scrollView.scrollRectToVisible(CGRect(origin: CGPoint.zero, size: CGSize(width: self.view.bounds.size.width, height: 50)), animated: false)
         self.getFollowing()
         self.getFollowers()
     }
@@ -523,6 +541,25 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
 //    ProfileImageCollectionViewCell
 //    ProfileTextCollectionViewCell
 //    ProfileVideoCollectionViewCell
+    
+    //MARK:- Observe Value
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if let scroll = object as? UIScrollView {
+            if scroll == self.scrollView {
+                if keyPath == #keyPath(UIScrollView.contentOffset) {
+                    if self.layoutType == .list {
+                        self.tableViewHeightConstraint.constant = self.tableView.contentSize.height
+                        self.tableView.layoutIfNeeded()
+                    }
+                    if self.layoutType == .grid {
+                        self.tableViewHeightConstraint.constant = self.collectionView.contentSize.height
+                        self.tableView.layoutIfNeeded()
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension UICollectionView {

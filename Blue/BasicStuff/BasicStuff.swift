@@ -21,6 +21,7 @@ struct ConstantKey {
     static let userid:String = "userid"
     static let id:String = "id"
     static let image:String = "image"
+    static let thumb_image:String = "thumb_image"
     static let contentType:String = "contentType"
     static let user:String = "user"
     static let caption:String = "caption"
@@ -36,6 +37,7 @@ struct ConstantKey {
     static let layout:String = "layout"
     static let duration:String = "duration"
     static let unreadCount:String = "unread"
+    static let post:String = "post"
     
 }
 struct Platform {
@@ -287,9 +289,33 @@ extension Date {
 //    }
     /// Returns the a custom time interval description from another date
     func offset(from date: Date) -> String {
-        if years(from: date)   > 0 { return "\(years(from: date)) years"   }
-        if months(from: date)  > 0 { return "\(months(from: date)) months"  }
-        if weeks(from: date)   > 0 { return "\(weeks(from: date)) weeks"   }
+        if years(from: date)   > 0 {
+            let year = years(from: date)
+            if year == 1 {
+                return "\(year) year"
+            }
+            else {
+                return "\(year) years"
+            }
+        }
+        if months(from: date)  > 0 {
+            let month = months(from: date)
+            if month == 1 {
+                return "\(month) month"
+            }
+            else {
+                return "\(month) months"
+            }
+        }
+        if weeks(from: date)   > 0 {
+            let week = weeks(from: date)
+            if week == 1 {
+                return "\(week) week"
+            }
+            else {
+                return "\(week) weeks"
+            }
+        }
         if days(from: date)    > 0 {
             let day = days(from: date)
             if day == 1 {

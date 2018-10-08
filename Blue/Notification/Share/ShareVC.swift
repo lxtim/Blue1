@@ -25,7 +25,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     var currentPlayIndexPath : IndexPath?
     var playerViewSize : CGSize?
     
-    var tableViewContext:UnsafeMutableRawPointer = UnsafeMutableRawPointer(bitPattern: 0)!
+    var isViewShow:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +34,23 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         self.shareTableView.register(UINib(nibName: "ShareImageTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareImageTableViewCell")
         self.shareTableView.register(UINib(nibName: "ShareVideoTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareVideoTableViewCell")
         
-        self.addTableViewObservers()
+        self.configurePlayer()
+        addTableViewObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //        self.player.displayView.removeFromSuperview()
+        //        player.cleanPlayer()
+        //        currentPlayIndexPath = nil
+        player.pause()
+        self.isViewShow = false
     }
     
     deinit {
-        player.cleanPlayer()
+        if player != nil {
+            player.cleanPlayer()
+        }
         self.removeTableViewObservers()
     }
     
@@ -55,15 +67,9 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         self.getShareData(count: 0)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        player?.cleanPlayer()
-    }
-    
-    
     func addTableViewObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
-        self.shareTableView.addObserver(self, forKeyPath: #keyPath(UITableView.contentOffset), options: options, context: &tableViewContext)
+        self.shareTableView.addObserver(self, forKeyPath: #keyPath(UITableView.contentOffset), options: options, context: nil)
     }
     
     func removeTableViewObservers() {
@@ -74,11 +80,11 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     //func get All FollowData
     func getShareData(count:Int) {
         if count >= self.follow.count {
-            self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
-            self.shareTableView.reloadData()
+            self.getShareContent(count:0)
             return
         }
         let id = self.follow[count]
+        
         self.ref.child(ConstantKey.share).child(id).observeSingleEvent(of: .value) { (snapshot) in
             if let response = snapshot.value as? [String:Any] {
                 JDB.log("Response ==>%@", response)
@@ -90,6 +96,32 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
             let nextCount = count + 1
             DispatchQueue.main.async {
                 self.getShareData(count: nextCount)
+            }
+        }
+    }
+    
+    func getShareContent(count:Int) {
+        
+        if count >= self.shareTableData.count {
+            self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
+            self.shareTableView.reloadData()
+            return
+        }
+        else {
+            
+            let object = self.shareTableData[count]
+            
+            let postUserID = object[ConstantKey.userid] as! String
+            let postID = object[ConstantKey.postID] as! String
+
+            self.ref.child(ConstantKey.feed).child(postUserID).child(postID).observe(.value) { (snapshot) in
+                if let post = snapshot.value as? [String:Any] {
+                    self.shareTableData[count][ConstantKey.post] = post
+                }
+                let nextCount = count + 1
+                DispatchQueue.main.async {
+                    self.getShareContent(count: nextCount)
+                }
             }
         }
     }
@@ -109,9 +141,14 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         let object = shareTableData[indexPath.row]
         let contentType:PostType = PostType(rawValue: object[ConstantKey.contentType] as! Int)!
         let cell = tableView.dequeueReusableCell(postType: contentType)
+        
+        if contentType == .video {
+            self.currentPlayIndexPath = indexPath
+        }
         cell.indexPath = indexPath
         cell.object = object
         cell.delegate = self
+        self.currentPlayIndexPath = indexPath
         return cell
     }
     
@@ -194,51 +231,55 @@ extension UITableView {
 
 extension ShareVC {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (context == &tableViewContext) {
-            if keyPath == #keyPath(UITableView.contentOffset) {
-                
-                if let playIndexPath = currentPlayIndexPath {
-                    if let cell = shareTableView.cellForRow(at: playIndexPath) as? ShareTableViewCell {
-                        if player.displayView.isFullScreen { return }
-                        let visibleCells = shareTableView.visibleCells
-                        if visibleCells.contains(cell) {
-                            if cell.postType == .video {
-                                if let playing = self.player.player?.isPlaying , playing == true {
-                                    
-                                }
-                                else {
-                                    if let contentView = cell.playerContentView {
-                                        self.playerViewSize = contentView.bounds.size
-                                        self.addPlayer(cell)
-                                        self.currentPlayIndexPath = cell.indexPath
-                                        if let url = cell.videoURL {
-                                            self.player.replaceVideo(url)
-                                            if cell.autoPlay {
-                                                self.player.play()
-                                            }
+        if keyPath == #keyPath(UITableView.contentOffset) {
+            
+            if let playIndexPath = currentPlayIndexPath {
+                if let cell = shareTableView.cellForRow(at: playIndexPath) as? ShareTableViewCell {
+                    if player.displayView.isFullScreen { return }
+                    let visibleCells = shareTableView.visibleCells
+                    if visibleCells.contains(cell) {
+                        let object = self.shareTableData[playIndexPath.row]
+                        
+                        if let type = object[ConstantKey.contentType] as? String {
+                            if let post = object[ConstantKey.post] as? [String:Any] {
+                                if let url = post[ConstantKey.image] as? String {
+                                    if type == ConstantKey.video {
+                                        let videoURL = URL(string: url)!
+                                        
+                                        self.player.replaceVideo(videoURL)
+                                        
+                                        if let view = self.player.displayView as? VGEmbedPlayerView {
+                                            view.indexPath = self.currentPlayIndexPath
                                         }
+                                        cell.playerContentView.addSubview(self.player.displayView)
+                                        
+                                        if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
+                                            player.play()
+                                        }
+                                        
+                                        self.player.displayView.snp.remakeConstraints {
+                                            $0.edges.equalTo(cell.playerContentView)
+                                        }
+                                    }
+                                    else {
+                                        self.player.displayView.removeFromSuperview()
+                                        self.player.cleanPlayer()
                                     }
                                 }
                             }
-//                            smallScreenView.removeFromSuperview()
-                            cell.contentView.addSubview(player.displayView)
-                            player.displayView.snp.remakeConstraints {
-                                $0.edges.equalTo(cell.playerContentView)
-                            }
-//                            playerView.isSmallMode = false
-                        } else {
-                            
-                            //addSmallScreenView()
-                            JDB.log("Window gone")
                         }
                     } else {
-                        if isViewLoaded && (view.window != nil) {
-//                            if smallScreenView.superview != UIApplication.shared.keyWindow {
-//                                addSmallScreenView()
-//                            }
-                        }
+                        self.player.displayView.removeFromSuperview()
+                        self.player.cleanPlayer()
                     }
+                } else {
+                    self.player.displayView.removeFromSuperview()
+                    self.player.cleanPlayer()
                 }
+            }
+            else {
+                self.player.displayView.removeFromSuperview()
+                self.player.cleanPlayer()
             }
         }
     }
