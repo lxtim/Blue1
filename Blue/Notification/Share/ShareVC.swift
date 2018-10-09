@@ -26,7 +26,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     var playerViewSize : CGSize?
     
     var isViewShow:Bool = false
-    
+    var isFirstTime:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,9 +40,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //        self.player.displayView.removeFromSuperview()
-        //        player.cleanPlayer()
-        //        currentPlayIndexPath = nil
+        
         player.pause()
         self.isViewShow = false
     }
@@ -62,11 +60,15 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.follow = BasicStuff.shared.followArray.map({$0 as! String})
-        self.shareTableData = [[String:Any]]()
-        self.getShareData(count: 0)
+        
     }
     
+    func getRefresh() {
+        self.follow = BasicStuff.shared.followArray.map({$0 as! String})
+        self.shareTableData = [[String:Any]]()
+        self.isFirstTime = true
+        self.getShareData(count: 0)
+    }
     func addTableViewObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
         self.shareTableView.addObserver(self, forKeyPath: #keyPath(UITableView.contentOffset), options: options, context: nil)
@@ -104,6 +106,18 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         
         if count >= self.shareTableData.count {
             self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
+            if self.isFirstTime {
+                self.isFirstTime = false
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+                    let visibleCell = self.shareTableView.visibleCells
+                    for item in visibleCell {
+                        if let cell = item as? ShareTableViewCell , cell.postType == .video {
+                            self.currentPlayIndexPath = cell.indexPath
+                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.shareTableView, change: nil, context: nil)
+                        }
+                    }
+                }
+            }
             self.shareTableView.reloadData()
             return
         }
@@ -145,6 +159,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         if contentType == .video {
             self.currentPlayIndexPath = indexPath
         }
+        
         cell.indexPath = indexPath
         cell.object = object
         cell.delegate = self
@@ -240,10 +255,10 @@ extension ShareVC {
                     if visibleCells.contains(cell) {
                         let object = self.shareTableData[playIndexPath.row]
                         
-                        if let type = object[ConstantKey.contentType] as? String {
+                        if let type = object[ConstantKey.contentType] as? Double {
                             if let post = object[ConstantKey.post] as? [String:Any] {
                                 if let url = post[ConstantKey.image] as? String {
-                                    if type == ConstantKey.video {
+                                    if type == 2 {
                                         let videoURL = URL(string: url)!
                                         
                                         self.player.replaceVideo(videoURL)

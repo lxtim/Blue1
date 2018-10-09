@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -104,9 +105,18 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyo-u0-NHb">
                         <rect key="frame" x="30" y="172" width="275" height="148"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lem-mr-iXv">
+                                <rect key="frame" x="17" y="0.0" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="148" id="odP-zA-MHc"/>
+                            <constraint firstItem="Lem-mr-iXv" firstAttribute="top" secondItem="oyo-u0-NHb" secondAttribute="top" id="Dz0-oc-5qN"/>
+                            <constraint firstAttribute="bottom" secondItem="Lem-mr-iXv" secondAttribute="bottom" id="LEl-iP-bAJ"/>
+                            <constraint firstItem="Lem-mr-iXv" firstAttribute="leading" secondItem="oyo-u0-NHb" secondAttribute="leading" id="Xgr-K4-UuG"/>
+                            <constraint firstAttribute="width" secondItem="oyo-u0-NHb" secondAttribute="height" multiplier="275:148" id="Zn6-HJ-koC"/>
+                            <constraint firstAttribute="trailing" secondItem="Lem-mr-iXv" secondAttribute="trailing" id="y37-ne-0M4"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVA-AY-jk2">
@@ -203,6 +213,7 @@
                 <outlet property="btnLikeCount" destination="usW-07-RDB" id="XVZ-IY-kVf"/>
                 <outlet property="btnLikeImage" destination="XLW-Xj-IT4" id="L8g-hs-Oow"/>
                 <outlet property="captionLabel" destination="GVA-AY-jk2" id="s8j-ZL-rfp"/>
+                <outlet property="feedImageView" destination="Lem-mr-iXv" id="nIk-Ax-SvI"/>
                 <outlet property="playerContentView" destination="oyo-u0-NHb" id="n0i-7s-REI"/>
                 <outlet property="shareCaptionLabel" destination="418-0S-IRk" id="LJi-cp-Z0i"/>
                 <outlet property="shareUserDateLabel" destination="Qk1-DH-yqi" id="ZBj-Mm-4Y2"/>

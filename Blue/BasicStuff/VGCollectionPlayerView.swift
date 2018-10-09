@@ -9,7 +9,7 @@
 import UIKit
 import VGPlayer
 
-class VGEmbedPlayerView: VGPlayerView {
+class VGCollectionPlayerView: VGPlayerView {
 
     var indexPath:IndexPath?
     
@@ -19,11 +19,8 @@ class VGEmbedPlayerView: VGPlayerView {
         timeSlider.minimumTrackTintColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         topView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         bottomView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        closeButton.isHidden = true
         
-        if  closeButton != nil {
-//            closeButton.setImage(#imageLiteral(resourceName: "VGPlayer_ic_slider_thumb"), for: .normal)
-            closeButton.isHidden = true
-        }
         self.timeSlider.isHidden = true
         self.fullscreenButton.isHidden = true
         
@@ -35,6 +32,8 @@ class VGEmbedPlayerView: VGPlayerView {
 //            make.bottom.equalTo(self.snp.bottom)
 //            make.height.equalTo(3)
 //        }
+        
+        self.timeLabel.isHidden = true
         self.configureGesture()
     }
     

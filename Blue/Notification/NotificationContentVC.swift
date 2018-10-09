@@ -47,10 +47,31 @@ class NotificationContentVC: UIViewController {
         self.userRef.child(firebaseUser.uid).updateChildValues([ConstantKey.unreadCount:0])
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let shared = self.childViewControllers[1] as? ShareVC {
+            shared.player.cleanPlayer()
+            shared.player.displayView.removeFromSuperview()
+            shared.currentPlayIndexPath = nil
+        }
+    }
+    
     @objc func segmentSelected(sender:ScrollableSegmentedControl) {
         let index = sender.selectedSegmentIndex
         let width = self.scrollVIew.frame.size.width
         let rect:CGRect = CGRect(x: (width * CGFloat(index)), y: 0, width: width, height: scrollVIew.frame.size.height)
+        if index == 1 {
+            if let shared = self.childViewControllers[index] as? ShareVC {
+                shared.getRefresh()
+            }
+        }
+        else {
+            if let shared = self.childViewControllers[1] as? ShareVC {
+                shared.player.cleanPlayer()
+                shared.player.displayView.removeFromSuperview()
+            }
+        }
+        
         self.scrollVIew.scrollRectToVisible(rect, animated: true)
     }
     

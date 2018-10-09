@@ -50,6 +50,12 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     var followers:[[String:Any]] = [[String:Any]]()
     
+    
+    var player: VGPlayer?
+    var playerView = VGCollectionPlayerView()
+    var currentPlayIndexPath : IndexPath?
+    
+    
     var layoutType:FeedLayout = FeedLayout.list {
         didSet(newValue) {
             if self.layoutType == .list {
@@ -78,12 +84,9 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.collectionView.register(UINib(nibName: "ProfileImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "ProfileImageCollectionViewCell")
         self.collectionView.register(UINib(nibName: "ProfileVideoCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "ProfileVideoCollectionViewCell")
         
-        //    ProfileImageCollectionViewCell
-        //    ProfileTextCollectionViewCell
-        //    ProfileVideoCollectionViewCell
-        
         self.tableView.isHidden = true
         self.collectionView.isHidden = true
+        
         if isOtherUserProfile {
             self.checkFollow()
             self.getNumberOfPost()
@@ -166,6 +169,13 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         else {
             self.navigationItem.title = "Profile"
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        playerView.removeFromSuperview()
+        player?.cleanPlayer()
+        currentPlayIndexPath = nil
     }
     @objc func btnSettingAction(_ sender:UIButton) {
         let object = Object(SettingViewController.self)
@@ -522,6 +532,14 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             if let type = feed[ConstantKey.contentType] as? String , type == ConstantKey.video {
                 let cell = collectionView.dequeueReusableCell(.video, indexPath: indexPath)
                 cell.object = feed
+                cell.indexPath = indexPath
+                cell.playCallBack = ({ [weak self] (indexPath: IndexPath?) -> Void in
+                    guard let strongSelf = self else { return }
+                    guard let index = indexPath else {return}
+                    let feed = strongSelf.feedData[index.row]
+                    strongSelf.addPlayer(cell, data: feed)
+                    strongSelf.currentPlayIndexPath = indexPath
+                })
                 return cell
             }
             else {
@@ -537,6 +555,32 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
     
+    func addPlayer(_ cell: ProfileCollectionViewCell,data:[String:Any]) {
+        if player != nil {
+            player?.cleanPlayer()
+        }
+        configurePlayer()
+        
+        guard let player = player else {return}
+        
+        cell.contentView.addSubview(player.displayView)
+        player.displayView.snp.makeConstraints {
+            $0.edges.equalTo(cell.playerContentView)
+        }
+        
+        if let url = data[ConstantKey.image] as? String {
+            if cell.postType == .video {
+                player.replaceVideo(URL(string:url)!)
+                player.play()
+            }
+        }
+    }
+    
+    func configurePlayer() {
+        playerView = VGCollectionPlayerView()
+        player = VGPlayer(playerView: playerView)
+        player?.backgroundMode = .suspend
+    }
     //ColectionView
 //    ProfileImageCollectionViewCell
 //    ProfileTextCollectionViewCell
@@ -555,6 +599,28 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                     if self.layoutType == .grid {
                         self.tableViewHeightConstraint.constant = self.collectionView.contentSize.height
                         self.tableView.layoutIfNeeded()
+                    }
+                }
+            }
+        }
+        if let collectionView = object as? UICollectionView , collectionView == self.collectionView {
+            if keyPath == #keyPath(UICollectionView.contentOffset) {
+                if let playIndexPath = currentPlayIndexPath {
+                    guard let player = self.player else {
+                        return
+                    }
+                    
+                    if let cell = self.collectionView.cellForItem(at: playIndexPath) as? ProfileCollectionViewCell {
+                        let visibleCells = self.collectionView.visibleCells
+                        if visibleCells.contains(cell) {
+                            cell.playerContentView.addSubview(player.displayView)
+                            player.displayView.snp.remakeConstraints {
+                                $0.edges.equalTo(cell.playerContentView)
+                            }
+                        } else {
+                            player.displayView.removeFromSuperview()
+                            player.cleanPlayer()
+                        }
                     }
                 }
             }

@@ -32,6 +32,7 @@
 		F183D6A121254097009DF2AC /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D69F21254097009DF2AC /* PostCell.xib */; };
 		F183D6A3212552FD009DF2AC /* UIView+NibInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */; };
 		F183D6A9212554D3009DF2AC /* PostWithOutImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */; };
+		F187FBC6216C8C310066C551 /* VGCollectionPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187FBC5216C8C300066C551 /* VGCollectionPlayerView.swift */; };
 		F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4C211D4D78008ED448 /* BasicStuff.swift */; };
 		F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A4E211D6D29008ED448 /* FeedViewController.swift */; };
 		F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18A4A50211D7590008ED448 /* NewPostViewController.swift */; };
@@ -109,6 +110,7 @@
 		F183D69F21254097009DF2AC /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
 		F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NibInstance.swift"; sourceTree = "<group>"; };
 		F183D6A7212554D3009DF2AC /* PostWithOutImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostWithOutImageCell.xib; sourceTree = "<group>"; };
+		F187FBC5216C8C300066C551 /* VGCollectionPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VGCollectionPlayerView.swift; sourceTree = "<group>"; };
 		F18A4A4C211D4D78008ED448 /* BasicStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStuff.swift; sourceTree = "<group>"; };
 		F18A4A4E211D6D29008ED448 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		F18A4A50211D7590008ED448 /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 		F18A4A4B211D4D56008ED448 /* BasicStuff */ = {
 			isa = PBXGroup;
 			children = (
+				F187FBC5216C8C300066C551 /* VGCollectionPlayerView.swift */,
 				F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */,
 				F107D7CE2143F25B00057001 /* video_Compression.swift */,
 				F18A4A4C211D4D78008ED448 /* BasicStuff.swift */,
@@ -615,6 +618,7 @@
 				F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */,
 				F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */,
 				F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */,
+				F187FBC6216C8C310066C551 /* VGCollectionPlayerView.swift in Sources */,
 				F1EACD92214D37BB00BB7349 /* ProfileCollectionViewCell.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,
 				F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */,

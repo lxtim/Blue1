@@ -18,11 +18,13 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var postTextView: UITextView!
     
     var player: VGPlayer?
-    
-    var playerView = VGEmbedPlayerView()
+    var playerView = VGCollectionPlayerView()
     
     @IBOutlet weak var playerContentView: UIView!
     
+    var indexPath:IndexPath?
+    
+    var playCallBack:((IndexPath?) -> Swift.Void)?
     override func awakeFromNib() {
        
     }
@@ -34,16 +36,9 @@ class ProfileCollectionViewCell: UICollectionViewCell {
             }
             if let url = object[ConstantKey.image] as? String {
                 if postType == .video {
-                    self.player = VGPlayer(playerView: playerView)
-                    let url = URL(string: url)!
-                    self.player?.replaceVideo(url)
-                    self.playerContentView.addSubview((self.player?.displayView)!)
-                    self.player?.displayView.snp.remakeConstraints({
-                        $0.edges.equalTo(self.playerContentView)
-                    })
-//                    if let duration = object[ConstantKey.duration] as? Double , duration < 70 {
-//                        self.player?.play()
-//                    }
+                    if let thumb = object[ConstantKey.thumb_image] as? String {
+                        self.postImageView.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                    }
                 }
                 else if postType == .image {
                     if let imageView = self.postImageView {
@@ -51,6 +46,13 @@ class ProfileCollectionViewCell: UICollectionViewCell {
                     }
                 }
             }
+        }
+    }
+    
+    @IBAction func btnPlayAction(_ sender:UIButton) {
+        
+        if let callback = self.playCallBack {
+            callback(indexPath)
         }
     }
 }

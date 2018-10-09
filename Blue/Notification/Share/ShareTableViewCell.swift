@@ -59,7 +59,9 @@ class ShareTableViewCell: UITableViewCell {
             self.post = cellPost
             if let url = post[ConstantKey.image] as? String {
                 if self.postType == .video {
-                    
+                    if let thumb = post[ConstantKey.thumb_image] as? String {
+                        self.feedImageView.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                    }
                 }
                 else if self.postType == .image {
                     self.feedImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
