@@ -23,15 +23,7 @@ class VGCollectionPlayerView: VGPlayerView {
         
         self.timeSlider.isHidden = true
         self.fullscreenButton.isHidden = true
-        
-        
-//        self.addSubview(bottomProgressView)
-//        bottomProgressView.snp.makeConstraints { (make) in
-//            make.left.equalTo(self.snp.left)
-//            make.right.equalTo(self.snp.right)
-//            make.bottom.equalTo(self.snp.bottom)
-//            make.height.equalTo(3)
-//        }
+
         
         self.timeLabel.isHidden = true
         self.configureGesture()

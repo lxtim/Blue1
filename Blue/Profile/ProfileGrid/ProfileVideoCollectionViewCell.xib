@@ -26,8 +26,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gw5-Uj-8yH">
-                                <rect key="frame" x="159" y="192" width="25" height="23"/>
-                                <state key="normal" image="Star"/>
+                                <rect key="frame" x="146.5" y="178.5" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="YRA-VY-tAD"/>
+                                    <constraint firstAttribute="height" constant="50" id="el9-Jc-EAT"/>
+                                </constraints>
+                                <state key="normal" image="btn_play"/>
                                 <connections>
                                     <action selector="btnPlayAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="brN-0v-gQB"/>
                                 </connections>
@@ -61,6 +65,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Star" width="25" height="23"/>
+        <image name="btn_play" width="72" height="72"/>
     </resources>
 </document>

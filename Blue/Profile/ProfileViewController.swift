@@ -55,6 +55,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     var playerView = VGCollectionPlayerView()
     var currentPlayIndexPath : IndexPath?
     
+    var lastContentOffset: CGFloat = 0.0
     
     var layoutType:FeedLayout = FeedLayout.list {
         didSet(newValue) {
@@ -94,10 +95,16 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
             self.userNameLabel.text = userProfileData.value(forKey: ConstantKey.username) as? String
-            self.btnFollow.isHidden = false
+//            self.btnFollow.setTitle("Follow", for: .normal)
+//            self.btnFollow.borderColor = UIColor("54C7FC")
+//            self.btnFollow.setTitleColor(UIColor("54C7FC"), for: .normal)
+//            self.btnFollow.backgroundColor = .clear
         }
         else {
-            self.btnFollow.isHidden = true
+            self.btnFollow.setTitle("Settings", for: .normal)
+            self.btnFollow.borderColor = UIColor("9B9B9B")
+            self.btnFollow.setTitleColor(UIColor("9B9B9B"), for: .normal)
+            self.btnFollow.backgroundColor = .clear
             self.getFeed()
         }
         self.addObserver()
@@ -145,7 +152,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
-            parent.navigationItem.rightBarButtonItems = [settingItem]
+//            parent.navigationItem.rightBarButtonItems = [settingItem]
         }
         else {
             self.navigationItem.title = "Profile"
@@ -164,7 +171,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
-            parent.navigationItem.rightBarButtonItems = [settingItem]
+//            parent.navigationItem.rightBarButtonItems = [settingItem]
         }
         else {
             self.navigationItem.title = "Profile"
@@ -215,7 +222,11 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.present(actionSheet, animated: true) {}
     }
     @IBAction func btnFollowAction(_ sender: UIButton) {
-        if sender.tag == 0 {
+        if self.isOtherUserProfile == false {
+            self.btnSettingAction(sender)
+         return
+        }
+        else if sender.tag == 0 {
             BasicStuff.shared.followArray.add(userProfileData.value(forKey: ConstantKey.id) as! String)
             self.sendFollowNotification()
         }
@@ -288,10 +299,17 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         if BasicStuff.shared.followArray.contains(userProfileData.value(forKey: ConstantKey.id) as! String) {
             self.btnFollow.tag = 1
             self.btnFollow.setTitle("Following", for: .normal)
+            self.btnFollow.borderColor = UIColor("54C7FC")
+            self.btnFollow.setTitleColor(UIColor("54C7FC"), for: .normal)
+            self.btnFollow.backgroundColor = .clear
         }
         else {
             self.btnFollow.tag = 0
             self.btnFollow.setTitle("Follow", for: .normal)
+            self.btnFollow.borderColor = UIColor("54C7FC")
+            self.btnFollow.setTitleColor(.white, for: .normal)
+            self.btnFollow.backgroundColor = UIColor("54C7FC")
+            
         }
     }
     func getFeed() {
@@ -459,7 +477,16 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 cell.type = .video
                 cell.object = feed
                 cell.delegate = self
+                cell.indexPath = indexPath
                 cell.likeImg.isUserInteractionEnabled = false
+                self.currentPlayIndexPath = indexPath
+                cell.playCallBack = ({ [weak self] (indexPath: IndexPath?) -> Void in
+                    guard let strongSelf = self else { return }
+                    guard let index = indexPath else {return}
+                    let feed = strongSelf.feedData[index.row]
+                    strongSelf.addPlayer(cell, data: feed)
+                    strongSelf.currentPlayIndexPath = indexPath
+                })
                 return cell
             }
             else {
@@ -555,6 +582,27 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
     
+    func addPlayer(_ cell: PostCell,data:[String:Any]) {
+        if player != nil {
+            player?.cleanPlayer()
+        }
+        configurePlayer()
+        
+        guard let player = player else {return}
+        
+        cell.contentView.addSubview(player.displayView)
+        player.displayView.snp.makeConstraints {
+            $0.edges.equalTo(cell.playerContentView)
+        }
+        
+        if let url = data[ConstantKey.image] as? String {
+            if cell.type == .video {
+                player.replaceVideo(URL(string:url)!)
+                player.play()
+            }
+        }
+    }
+    
     func addPlayer(_ cell: ProfileCollectionViewCell,data:[String:Any]) {
         if player != nil {
             player?.cleanPlayer()
@@ -581,10 +629,87 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         player = VGPlayer(playerView: playerView)
         player?.backgroundMode = .suspend
     }
-    //ColectionView
-//    ProfileImageCollectionViewCell
-//    ProfileTextCollectionViewCell
-//    ProfileVideoCollectionViewCell
+    
+    //MARK:- UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        var scrollDirection: ScrollDirection!
+        
+        if lastContentOffset < scrollView.contentOffset.y {
+//            print("Going up!")
+            scrollDirection = ScrollDirection.up
+        }else if lastContentOffset > scrollView.contentOffset.y {
+//            print("Going down!")
+            scrollDirection = ScrollDirection.down
+        }
+        lastContentOffset = scrollView.contentOffset.y
+        
+        var y = scrollView.contentOffset.y
+        
+        if scrollDirection == .up {
+            y = y + self.scrollView.frame.size.height - 100
+        }
+        else {
+            y = y + 100
+        }
+        
+        let point = CGPoint(x: scrollView.contentOffset.x, y: y)
+        if self.layoutType == .list {
+            if let indexPath = self.tableView.indexPathForRow(at: point) {
+                let feed = self.feedData[indexPath.row]
+                if let type = feed[ConstantKey.contentType] as? String {
+                    if type == ConstantKey.video {
+                        if self.currentPlayIndexPath != indexPath {
+                            player?.displayView.removeFromSuperview()
+                            player?.cleanPlayer()
+                        }
+                        
+                        self.currentPlayIndexPath = indexPath
+                        if self.player == nil {
+                            self.configurePlayer()
+                        }
+                        
+                        guard let player = self.player else {return}
+                        if let url = feed[ConstantKey.image] as? String {
+                            let videoURL = URL(string: url)!
+                            if let cell = self.tableView.cellForRow(at: indexPath) as? PostCell {
+                                if player.player?.isPlaying == true {
+                                    
+                                }
+                                else {
+                                    player.replaceVideo(videoURL)
+                                    
+                                    cell.playerContentView.addSubview(player.displayView)
+                                    
+                                    if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
+                                        player.play()
+                                    }
+                                    
+                                    player.displayView.snp.remakeConstraints {
+                                        $0.edges.equalTo(cell.playerContentView)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            if let indexPath = self.collectionView.indexPathForItem(at: point) {
+                let feed = self.feedData[indexPath.item]
+                if let type = feed[ConstantKey.contentType] as? String {
+                    if type == ConstantKey.video {
+                        if self.currentPlayIndexPath != indexPath {
+                            player?.displayView.removeFromSuperview()
+                            player?.cleanPlayer()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     
     //MARK:- Observe Value
     
@@ -618,6 +743,70 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                                 $0.edges.equalTo(cell.playerContentView)
                             }
                         } else {
+                            player.displayView.removeFromSuperview()
+                            player.cleanPlayer()
+                        }
+                    }
+                }
+            }
+        }
+        
+        if let tableView = object as? UITableView , tableView == self.tableView {
+            if keyPath == #keyPath(UITableView.contentOffset) {
+                if let playIndexPath = currentPlayIndexPath {
+                    guard let player = self.player else {
+                        return
+                    }
+                    
+                    if let cell = self.tableView.cellForRow(at: playIndexPath) as? PostCell {
+                        let visibleCells = self.tableView.visibleCells
+                        if visibleCells.contains(cell) {
+                            
+                            //print("Current indexPath ==>%@", playIndexPath)
+                            if let dsPView = player.displayView as? VGEmbedPlayerView {
+                                if playIndexPath != dsPView.indexPath {
+                                    player.cleanPlayer()
+                                    player.displayView.removeFromSuperview()
+                                }
+                            }
+                            
+                            if let ply = player.player?.isPlaying , ply == true {
+                                
+                            }
+                            else {
+                                let feed = self.feedData[playIndexPath.row]
+                                if let type = feed[ConstantKey.contentType] as? String {
+                                    if let url = feed[ConstantKey.image] as? String {
+                                        if type == ConstantKey.video {
+                                            let videoURL = URL(string: url)!
+                                            
+                                            player.replaceVideo(videoURL)
+                                            if let view = player.displayView as? VGEmbedPlayerView {
+                                                view.indexPath = self.currentPlayIndexPath
+                                            }
+                                            cell.playerContentView.addSubview(player.displayView)
+                                            
+                                            if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
+                                                player.play()
+                                            }
+                                            
+                                            player.displayView.snp.remakeConstraints {
+                                                $0.edges.equalTo(cell.playerContentView)
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        player.displayView.removeFromSuperview()
+                                        player.cleanPlayer()
+                                    }
+                                }
+                                else {
+                                    player.displayView.removeFromSuperview()
+                                    player.cleanPlayer()
+                                }
+                            }
+                        }
+                        else {
                             player.displayView.removeFromSuperview()
                             player.cleanPlayer()
                         }

@@ -15,6 +15,7 @@ class NotificationContentVC: UIViewController {
     @IBOutlet weak var scrollVIew: UIScrollView!
     @IBOutlet weak var segmentView: ScrollableSegmentedControl!
     
+    var selectedIndex:Int = 0
     var userRef = Database.database().reference().child(ConstantKey.Users)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ class NotificationContentVC: UIViewController {
         segmentView.setTitleTextAttributes(normalColorAttribute, for: .normal)
         segmentView.setTitleTextAttributes(selectedColorAttribute, for: .highlighted)
         segmentView.setTitleTextAttributes(selectedColorAttribute, for: .selected)
-        segmentView.selectedSegmentIndex = 0
+        
         
     }
 
@@ -47,6 +48,11 @@ class NotificationContentVC: UIViewController {
         self.userRef.child(firebaseUser.uid).updateChildValues([ConstantKey.unreadCount:0])
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        segmentView.selectedSegmentIndex = selectedIndex
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let shared = self.childViewControllers[1] as? ShareVC {

@@ -157,6 +157,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     func getFeed() {
+        HUD.show()
         self.feedData = [[String:Any]]()
         self.userRef.observe(.value) { (snapshot) in
             if  let value = snapshot.value as? [String:Any] {
@@ -168,6 +169,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     func getFeedData(_ keys:[String], _ sender:[String:Any] , index:Int) {
         if index >= sender.count {
+            HUD.dismiss()
             let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
             self.feedData = sortedArray
             
@@ -249,7 +251,9 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         }
     }
     func getMyFollowers() {
+        HUD.show()
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
+            HUD.dismiss()
             if let snap = snapshot.value as? NSDictionary {
                 BasicStuff.shared.UserData = NSMutableDictionary(dictionary: snap)
                 self.setRightBar()
@@ -369,10 +373,10 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.parent?.navigationController?.pushViewController(profileVC, animated: true)
     }
     
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("Scroll Complete")
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

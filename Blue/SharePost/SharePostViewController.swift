@@ -102,8 +102,16 @@ class SharePostViewController: UIViewController {
         savedData[ConstantKey.contentType] = self.contentType.rawValue
         
         self.ref.child(ConstantKey.share).child(firebaseUser.uid).childByAutoId().setValue(savedData) { (error, dabaseRef) in
+            
             if error == nil {
-                self.showAlert("Post Shared Successfully.")
+                let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                    DispatchQueue.main.async {
+                        let notificationVC = Object(NotificationContentVC.self)
+                        notificationVC.selectedIndex = 1
+                        self.navigationController?.pushViewController(notificationVC, animated: true)
+                    }
+                })
+                self.showAlert(message: "Post Shared Successfully.", actions: actionOK)
             }
         }
     }

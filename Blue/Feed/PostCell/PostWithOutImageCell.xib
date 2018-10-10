@@ -22,17 +22,17 @@
                         <rect key="frame" x="0.0" y="0.5" width="375" height="199"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BPQ-9z-qJz">
-                                <rect key="frame" x="10" y="15.5" width="60" height="60"/>
+                                <rect key="frame" x="10" y="15.5" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="2zi-Ed-4DN"/>
-                                    <constraint firstAttribute="width" constant="60" id="Hjy-yV-exz"/>
+                                    <constraint firstAttribute="height" constant="40" id="2zi-Ed-4DN"/>
+                                    <constraint firstAttribute="width" constant="40" id="Hjy-yV-exz"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="pCq-NQ-Pdd">
-                                <rect key="frame" x="85" y="15.5" width="73.5" height="60"/>
+                                <rect key="frame" x="65" y="15.5" width="73.5" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YS1-Lj-cs7">
-                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="23.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="Kj9-Wb-akj"/>
                                         </constraints>
@@ -41,7 +41,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="time ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iak-8f-Nph">
-                                        <rect key="frame" x="0.0" y="43.5" width="73.5" height="16.5"/>
+                                        <rect key="frame" x="0.0" y="23.5" width="73.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -58,13 +58,13 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q9w-dJ-JSH">
-                                <rect key="frame" x="10" y="15.5" width="148.5" height="60"/>
+                                <rect key="frame" x="10" y="15.5" width="128.5" height="40"/>
                                 <connections>
                                     <action selector="btnUserProfileAction:" destination="APD-4n-lZo" eventType="touchUpInside" id="7XP-SI-b2m"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jbp-EM-mxy">
-                                <rect key="frame" x="10" y="90.5" width="355" height="43.5"/>
+                                <rect key="frame" x="10" y="70.5" width="355" height="63.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
@@ -98,7 +98,7 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.2274509804" green="0.58431372550000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>

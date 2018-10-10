@@ -655,8 +655,8 @@ extension VGPlayerView {
         
         let playImage = VGPlayerUtils.imageResource("VGPlayer_ic_play")
         let pauseImage = VGPlayerUtils.imageResource("VGPlayer_ic_pause")
-        playButtion.setImage(VGPlayerUtils.imageSize(image: playImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .normal)
-        playButtion.setImage(VGPlayerUtils.imageSize(image: pauseImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .selected)
+        playButtion.setImage(playImage, for: .normal)// setImage(VGPlayerUtils.imageSize(image: playImage!, scaledToSize: CGSize(width: 45, height: 45)), for: .normal)
+        playButtion.setImage(pauseImage, for: .selected)//VGPlayerUtils.imageSize(image: pauseImage!, scaledToSize: CGSize(width: 45, height: 45))
         playButtion.addTarget(self, action: #selector(onPlayerButton(_:)), for: .touchUpInside)
         bottomView.addSubview(playButtion)
         
@@ -710,15 +710,13 @@ extension VGPlayerView {
             make.left.equalTo(strongSelf)
             make.right.equalTo(strongSelf)
             make.bottom.equalTo(strongSelf)
-            make.height.equalTo(52)
+            make.top.equalTo(strongSelf)
         }
         
         playButtion.snp.makeConstraints { [weak self] (make) in
             guard let strongSelf = self else { return }
-            make.left.equalTo(strongSelf.bottomView).offset(20)
-            make.height.equalTo(25)
-            make.width.equalTo(25)
             make.centerY.equalTo(strongSelf.bottomView)
+            make.centerX.equalTo(strongSelf.bottomView)
         }
         
         timeLabel.snp.makeConstraints { [weak self] (make) in

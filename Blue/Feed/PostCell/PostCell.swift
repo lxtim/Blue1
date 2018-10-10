@@ -55,6 +55,7 @@ class PostCell: UITableViewCell {
     var ref: DatabaseReference = Database.database().reference()
     var delegate:FeedPostCellDelegate? = nil
     
+    var playCallBack:((IndexPath?) -> Swift.Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -139,6 +140,11 @@ class PostCell: UITableViewCell {
         }
     }
     
+    @IBAction func btnPlayVideoAction(_ sender: UIButton) {
+        if let callback = self.playCallBack {
+            callback(indexPath)
+        }
+    }
     
     
     

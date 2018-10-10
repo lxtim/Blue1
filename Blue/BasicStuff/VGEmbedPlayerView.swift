@@ -20,14 +20,14 @@ class VGEmbedPlayerView: VGPlayerView {
         topView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         bottomView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         
-        if  closeButton != nil {
-//            closeButton.setImage(#imageLiteral(resourceName: "VGPlayer_ic_slider_thumb"), for: .normal)
-            closeButton.isHidden = true
-        }
+        closeButton.isHidden = true
+
         self.timeSlider.isHidden = true
         self.fullscreenButton.isHidden = true
         
-        
+//        self.playButtion.snp.makeConstraints { (make) in
+//            make.center.equalTo(self.snp.center)
+//        }
 //        self.addSubview(bottomProgressView)
 //        bottomProgressView.snp.makeConstraints { (make) in
 //            make.left.equalTo(self.snp.left)
@@ -35,6 +35,7 @@ class VGEmbedPlayerView: VGPlayerView {
 //            make.bottom.equalTo(self.snp.bottom)
 //            make.height.equalTo(3)
 //        }
+        self.timeLabel.isHidden = true
         self.configureGesture()
     }
     
