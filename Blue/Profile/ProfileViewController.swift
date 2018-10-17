@@ -75,7 +75,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     //MARK:-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
         self.tableView.register(UINib(nibName: "PostWithOutImageCell", bundle: Bundle.main), forCellReuseIdentifier: "PostWithOutImageCell")
         self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
@@ -483,9 +483,10 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 cell.playCallBack = ({ [weak self] (indexPath: IndexPath?) -> Void in
                     guard let strongSelf = self else { return }
                     guard let index = indexPath else {return}
-                    let feed = strongSelf.feedData[index.row]
-                    strongSelf.addPlayer(cell, data: feed)
-                    strongSelf.currentPlayIndexPath = indexPath
+//                    let feed = strongSelf.feedData[index.row]
+//                    strongSelf.addPlayer(cell, data: feed)
+//                    strongSelf.currentPlayIndexPath = indexPath
+                    strongSelf.tableView(strongSelf.tableView, didSelectRowAt: index)
                 })
                 return cell
             }
@@ -510,6 +511,12 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let feed = self.feedData[indexPath.row]
+        let object = Object(PostViewController.self)
+        object.object = feed
+        self.navigationController?.pushViewController(object, animated: true)
+    }
     //MARK:- FeedPostCellDelegate
     func feedLikeDidSelect(user: [String : Any]) {
         let likeVC = Object(LikeViewController.self)
@@ -563,9 +570,10 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 cell.playCallBack = ({ [weak self] (indexPath: IndexPath?) -> Void in
                     guard let strongSelf = self else { return }
                     guard let index = indexPath else {return}
-                    let feed = strongSelf.feedData[index.row]
-                    strongSelf.addPlayer(cell, data: feed)
-                    strongSelf.currentPlayIndexPath = indexPath
+//                    let feed = strongSelf.feedData[index.row]
+//                    strongSelf.addPlayer(cell, data: feed)
+//                    strongSelf.currentPlayIndexPath = indexPath
+                    strongSelf.collectionView(strongSelf.collectionView, didSelectItemAt: index)
                 })
                 return cell
             }
@@ -582,6 +590,12 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let feed = self.feedData[indexPath.row]
+        let object = Object(PostViewController.self)
+        object.object = feed
+        self.navigationController?.pushViewController(object, animated: true)
+    }
     func addPlayer(_ cell: PostCell,data:[String:Any]) {
         if player != nil {
             player?.cleanPlayer()
@@ -658,40 +672,40 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             if let indexPath = self.tableView.indexPathForRow(at: point) {
                 let feed = self.feedData[indexPath.row]
                 if let type = feed[ConstantKey.contentType] as? String {
-                    if type == ConstantKey.video {
-                        if self.currentPlayIndexPath != indexPath {
-                            player?.displayView.removeFromSuperview()
-                            player?.cleanPlayer()
-                        }
-                        
-                        self.currentPlayIndexPath = indexPath
-                        if self.player == nil {
-                            self.configurePlayer()
-                        }
-                        
-                        guard let player = self.player else {return}
-                        if let url = feed[ConstantKey.image] as? String {
-                            let videoURL = URL(string: url)!
-                            if let cell = self.tableView.cellForRow(at: indexPath) as? PostCell {
-                                if player.player?.isPlaying == true {
-                                    
-                                }
-                                else {
-                                    player.replaceVideo(videoURL)
-                                    
-                                    cell.playerContentView.addSubview(player.displayView)
-                                    
-                                    if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
-                                        player.play()
-                                    }
-                                    
-                                    player.displayView.snp.remakeConstraints {
-                                        $0.edges.equalTo(cell.playerContentView)
-                                    }
-                                }
-                            }
-                        }
-                    }
+//                    if type == ConstantKey.video {
+//                        if self.currentPlayIndexPath != indexPath {
+//                            player?.displayView.removeFromSuperview()
+//                            player?.cleanPlayer()
+//                        }
+//
+//                        self.currentPlayIndexPath = indexPath
+//                        if self.player == nil {
+//                            self.configurePlayer()
+//                        }
+//
+//                        guard let player = self.player else {return}
+//                        if let url = feed[ConstantKey.image] as? String {
+//                            let videoURL = URL(string: url)!
+//                            if let cell = self.tableView.cellForRow(at: indexPath) as? PostCell {
+//                                if player.player?.isPlaying == true {
+//
+//                                }
+//                                else {
+//                                    player.replaceVideo(videoURL)
+//
+//                                    cell.playerContentView.addSubview(player.displayView)
+//
+//                                    if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
+//                                        player.play()
+//                                    }
+//
+//                                    player.displayView.snp.remakeConstraints {
+//                                        $0.edges.equalTo(cell.playerContentView)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
                 }
             }
         }
@@ -760,56 +774,56 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                     
                     if let cell = self.tableView.cellForRow(at: playIndexPath) as? PostCell {
                         let visibleCells = self.tableView.visibleCells
-                        if visibleCells.contains(cell) {
-                            
-                            //print("Current indexPath ==>%@", playIndexPath)
-                            if let dsPView = player.displayView as? VGEmbedPlayerView {
-                                if playIndexPath != dsPView.indexPath {
-                                    player.cleanPlayer()
-                                    player.displayView.removeFromSuperview()
-                                }
-                            }
-                            
-                            if let ply = player.player?.isPlaying , ply == true {
-                                
-                            }
-                            else {
-                                let feed = self.feedData[playIndexPath.row]
-                                if let type = feed[ConstantKey.contentType] as? String {
-                                    if let url = feed[ConstantKey.image] as? String {
-                                        if type == ConstantKey.video {
-                                            let videoURL = URL(string: url)!
-                                            
-                                            player.replaceVideo(videoURL)
-                                            if let view = player.displayView as? VGEmbedPlayerView {
-                                                view.indexPath = self.currentPlayIndexPath
-                                            }
-                                            cell.playerContentView.addSubview(player.displayView)
-                                            
-                                            if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
-                                                player.play()
-                                            }
-                                            
-                                            player.displayView.snp.remakeConstraints {
-                                                $0.edges.equalTo(cell.playerContentView)
-                                            }
-                                        }
-                                    }
-                                    else {
-                                        player.displayView.removeFromSuperview()
-                                        player.cleanPlayer()
-                                    }
-                                }
-                                else {
-                                    player.displayView.removeFromSuperview()
-                                    player.cleanPlayer()
-                                }
-                            }
-                        }
-                        else {
-                            player.displayView.removeFromSuperview()
-                            player.cleanPlayer()
-                        }
+//                        if visibleCells.contains(cell) {
+//
+//                            //print("Current indexPath ==>%@", playIndexPath)
+//                            if let dsPView = player.displayView as? VGEmbedPlayerView {
+//                                if playIndexPath != dsPView.indexPath {
+//                                    player.cleanPlayer()
+//                                    player.displayView.removeFromSuperview()
+//                                }
+//                            }
+//
+//                            if let ply = player.player?.isPlaying , ply == true {
+//
+//                            }
+//                            else {
+//                                let feed = self.feedData[playIndexPath.row]
+//                                if let type = feed[ConstantKey.contentType] as? String {
+//                                    if let url = feed[ConstantKey.image] as? String {
+//                                        if type == ConstantKey.video {
+//                                            let videoURL = URL(string: url)!
+//
+//                                            player.replaceVideo(videoURL)
+//                                            if let view = player.displayView as? VGEmbedPlayerView {
+//                                                view.indexPath = self.currentPlayIndexPath
+//                                            }
+//                                            cell.playerContentView.addSubview(player.displayView)
+//
+//                                            if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
+//                                                player.play()
+//                                            }
+//
+//                                            player.displayView.snp.remakeConstraints {
+//                                                $0.edges.equalTo(cell.playerContentView)
+//                                            }
+//                                        }
+//                                    }
+//                                    else {
+//                                        player.displayView.removeFromSuperview()
+//                                        player.cleanPlayer()
+//                                    }
+//                                }
+//                                else {
+//                                    player.displayView.removeFromSuperview()
+//                                    player.cleanPlayer()
+//                                }
+//                            }
+//                        }
+//                        else {
+//                            player.displayView.removeFromSuperview()
+//                            player.cleanPlayer()
+//                        }
                     }
                 }
             }

@@ -59,6 +59,9 @@ enum ScrollDirection : Int {
     case crazy
 }
 
+extension Notification.Name {
+    static let RefreshFeedData = Notification.Name.init("com.jdbtechs.blue.refreshFeedData")
+}
 func getThumbnailImage(forUrl url: URL) -> UIImage? {
     let asset: AVAsset = AVAsset(url: url)
     let imageGenerator = AVAssetImageGenerator(asset: asset)
@@ -226,8 +229,7 @@ extension UITextView{
             return Int(self.contentSize.height / fontUnwrapped.lineHeight)
         }
         return 0
-    }
-    
+    }   
 }
 extension Date {
     var string: String {

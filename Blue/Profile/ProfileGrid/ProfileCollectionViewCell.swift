@@ -33,6 +33,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         didSet(newValue) {
             if postType == .caption {
                 self.postTextView.text = object[ConstantKey.caption] as? String
+                self.postTextView.isUserInteractionEnabled = false
             }
             if let url = object[ConstantKey.image] as? String {
                 if postType == .video {

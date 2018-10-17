@@ -26,6 +26,7 @@
 		F1120780214A66E8007F0535 /* ShareTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F112077E214A66E8007F0535 /* ShareTableViewCell.xib */; };
 		F1120782214A6A19007F0535 /* ShareImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */; };
 		F1120784214A6AF2007F0535 /* ShareVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */; };
+		F147708B217751000079D329 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F147708A217751000079D329 /* PostViewController.swift */; };
 		F14E71FC2162620300B8D8A4 /* VGEmbedPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E71FB2162620300B8D8A4 /* VGEmbedPlayerView.swift */; };
 		F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */; };
 		F183D69D21254060009DF2AC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F183D69C21254060009DF2AC /* PostCell.swift */; };
@@ -104,6 +105,7 @@
 		F112077E214A66E8007F0535 /* ShareTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTableViewCell.xib; sourceTree = "<group>"; };
 		F1120781214A6A19007F0535 /* ShareImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareImageTableViewCell.xib; sourceTree = "<group>"; };
 		F1120783214A6AF2007F0535 /* ShareVideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareVideoTableViewCell.xib; sourceTree = "<group>"; };
+		F147708A217751000079D329 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		F14E71FB2162620300B8D8A4 /* VGEmbedPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VGEmbedPlayerView.swift; sourceTree = "<group>"; };
 		F172DF4D2126E215008FE288 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		F183D69C21254060009DF2AC /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				F18A4A4E211D6D29008ED448 /* FeedViewController.swift */,
 				F18A4A57211DDB62008ED448 /* UserSearchViewController.swift */,
 				F1E809A62125984A00CB7197 /* LikeViewController.swift */,
+				F147708A217751000079D329 /* PostViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				F1EACD92214D37BB00BB7349 /* ProfileCollectionViewCell.swift in Sources */,
 				D959983120ED478E00982DBC /* AppDelegate.swift in Sources */,
 				F18A4A4D211D4D78008ED448 /* BasicStuff.swift in Sources */,
+				F147708B217751000079D329 /* PostViewController.swift in Sources */,
 				F172DF4E2126E215008FE288 /* ForgotPasswordVC.swift in Sources */,
 				D959986520ED4FBC00982DBC /* SignUpViewController.swift in Sources */,
 				F18A4A51211D7590008ED448 /* NewPostViewController.swift in Sources */,

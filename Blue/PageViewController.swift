@@ -41,7 +41,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         }
         
         configurePageControl()
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
         self.view.backgroundColor = .white
         
         
@@ -52,10 +52,15 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.pageControl.frame = CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50)
         self.pageControl.isUserInteractionEnabled = false
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
         self.pageControl.translatesAutoresizingMaskIntoConstraints =  false

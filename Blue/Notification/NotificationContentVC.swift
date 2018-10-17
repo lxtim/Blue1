@@ -40,7 +40,6 @@ class NotificationContentVC: UIViewController {
         segmentView.setTitleTextAttributes(selectedColorAttribute, for: .highlighted)
         segmentView.setTitleTextAttributes(selectedColorAttribute, for: .selected)
         
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +63,7 @@ class NotificationContentVC: UIViewController {
     
     @objc func segmentSelected(sender:ScrollableSegmentedControl) {
         let index = sender.selectedSegmentIndex
+        self.selectedIndex = index
         let width = self.scrollVIew.frame.size.width
         let rect:CGRect = CGRect(x: (width * CGFloat(index)), y: 0, width: width, height: scrollVIew.frame.size.height)
         if index == 1 {

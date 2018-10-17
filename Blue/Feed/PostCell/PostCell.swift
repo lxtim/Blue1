@@ -90,10 +90,7 @@ class PostCell: UITableViewCell {
             }
             
             self.caption.text = object[ConstantKey.caption] as? String
-            
-            if let caption = object[ConstantKey.caption] as? String {
-                JDB.log("%@", caption)
-            }
+            self.caption.isUserInteractionEnabled = false
             
             if let timeStamp = object[ConstantKey.date] as? Double {
                 let date = Date(timeIntervalSince1970: timeStamp)
@@ -230,7 +227,7 @@ class PostCell: UITableViewCell {
         let adminUserID = object[ConstantKey.userid] as! String
         let likedUserID = firebaseUser.uid
         
-        if adminUserID != likedUserID {
+//        if adminUserID != likedUserID {
             var json = [String:Any]()
             if object[ConstantKey.image] != nil {
                 if let type = object[ConstantKey.contentType] as? String , type == ConstantKey.video {
@@ -247,7 +244,7 @@ class PostCell: UITableViewCell {
                     
                 }
             }
-        }
+//        }
         
         self.ref.child(ConstantKey.Users).child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
             guard let user = snapshot.value as? [String:Any] else {return}

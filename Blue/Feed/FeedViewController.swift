@@ -38,7 +38,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
         self.tableView.isHidden = true
         self.getMyFollowers()
         self.tableView.register(UINib(nibName: "PostCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCell")
@@ -46,12 +46,14 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.tableView.register(UINib(nibName: "VideoCell", bundle: Bundle.main), forCellReuseIdentifier: "VideoCell")
         
         self.configurePlayer()
-        addTableViewObservers()
+//        addTableViewObservers()
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteData), name: NSNotification.Name.RefreshFeedData, object: nil)
+    
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
         let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
         self.parent?.navigationItem.leftBarButtonItem = searchFeed
         self.parent?.navigationItem.title = "Feed"
@@ -111,6 +113,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     deinit {
         player.cleanPlayer()
         removeTableViewObservers()
+        NotificationCenter.default.removeObserver(self)
     }
     
     func configurePlayer() {
@@ -119,13 +122,19 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         player.backgroundMode = .suspend
     }
     
+    @objc func deleteData() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+           // self.getFeed()
+        }
+    }
+    
     func setRightBar() {
         let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
         let image = #imageLiteral(resourceName: "Star").withRenderingMode(.alwaysOriginal)
         let buttonWithBadge = YTBarButtonItemWithBadge();
         self.searchFeedItem = buttonWithBadge
         buttonWithBadge.setHandler {
-            self.btnShareAction(UIBarButtonItem())
+//            self.btnShareAction();
         }
         buttonWithBadge.setImage(image: image);
         var badgeCount = 0
@@ -137,12 +146,21 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         }
         self.parent?.navigationItem.rightBarButtonItems = [addFeedItem,buttonWithBadge.getBarButtonItem()]
     }
-    @objc func btnAddFeedAction(_ sender: UIBarButtonItem) {
+    @IBAction func btnAddFeedAction(_ sender: UIButton) {
+//        let object = Object(NewPostViewController.self)
+//        self.navigationController?.pushViewController(object, animated: true)
+//    }
+//    @objc func btnAddFeedAction(_ sender: UIBarButtonItem) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let object = Object(NewPostViewController.self)
         self.navigationController?.pushViewController(object, animated: true)
     }
     
-    @IBAction func btnSearchAction(_ sender: UIBarButtonItem) {
+    @IBAction func btnSearchAction(_ sender: UIButton) {
+        
+//    }
+//    @IBAction func btnSearchAction(_ sender: UIBarButtonItem) {
+        
         if let navigation = self.storyboard?.instantiateViewController(withIdentifier: "searchNavigation") as? UINavigationController {
             let searchTableController = navigation.viewControllers.first as! UserSearchViewController
             let searchController = UISearchController(searchResultsController: searchTableController)
@@ -152,21 +170,33 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         }
     }
     
-    @objc func btnShareAction(_ sender:UIBarButtonItem) {
+    @IBAction func btnShareAction(_ sender: UIButton) {
+//    }
+//    @objc func btnShareAction(_ sender:UIBarButtonItem) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let notificationVC = Object(NotificationContentVC.self)
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     func getFeed() {
         HUD.show()
         self.feedData = [[String:Any]]()
-        self.userRef.observe(.value) { (snapshot) in
+        self.userRef.observeSingleEvent(of: DataEventType.value) { (snapshot) in
+            
+//        }
+//        self.userRef.observe(.value) { (snapshot) in
+            if  let value = snapshot.value as? [String:Any] {
+                let keys = value.keys.map({$0})
+                self.getFeedData(keys, value, index: 0)
+            }
+        }
+        self.userRef.observe(.childRemoved) { (snapshot) in
             if  let value = snapshot.value as? [String:Any] {
                 let keys = value.keys.map({$0})
                 self.getFeedData(keys, value, index: 0)
             }
         }
     }
-    
+
     func getFeedData(_ keys:[String], _ sender:[String:Any] , index:Int) {
         if index >= sender.count {
             HUD.dismiss()
@@ -188,7 +218,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                     for item in visibleCell {
                         if let cell = item as? PostCell , cell.type == .video {
                             self.currentPlayIndexPath = cell.indexPath
-                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.tableView, change: nil, context: nil)
+//                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.tableView, change: nil, context: nil)
                         }
                     }
                 }
@@ -200,8 +230,14 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             let userValue = sender[key] as! [String:Any]
             
             if BasicStuff.shared.followArray.contains(key) || firebaseUser.uid == key {
-                self.feedRef.child(key).observe(.value, with: { (snap) in
+                
+                self.feedRef.child(key).observeSingleEvent(of: .value) { (snap) in
+//
+//                }
+//                self.feedRef.child(key).observe(.value, with: { (snap) in
+                    
                     if let value = snap.value as? [String:Any] {
+                        JDB.log("child added ==>%@",value)
                         var isItemChanged:Bool = false
                         var changedIndex:[Int] = [Int]()
                         for (k,v) in value {
@@ -240,7 +276,44 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                             self.getFeedData(keys, sender, index: next)
                         }
                     }
+                }//)
+                
+                self.feedRef.child(key).observe(.childChanged, with: { (snap) in
+                    if var value = snap.value as? [String:Any] {
+                        if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
+                            let data = self.feedData[itemIndex]
+                            let user = data[ConstantKey.user] as! [String:Any]
+                            value[ConstantKey.user] = user
+                            self.feedData.remove(at: itemIndex)
+                            self.feedData.insert(value, at: itemIndex)
+                            let indexPath = IndexPath(row: itemIndex, section: 0)
+                            self.tableView.reloadRows(at: [indexPath], with: .none)
+                        }
+                        else {
+                            let userID = value[ConstantKey.userid] as! String
+                            self.userRef.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                                if let user = snapshot.value as? [String:Any] {
+                                    value[ConstantKey.user] = user
+                                    self.feedData.append(value)
+                                    let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+                                    self.feedData = sortedArray
+                                    self.tableView.reloadData()
+                                }
+                            })
+                        }
+                    }
                 })
+                
+                self.feedRef.child(key).observe(.childRemoved, with: { (snap) in
+                    if var value = snap.value as? [String:Any] {
+                        if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
+                            self.feedData.remove(at: itemIndex)
+                            let indexPath = IndexPath(row: itemIndex, section: 0)
+                            self.tableView.deleteRows(at: [indexPath], with: .none)
+                        }
+                    }
+                })
+                
             }
             else {
                 DispatchQueue.main.async {
@@ -253,7 +326,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     func getMyFollowers() {
         HUD.show()
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
-            HUD.dismiss()
             if let snap = snapshot.value as? NSDictionary {
                 BasicStuff.shared.UserData = NSMutableDictionary(dictionary: snap)
                 self.setRightBar()
@@ -304,6 +376,11 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                 cell.delegate = self
                 cell.indexPath = indexPath
                 self.currentPlayIndexPath = indexPath
+                cell.playCallBack = { (index) in
+                    if let index = index {
+                        self.tableView(self.tableView, didSelectRowAt: index)
+                    }
+                }
                 return cell
             }
             else {
@@ -327,7 +404,10 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     //MARK:- UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let feed = self.feedData[indexPath.row]
+        let object = Object(PostViewController.self)
+        object.object = feed
+        self.navigationController?.pushViewController(object, animated: true)
     }
     
     
@@ -352,6 +432,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func feedCommentDidSelect(post: [String : Any], user: [String : Any]) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let commentVC = Object(CommentVC.self)
         commentVC.post = post
         commentVC.user = user
@@ -359,6 +440,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func feedShareDidSelect(post: [String : Any], user: [String : Any]) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let sharePostVC = Object(SharePostViewController.self)
         sharePostVC.post = post
         sharePostVC.user = user
@@ -367,6 +449,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     //MARK:- UserSearchDelegate
     func userDidSelect(_ data: NSDictionary) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let profileVC = Object(ProfileViewController.self)
         profileVC.isOtherUserProfile = true
         profileVC.userProfileData = NSMutableDictionary(dictionary: data)
@@ -374,7 +457,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("Scroll Complete")
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -404,45 +487,45 @@ extension FeedViewController {
                     let visibleCells = tableView.visibleCells
                     if visibleCells.contains(cell) {
                         if cell.type == .video {
-                            if self.isViewShow == false {
-                                return
-                            }
-                            
-                            //print("Current indexPath ==>%@", playIndexPath)
-                            if let dsPView = player.displayView as? VGEmbedPlayerView {
-                                if playIndexPath != dsPView.indexPath {
-                                    self.player.cleanPlayer()
-                                    self.player.displayView.removeFromSuperview()
-                                }
-                            }
-                            
-                            if let ply = player.player?.isPlaying , ply == true {
-                                
-                            }
-                            else {
-                                let feed = self.feedData[playIndexPath.row]
-                                if let type = feed[ConstantKey.contentType] as? String {
-                                    if let url = feed[ConstantKey.image] as? String {
-                                        if type == ConstantKey.video {
-                                            let videoURL = URL(string: url)!
-                                    
-                                            self.player.replaceVideo(videoURL)
-                                            if let view = self.player.displayView as? VGEmbedPlayerView {
-                                                view.indexPath = self.currentPlayIndexPath
-                                            }
-                                            cell.playerContentView.addSubview(self.player.displayView)
-                                            
-                                            if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
-                                                player.play()
-                                            }
-                                            
-                                            self.player.displayView.snp.remakeConstraints {
-                                                $0.edges.equalTo(cell.playerContentView)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+//                            if self.isViewShow == false {
+//                                return
+//                            }
+//
+//                            //print("Current indexPath ==>%@", playIndexPath)
+//                            if let dsPView = player.displayView as? VGEmbedPlayerView {
+//                                if playIndexPath != dsPView.indexPath {
+//                                    self.player.cleanPlayer()
+//                                    self.player.displayView.removeFromSuperview()
+//                                }
+//                            }
+//
+//                            if let ply = player.player?.isPlaying , ply == true {
+//
+//                            }
+//                            else {
+//                                let feed = self.feedData[playIndexPath.row]
+//                                if let type = feed[ConstantKey.contentType] as? String {
+//                                    if let url = feed[ConstantKey.image] as? String {
+//                                        if type == ConstantKey.video {
+//                                            let videoURL = URL(string: url)!
+//
+//                                            self.player.replaceVideo(videoURL)
+//                                            if let view = self.player.displayView as? VGEmbedPlayerView {
+//                                                view.indexPath = self.currentPlayIndexPath
+//                                            }
+//                                            cell.playerContentView.addSubview(self.player.displayView)
+//
+//                                            if let duration = feed[ConstantKey.duration] as? Double , duration < 70 {
+//                                                player.play()
+//                                            }
+//
+//                                            self.player.displayView.snp.remakeConstraints {
+//                                                $0.edges.equalTo(cell.playerContentView)
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
                         }
                         else {
                             self.player.displayView.removeFromSuperview()

@@ -217,7 +217,7 @@ class ShareTableViewCell: UITableViewCell {
     func sendLikeNotification() {
         let adminUserID = self.post[ConstantKey.userid] as! String
         let likedUserID = firebaseUser.uid
-        if adminUserID != likedUserID {
+//        if adminUserID != likedUserID {
             var json = [String:Any]()
             if self.post[ConstantKey.image] != nil {
                 if let type = self.post[ConstantKey.contentType] as? String , type == ConstantKey.video {
@@ -244,6 +244,6 @@ class ShareTableViewCell: UITableViewCell {
                 notificationCount = notificationCount + 1
                 self.ref.child(ConstantKey.Users).child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
             }
-        }
+//        }
     }
 }
