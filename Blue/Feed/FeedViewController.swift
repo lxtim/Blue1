@@ -15,6 +15,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
 
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var btnFavourite: MFBadgeButton!
+    
     var ref: DatabaseReference = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
@@ -35,6 +37,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var lastContentOffset: CGFloat = 0.0
     
     var isViewShow:Bool = false
+    
+    var changeObserver:[String:[UInt]] = [String:[UInt]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,22 +133,25 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func setRightBar() {
-        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
-        let image = #imageLiteral(resourceName: "Star").withRenderingMode(.alwaysOriginal)
-        let buttonWithBadge = YTBarButtonItemWithBadge();
-        self.searchFeedItem = buttonWithBadge
-        buttonWithBadge.setHandler {
-//            self.btnShareAction();
-        }
-        buttonWithBadge.setImage(image: image);
+//        
+//        
+//        let addFeedItem:UIBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "btn_add_final"), landscapeImagePhone: #imageLiteral(resourceName: "btn_add_final"), style: UIBarButtonItemStyle.done, target: self, action: #selector(btnAddFeedAction(_:)))
+//        let image = #imageLiteral(resourceName: "Star").withRenderingMode(.alwaysOriginal)
+//        let buttonWithBadge = YTBarButtonItemWithBadge();
+//        self.searchFeedItem = buttonWithBadge
+//        buttonWithBadge.setHandler {
+////            self.btnShareAction();
+//        }
+//        buttonWithBadge.setImage(image: image);
         var badgeCount = 0
         if let count = BasicStuff.shared.UserData[ConstantKey.unreadCount] as? Int {
             badgeCount = count
         }
-        if let searchFeed = self.searchFeedItem {
-            searchFeed.setBadge(value: "\(badgeCount)");
-        }
-        self.parent?.navigationItem.rightBarButtonItems = [addFeedItem,buttonWithBadge.getBarButtonItem()]
+        self.btnFavourite.badgeValue = "\(badgeCount)"
+//        if let searchFeed = self.searchFeedItem {
+//            searchFeed.setBadge(value: "\(badgeCount)");
+//        }
+//        self.parent?.navigationItem.rightBarButtonItems = [addFeedItem,buttonWithBadge.getBarButtonItem()]
     }
     @IBAction func btnAddFeedAction(_ sender: UIButton) {
 //        let object = Object(NewPostViewController.self)
@@ -187,16 +194,71 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             if  let value = snapshot.value as? [String:Any] {
                 let keys = value.keys.map({$0})
                 self.getFeedData(keys, value, index: 0)
+                
+                for (k,v) in self.changeObserver {
+                    for int in v {
+                        self.feedRef.child(k).removeObserver(withHandle: int)
+                    }
+                }
+                self.changeObserver.removeAll()
             }
         }
         self.userRef.observe(.childRemoved) { (snapshot) in
             if  let value = snapshot.value as? [String:Any] {
                 let keys = value.keys.map({$0})
                 self.getFeedData(keys, value, index: 0)
+                
+                for (k,v) in self.changeObserver {
+                    for int in v {
+                        self.feedRef.child(k).removeObserver(withHandle: int)
+                    }
+                }
+                self.changeObserver.removeAll()
             }
         }
     }
 
+    func observeChangedObject(_ key:String) {
+      let changeIndex = self.feedRef.child(key).observe(.childChanged, with: { (snap) in
+            if var value = snap.value as? [String:Any] {
+                if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
+                    let data = self.feedData[itemIndex]
+                    let user = data[ConstantKey.user] as! [String:Any]
+                    value[ConstantKey.user] = user
+                    self.feedData.remove(at: itemIndex)
+                    self.feedData.insert(value, at: itemIndex)
+                    let indexPath = IndexPath(row: itemIndex, section: 0)
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+                else {
+                    let userID = value[ConstantKey.userid] as! String
+                    self.userRef.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let user = snapshot.value as? [String:Any] {
+                            value[ConstantKey.user] = user
+                            self.feedData.append(value)
+                            let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+                            self.feedData = sortedArray
+                            self.tableView.reloadData()
+                        }
+                    })
+                }
+            }
+        })
+        
+       let removeIndex = self.feedRef.child(key).observe(DataEventType.childRemoved) { (snap) in
+            if var value = snap.value as? [String:Any] {
+                if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
+                    self.feedData.remove(at: itemIndex)
+                    let indexPath = IndexPath(row: itemIndex, section: 0)
+                    self.tableView.beginUpdates()
+                    self.tableView.deleteRows(at: [indexPath], with: .none)
+                    self.tableView.endUpdates()
+                }
+            }
+        }
+        
+        self.changeObserver[key] = [changeIndex,removeIndex]
+    }
     func getFeedData(_ keys:[String], _ sender:[String:Any] , index:Int) {
         if index >= sender.count {
             HUD.dismiss()
@@ -235,9 +297,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
 //
 //                }
 //                self.feedRef.child(key).observe(.value, with: { (snap) in
-                    
                     if let value = snap.value as? [String:Any] {
-                        JDB.log("child added ==>%@",value)
                         var isItemChanged:Bool = false
                         var changedIndex:[Int] = [Int]()
                         for (k,v) in value {
@@ -276,44 +336,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                             self.getFeedData(keys, sender, index: next)
                         }
                     }
-                }//)
-                
-                self.feedRef.child(key).observe(.childChanged, with: { (snap) in
-                    if var value = snap.value as? [String:Any] {
-                        if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
-                            let data = self.feedData[itemIndex]
-                            let user = data[ConstantKey.user] as! [String:Any]
-                            value[ConstantKey.user] = user
-                            self.feedData.remove(at: itemIndex)
-                            self.feedData.insert(value, at: itemIndex)
-                            let indexPath = IndexPath(row: itemIndex, section: 0)
-                            self.tableView.reloadRows(at: [indexPath], with: .none)
-                        }
-                        else {
-                            let userID = value[ConstantKey.userid] as! String
-                            self.userRef.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-                                if let user = snapshot.value as? [String:Any] {
-                                    value[ConstantKey.user] = user
-                                    self.feedData.append(value)
-                                    let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
-                                    self.feedData = sortedArray
-                                    self.tableView.reloadData()
-                                }
-                            })
-                        }
-                    }
-                })
-                
-                self.feedRef.child(key).observe(.childRemoved, with: { (snap) in
-                    if var value = snap.value as? [String:Any] {
-                        if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
-                            self.feedData.remove(at: itemIndex)
-                            let indexPath = IndexPath(row: itemIndex, section: 0)
-                            self.tableView.deleteRows(at: [indexPath], with: .none)
-                        }
-                    }
-                })
-                
+                }
+                self.observeChangedObject(key)
             }
             else {
                 DispatchQueue.main.async {
@@ -325,6 +349,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     func getMyFollowers() {
         HUD.show()
+        var localisFirsTime = false
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
             if let snap = snapshot.value as? NSDictionary {
                 BasicStuff.shared.UserData = NSMutableDictionary(dictionary: snap)
@@ -338,7 +363,10 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                 if let observer = self.currentObserver {
                     self.ref.removeObserver(withHandle: observer)
                 }
-                self.getFeed()
+                if localisFirsTime == false {
+                    localisFirsTime = true
+                    self.getFeed()
+                }
             }
         }
     }

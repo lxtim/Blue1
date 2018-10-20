@@ -13,9 +13,11 @@ import Firebase
 class PostViewController: UIViewController {
 
     
-    var ref: DatabaseReference = Database.database().reference()
+//    var ref: DatabaseReference = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
+    var shareRef = Database.database().reference().child(ConstantKey.share)
+    var notificationRef = Database.database().reference().child(ConstantKey.notification)
     
     
     var object:[String:Any] = [String:Any]()
@@ -24,7 +26,7 @@ class PostViewController: UIViewController {
     var player:VGPlayer!
     var playerView : VGEmbedPlayerView!
     
-    
+
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var caption: UITextView!
@@ -41,6 +43,8 @@ class PostViewController: UIViewController {
     @IBOutlet weak var btnPlayVideo: UIButton!
     
     @IBOutlet weak var btnMore: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -149,13 +153,41 @@ class PostViewController: UIViewController {
     @IBAction func btnMoreAction(_ sender: UIButton) {
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             HUD.show()
+            func deleteSharePost() {
+                guard let userID = self.object[ConstantKey.userid] as? String else {return}
+                guard let postID = self.object[ConstantKey.id] as? String else {return}
+                
+                self.shareRef.child(userID).observeSingleEvent(of: DataEventType.value, with: { (snap) in
+                    if let value = snap.value as? [String:Any] {
+                        var sharePostKeys:[String] = [String]()
+                        for (k,v) in value {
+                            if let sharePost  = v as? [String:Any] {
+                                if sharePost[ConstantKey.postID] as! String == postID {
+                                    sharePostKeys.append(k)
+                                }
+                            }
+                        }
+                        
+                        for item in sharePostKeys {
+                            self.shareRef.child(userID).child(item).removeValue()
+                        }
+                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
+                        self.navigationController?.popViewController(animated: true)
+                        HUD.dismiss()
+                    }
+                    else {
+                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
+                        self.navigationController?.popViewController(animated: true)
+                        HUD.dismiss()
+                    }
+                })
+            }
+            
             func deletePost() {
                 guard let userID = self.object[ConstantKey.userid] as? String else {return}
                 guard let postID = self.object[ConstantKey.id] as? String else {return}
                 self.feedRef.child(userID).child(postID).removeValue(completionBlock: { (error, ref) in
-                    NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
-                    self.navigationController?.popViewController(animated: true)
-                    HUD.dismiss()
+                    deleteSharePost()
                 })
             }
             
@@ -207,7 +239,7 @@ class PostViewController: UIViewController {
                     self.navigationController?.pushViewController(profile, animated: true)
                 }
                 else {
-                    self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                    self.userRef.child(id).observeSingleEvent(of: .value) { (snapshot) in
                         if let value = snapshot.value as? [String:Any] {
                             let profile = Object(ProfileViewController.self)
                             profile.isOtherUserProfile = true
@@ -231,7 +263,7 @@ class PostViewController: UIViewController {
         if self.likeImg.tag == 0 {
             likes.add(firebaseUser.uid)
             object[ConstantKey.likes] = likes
-            self.ref.child(ConstantKey.feed).child(userID).child(feedID).updateChildValues([ConstantKey.likes:likes]) { (error, refrance) in
+            self.feedRef.child(userID).child(feedID).updateChildValues([ConstantKey.likes:likes]) { (error, refrance) in
                 if error == nil {
                     self.likeImg.isSelected = false
                     self.likeImg.tag = 1
@@ -242,7 +274,7 @@ class PostViewController: UIViewController {
         else {
             likes.remove(firebaseUser.uid)
             object[ConstantKey.likes] = likes
-            self.ref.child(ConstantKey.feed).child(userID).child(feedID).updateChildValues([ConstantKey.likes:likes]) { (error, refrance) in
+            self.feedRef.child(userID).child(feedID).updateChildValues([ConstantKey.likes:likes]) { (error, refrance) in
                 if error == nil {
                     self.likeImg.isSelected = true
                     self.likeImg.tag = 0
@@ -262,7 +294,7 @@ class PostViewController: UIViewController {
                     self.navigationController?.pushViewController(commentVC, animated: true)
                 }
                 else {
-                    self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                    self.userRef.child(id).observeSingleEvent(of: .value) { (snapshot) in
                         if let value = snapshot.value as? [String:Any] {
                             let commentVC = Object(CommentVC.self)
                             commentVC.post = self.object
@@ -292,21 +324,21 @@ class PostViewController: UIViewController {
         json[ConstantKey.id] = likedUserID
         json[ConstantKey.date] = Date().timeStamp
         json[ConstantKey.contentType] = NotificationType.like.rawValue
-        self.ref.child(ConstantKey.notification).child(adminUserID).child(object[ConstantKey.id] as! String).setValue(json) { (error, ref) in
+        self.notificationRef.child(adminUserID).child(object[ConstantKey.id] as! String).setValue(json) { (error, ref) in
             if error == nil {
                 
             }
         }
         //        }
         
-        self.ref.child(ConstantKey.Users).child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
+        self.userRef.child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
             guard let user = snapshot.value as? [String:Any] else {return}
             var notificationCount = 0
             if let count = user[ConstantKey.unreadCount] as? Int {
                 notificationCount = count
             }
             notificationCount = notificationCount + 1
-            self.ref.child(ConstantKey.Users).child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
+            self.userRef.child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
         }
     }
     
@@ -320,7 +352,7 @@ class PostViewController: UIViewController {
                     self.navigationController?.pushViewController(sharePostVC, animated: true)
                 }
                 else {
-                    self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+                    self.userRef.child(id).observeSingleEvent(of: .value) { (snapshot) in
                         if let value = snapshot.value as? [String:Any] {
                             let sharePostVC = Object(SharePostViewController.self)
                             sharePostVC.post = self.object

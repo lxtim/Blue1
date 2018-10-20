@@ -42,12 +42,11 @@ class SharePostViewController: UIViewController {
         }
         
         if let content = post[ConstantKey.image] as? String {
+            self.playerContentView.isHidden = false
+            
             if let type = post[ConstantKey.contentType] as? String , type == ConstantKey.video {
                 //Video
                 self.contentType = .video
-                self.feedImageView.isHidden = true
-                
-                self.playerContentView.isHidden = false
                 
                 playerView = VGEmbedPlayerView()
                 player = VGPlayer(playerView: playerView!)
@@ -62,19 +61,16 @@ class SharePostViewController: UIViewController {
                 if let duration = post[ConstantKey.duration] as? Double , duration < 70 {
                     self.player?.play()
                 }
+                
             }
             else {
-                
                 //Image
-                self.feedImageView.isHidden = false
-                self.playerContentView.isHidden = true
                 self.feedImageView.sd_setImage(with: URL(string: content)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 self.contentType = .image
             }
         }
         else {
             self.playerContentView.isHidden = true
-            self.feedImageView.isHidden = true
             self.contentType = .caption
         }
         
@@ -106,9 +102,17 @@ class SharePostViewController: UIViewController {
             if error == nil {
                 let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (action) in
                     DispatchQueue.main.async {
-                        let notificationVC = Object(NotificationContentVC.self)
-                        notificationVC.selectedIndex = 1
-                        self.navigationController?.pushViewController(notificationVC, animated: true)
+                        if var viewContrllers = self.navigationController?.viewControllers {
+                            viewContrllers.removeLast()
+                            let notificationVC = Object(NotificationContentVC.self)
+                            notificationVC.selectedIndex = 1
+                            viewContrllers.append(notificationVC)
+                            self.navigationController?.setViewControllers(viewContrllers, animated: true)
+                        }
+                        
+//                        let notificationVC = Object(NotificationContentVC.self)
+//                        notificationVC.selectedIndex = 1
+//                        self.navigationController?.pushViewController(notificationVC, animated: true)
                     }
                 })
                 self.showAlert(message: "Post Shared Successfully.", actions: actionOK)

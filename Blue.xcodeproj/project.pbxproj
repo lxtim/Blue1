@@ -47,6 +47,7 @@
 		F1B21565214B88E60076AAD7 /* SharePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B21564214B88E60076AAD7 /* SharePostViewController.swift */; };
 		F1B92AA72147D0C0003C560E /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */; };
 		F1BEB80E211B0C0A006472DA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BEB80D211B0C0A006472DA /* SignInViewController.swift */; };
+		F1CCF91C217AF7DD000BF0D2 /* MFBadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CCF91B217AF7DB000BF0D2 /* MFBadgeButton.swift */; };
 		F1E3D1662146814C00D417D3 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E3D1652146814C00D417D3 /* CommentVC.swift */; };
 		F1E809A321258CC300CB7197 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A221258CC300CB7197 /* FollowingViewController.swift */; };
 		F1E809A72125984A00CB7197 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E809A62125984A00CB7197 /* LikeViewController.swift */; };
@@ -127,6 +128,7 @@
 		F1B92AA62147D0C0003C560E /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		F1BEB80D211B0C0A006472DA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		F1BF18B53ACC74870A273202 /* Pods-BlueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueTests/Pods-BlueTests.release.xcconfig"; sourceTree = "<group>"; };
+		F1CCF91B217AF7DB000BF0D2 /* MFBadgeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFBadgeButton.swift; sourceTree = "<group>"; };
 		F1E3D1652146814C00D417D3 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		F1E809A221258CC300CB7197 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		F1E809A62125984A00CB7197 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		F18A4A4B211D4D56008ED448 /* BasicStuff */ = {
 			isa = PBXGroup;
 			children = (
+				F1CCF91B217AF7DB000BF0D2 /* MFBadgeButton.swift */,
 				F187FBC5216C8C300066C551 /* VGCollectionPlayerView.swift */,
 				F183D6A2212552FD009DF2AC /* UIView+NibInstance.swift */,
 				F107D7CE2143F25B00057001 /* video_Compression.swift */,
@@ -604,6 +607,7 @@
 				F1B21565214B88E60076AAD7 /* SharePostViewController.swift in Sources */,
 				F1A1B95C21243C2800D24606 /* FollwersViewController.swift in Sources */,
 				D934FE6F2117647500A5F66F /* ProfileViewController.swift in Sources */,
+				F1CCF91C217AF7DD000BF0D2 /* MFBadgeButton.swift in Sources */,
 				F1B206982148F331004955E1 /* NotificationTableViewCell.swift in Sources */,
 				F1A1B95E21244A8A00D24606 /* SettingViewController.swift in Sources */,
 				F18A4A4F211D6D29008ED448 /* FeedViewController.swift in Sources */,
