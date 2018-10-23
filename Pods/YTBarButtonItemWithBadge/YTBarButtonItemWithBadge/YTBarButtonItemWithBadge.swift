@@ -20,7 +20,7 @@ public class YTBarButtonItemWithBadge {
     
     public  init() {
         
-        badgeLabel.font = UIFont.systemFont(ofSize: 11);
+        badgeLabel.font = UIFont(name: "HelveticaNeue", size: 11)!
         badgeLabel.textAlignment = .center;
         badgeLabel.layer.masksToBounds = true;
         badgeLabel.layer.cornerRadius = badgeLabel.frame.width / 2;

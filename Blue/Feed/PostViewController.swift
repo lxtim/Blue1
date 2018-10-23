@@ -171,12 +171,12 @@ class PostViewController: UIViewController {
                         for item in sharePostKeys {
                             self.shareRef.child(userID).child(item).removeValue()
                         }
-                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
+//                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
                         self.navigationController?.popViewController(animated: true)
                         HUD.dismiss()
                     }
                     else {
-                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
+//                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
                         self.navigationController?.popViewController(animated: true)
                         HUD.dismiss()
                     }

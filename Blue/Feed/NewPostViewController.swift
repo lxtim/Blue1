@@ -145,7 +145,6 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                 let storageMetaData = StorageMetadata()
                 storageMetaData.contentType = "image/png"
                 imageRef.putData(UIImageJPEGRepresentation(img, 0.5)!, metadata: storageMetaData) { (metadata, error) in
-                    JDB.error("==>%@", error ?? "no error")
                     if metadata == nil {
                         HUD.dismiss()
                         return
