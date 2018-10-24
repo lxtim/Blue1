@@ -64,6 +64,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     }
     
     func getRefresh() {
+        HUD.show()
         self.follow = BasicStuff.shared.followArray.map({$0 as! String})
         self.follow.append(firebaseUser.uid)
         self.shareTableData = [[String:Any]]()
@@ -107,8 +108,12 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     func getShareContent(count:Int) {
         
         if count >= self.shareTableData.count {
+            HUD.dismiss()
             self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
             JDB.log("Share data ==>%@", self.shareTableData)
+            
+            self.shareTableView.reloadData()
+            
             if self.isFirstTime {
                 self.isFirstTime = false
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
@@ -121,7 +126,6 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
                     }
                 }
             }
-            self.shareTableView.reloadData()
             return
         }
         else {

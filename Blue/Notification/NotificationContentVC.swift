@@ -40,6 +40,7 @@ class NotificationContentVC: UIViewController {
         segmentView.setTitleTextAttributes(selectedColorAttribute, for: .highlighted)
         segmentView.setTitleTextAttributes(selectedColorAttribute, for: .selected)
         
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -52,7 +52,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.pageControl.frame = CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50)
         self.pageControl.isUserInteractionEnabled = false
     }

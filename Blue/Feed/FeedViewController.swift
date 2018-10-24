@@ -183,9 +183,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     @IBAction func btnShareAction(_ sender: UIButton) {
-//    }
-//    @objc func btnShareAction(_ sender:UIBarButtonItem) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let notificationVC = Object(NotificationContentVC.self)
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
@@ -223,35 +220,41 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     func observeChangedObject(_ key:String) {
       let changeIndex = self.feedRef.child(key).observe(.childChanged, with: { (snap) in
             if var value = snap.value as? [String:Any] {
-                if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == value[ConstantKey.id] as! String }) {
-                    let data = self.feedData[itemIndex]
-                    let user = data[ConstantKey.user] as! [String:Any]
-                    value[ConstantKey.user] = user
-                    self.feedData.remove(at: itemIndex)
-                    self.feedData.insert(value, at: itemIndex)
-                    
-//                    if let indexPath = self.tableView.indexPathsForVisibleRows {
-//                        self.tableView.beginUpdates()
-//                        self.tableView.reloadRows(at: indexPath, with: .none)
-//                        self.tableView.endUpdates()
-//                    }
-                    
-//                    let indexPath = IndexPath(row: itemIndex, section: 0)
-//                    self.tableView.beginUpdates()
-//                    self.tableView.reloadRows(at: [indexPath], with: .none)
-//                    self.tableView.endUpdates()
+                if let id = value[ConstantKey.id] as? String {
+                    if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == id }) {
+                        let data = self.feedData[itemIndex]
+                        let user = data[ConstantKey.user] as! [String:Any]
+                        value[ConstantKey.user] = user
+                        self.feedData.remove(at: itemIndex)
+                        self.feedData.insert(value, at: itemIndex)
+                        
+                        //                    if let indexPath = self.tableView.indexPathsForVisibleRows {
+                        //                        self.tableView.beginUpdates()
+                        //                        self.tableView.reloadRows(at: indexPath, with: .none)
+                        //                        self.tableView.endUpdates()
+                        //                    }
+                        
+                        //                    let indexPath = IndexPath(row: itemIndex, section: 0)
+                        //                    self.tableView.beginUpdates()
+                        //                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                        //                    self.tableView.endUpdates()
+                    }
+                    else {
+                        let userID = value[ConstantKey.userid] as! String
+                        self.userRef.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                            if let user = snapshot.value as? [String:Any] {
+                                value[ConstantKey.user] = user
+                                self.feedData.append(value)
+                                let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+                                self.feedData = sortedArray
+                                self.tableView.reloadData()
+                            }
+                        })
+                    }
                 }
                 else {
-                    let userID = value[ConstantKey.userid] as! String
-                    self.userRef.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let user = snapshot.value as? [String:Any] {
-                            value[ConstantKey.user] = user
-                            self.feedData.append(value)
-                            let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
-                            self.feedData = sortedArray
-                            self.tableView.reloadData()
-                        }
-                    })
+                    JDB.log("No ID Found ==>%@", value)
+//                    self.showAlert("Please check id on feed content line 257")
                 }
             }
         })

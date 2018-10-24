@@ -323,7 +323,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                     for (k,v) in value {
                         if var data = v as? [String:Any] {
                             data[ConstantKey.user] = snapshot.value
-                            data[ConstantKey.id] = k
+//                            data[ConstantKey.id] = k
                             if let index = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
                                 self.feedData.remove(at: index)
                                 changedIndex.append(index)

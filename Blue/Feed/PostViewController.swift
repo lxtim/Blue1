@@ -152,37 +152,42 @@ class PostViewController: UIViewController {
     
     @IBAction func btnMoreAction(_ sender: UIButton) {
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            
             HUD.show()
+
             func deleteSharePost() {
-                guard let userID = self.object[ConstantKey.userid] as? String else {return}
+            
                 guard let postID = self.object[ConstantKey.id] as? String else {return}
                 
-                self.shareRef.child(userID).observeSingleEvent(of: DataEventType.value, with: { (snap) in
+                self.shareRef.observeSingleEvent(of: DataEventType.value, with: { (snap) in
                     if let value = snap.value as? [String:Any] {
-                        var sharePostKeys:[String] = [String]()
+                        
+                        var sharePostKeys:[String:String] = [String:String]()
                         for (k,v) in value {
-                            if let sharePost  = v as? [String:Any] {
-                                if sharePost[ConstantKey.postID] as! String == postID {
-                                    sharePostKeys.append(k)
+                            if let sharePost = v as? [String:Any] {
+                                for (k1,v1) in sharePost {
+                                    if let originalPost = v1 as? [String:Any] {
+                                        if let pID = originalPost[ConstantKey.postID] as? String , pID == postID {
+                                            sharePostKeys[k] = k1
+                                        }
+                                    }
                                 }
                             }
                         }
                         
-                        for item in sharePostKeys {
-                            self.shareRef.child(userID).child(item).removeValue()
+                        for (k,v) in sharePostKeys {
+                            self.shareRef.child(k).child(v).removeValue()
                         }
-//                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
                         self.navigationController?.popViewController(animated: true)
                         HUD.dismiss()
                     }
                     else {
-//                        NotificationCenter.default.post(name: NSNotification.Name.RefreshFeedData, object: nil)
                         self.navigationController?.popViewController(animated: true)
                         HUD.dismiss()
                     }
                 })
             }
-            
+
             func deletePost() {
                 guard let userID = self.object[ConstantKey.userid] as? String else {return}
                 guard let postID = self.object[ConstantKey.id] as? String else {return}
@@ -190,7 +195,7 @@ class PostViewController: UIViewController {
                     deleteSharePost()
                 })
             }
-            
+
             if let image = self.object[ConstantKey.image] as? String  {
                 let storage = Storage.storage()
                 if let type = self.object[ConstantKey.contentType] as? String , type == ConstantKey.video {
@@ -214,7 +219,7 @@ class PostViewController: UIViewController {
             else {
                 deletePost()
             }
-            JDB.log("Delete Object ==>%@", self.object)
+//            JDB.log("Delete Object ==>%@", self.object)
         }
         let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
             
@@ -312,33 +317,33 @@ class PostViewController: UIViewController {
         let adminUserID = object[ConstantKey.userid] as! String
         let likedUserID = firebaseUser.uid
         
-        //        if adminUserID != likedUserID {
-        var json = [String:Any]()
-        if object[ConstantKey.image] != nil {
-            if let type = object[ConstantKey.contentType] as? String , type == ConstantKey.video {
+        if adminUserID != likedUserID {
+            var json = [String:Any]()
+            if object[ConstantKey.image] != nil {
+                if let type = object[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                }
+                else {
+                    json[ConstantKey.image] = object[ConstantKey.image]
+                }
             }
-            else {
-                json[ConstantKey.image] = object[ConstantKey.image]
+            json[ConstantKey.id] = likedUserID
+            json[ConstantKey.date] = Date().timeStamp
+            json[ConstantKey.contentType] = NotificationType.like.rawValue
+            self.notificationRef.child(adminUserID).child(object[ConstantKey.id] as! String).setValue(json) { (error, ref) in
+                if error == nil {
+                    
+                }
             }
-        }
-        json[ConstantKey.id] = likedUserID
-        json[ConstantKey.date] = Date().timeStamp
-        json[ConstantKey.contentType] = NotificationType.like.rawValue
-        self.notificationRef.child(adminUserID).child(object[ConstantKey.id] as! String).setValue(json) { (error, ref) in
-            if error == nil {
-                
+            
+            self.userRef.child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
+                guard let user = snapshot.value as? [String:Any] else {return}
+                var notificationCount = 0
+                if let count = user[ConstantKey.unreadCount] as? Int {
+                    notificationCount = count
+                }
+                notificationCount = notificationCount + 1
+                self.userRef.child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
             }
-        }
-        //        }
-        
-        self.userRef.child(adminUserID).observeSingleEvent(of: .value) { (snapshot) in
-            guard let user = snapshot.value as? [String:Any] else {return}
-            var notificationCount = 0
-            if let count = user[ConstantKey.unreadCount] as? Int {
-                notificationCount = count
-            }
-            notificationCount = notificationCount + 1
-            self.userRef.child(adminUserID).updateChildValues([ConstantKey.unreadCount:notificationCount])
         }
     }
     
