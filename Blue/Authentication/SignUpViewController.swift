@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SignUpViewController: ViewController {
+class SignUpViewController: UIViewController {
     
     
     @IBOutlet weak var username: UITextField!
@@ -46,6 +46,7 @@ class SignUpViewController: ViewController {
         Auth.auth().createUser(withEmail: email, password: pass) { user, error in
             HUD.dismiss()
             guard let user = user else {
+                self.showAlert(error!.localizedDescription)
                 print("Error: \(error!.localizedDescription)")
                 return
             }
@@ -67,6 +68,7 @@ class SignUpViewController: ViewController {
                         JDB.error("Data base error ==>%@", error.localizedDescription)
                     })
                 } else {
+                    self.showAlert(error!.localizedDescription)
                     print("Error: \(error!.localizedDescription)")
                 }
             }

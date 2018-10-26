@@ -43,16 +43,16 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
         super.viewDidLoad()
 
         self.navigationItem.titleView = self.searchBar
-        self.navigationController?.navigationBar.barTintColor = UIColor(patternImage: #imageLiteral(resourceName: "Rectangle 8"))
+//        self.navigationController?.navigationBar.barTintColor = UIColor(patternImage: #imageLiteral(resourceName: "Rectangle 8"))
         
         self.searchBar.delegate = self
         self.searchBar.showsCancelButton = true
-        self.searchBar.tintColor = .white
+        self.searchBar.tintColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
         
         for view in self.searchBar.subviews {
             for subview in view.subviews {
                 if let searchTextField = subview as? UITextField {
-                    searchTextField.tintColor = UIColor(patternImage: #imageLiteral(resourceName: "Rectangle 8"))
+                    searchTextField.tintColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
                     searchTextField.becomeFirstResponder()
                 }
             }

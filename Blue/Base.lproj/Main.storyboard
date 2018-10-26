@@ -1141,10 +1141,10 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fRF-5q-ysQ" firstAttribute="width" secondItem="cNu-dN-Cyv" secondAttribute="width" id="4TH-l1-700"/>
-                            <constraint firstItem="P2H-2X-1Va" firstAttribute="top" secondItem="cNu-dN-Cyv" secondAttribute="top" id="RB8-Aa-QR4"/>
+                            <constraint firstItem="P2H-2X-1Va" firstAttribute="top" secondItem="v9C-yA-tH0" secondAttribute="top" id="RB8-Aa-QR4"/>
                             <constraint firstAttribute="trailing" secondItem="P2H-2X-1Va" secondAttribute="trailing" id="dkw-v1-MD8"/>
                             <constraint firstItem="P2H-2X-1Va" firstAttribute="leading" secondItem="cNu-dN-Cyv" secondAttribute="leading" id="jm6-9V-rle"/>
-                            <constraint firstAttribute="bottom" secondItem="P2H-2X-1Va" secondAttribute="bottom" id="tPS-uE-xKE"/>
+                            <constraint firstItem="v9C-yA-tH0" firstAttribute="bottom" secondItem="P2H-2X-1Va" secondAttribute="bottom" id="tPS-uE-xKE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="v9C-yA-tH0"/>
                     </view>
@@ -1342,12 +1342,32 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="nGz-Cz-ulP"/>
+                        <segue destination="0nR-UT-6xv" kind="relationship" relationship="rootViewController" id="8Dv-Yu-Djj"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i7K-ax-1wu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="356" y="-618"/>
+            <point key="canvasLocation" x="-567" y="-618"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="7U8-tv-FxN">
+            <objects>
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0nR-UT-6xv" customClass="ViewController" customModule="Blue" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3gx-AG-eDD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ul8-iq-L32"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4dl-3M-bC8"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="SignInViewController" id="hzI-2H-T54"/>
+                        <segue destination="rlO-8c-s9r" kind="show" identifier="PageViewController" id="2CZ-St-csw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tme-gf-syT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="375" y="-698"/>
         </scene>
         <!--User Search View Controller-->
         <scene sceneID="B27-2Z-MQy">
@@ -2265,4 +2285,7 @@
         <image name="square_normal" width="115" height="146"/>
         <image name="square_selected" width="115" height="146"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="2CZ-St-csw"/>
+    </inferredMetricsTieBreakers>
 </document>

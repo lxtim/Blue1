@@ -45,7 +45,9 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.view.backgroundColor = .white
         
         
-        
+//        var appearance = UIPageControl.appearance(whenContainedInInstancesOf: [UIPageViewController.self])
+//        appearance.pageIndicatorTintColor = UIColor.red
+//        appearance.currentPageIndicatorTintColor = UIColor.red
         // Do any additional setup after loading the view.
     }
     
@@ -53,7 +55,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.pageControl.frame = CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50)
+        self.pageControl.frame = CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50)
         self.pageControl.isUserInteractionEnabled = false
     }
     
@@ -64,7 +66,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
         self.pageControl.translatesAutoresizingMaskIntoConstraints =  false
-        pageControl = UIPageControl(frame: CGRect(x: 0,y: self.view.bounds.size.height - 50,width: self.view.bounds.width,height: 50))
+        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = orderedViewControllers.count
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.black

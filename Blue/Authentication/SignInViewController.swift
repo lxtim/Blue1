@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import Firebase
 
-class SignInViewController: ViewController, UITextFieldDelegate{
+class SignInViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
