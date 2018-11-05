@@ -152,7 +152,14 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         if let count = BasicStuff.shared.UserData[ConstantKey.unreadCount] as? Int {
             badgeCount = count
         }
-        self.btnFavourite.badgeValue = "\(badgeCount)"
+//        self.btnFavourite.badgeValue = "\(badgeCount)"
+        
+        if badgeCount == 0 {
+            self.btnFavourite.setImage(#imageLiteral(resourceName: "Logo_icon"), for: .normal)
+        }
+        else {
+            self.btnFavourite.setImage(#imageLiteral(resourceName: "Logo_notification"), for: .normal)
+        }
 //        if let searchFeed = self.searchFeedItem {
 //            searchFeed.setBadge(value: "\(badgeCount)");
 //        }

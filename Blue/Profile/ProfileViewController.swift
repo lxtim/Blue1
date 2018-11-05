@@ -324,27 +324,37 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                         if var data = v as? [String:Any] {
                             data[ConstantKey.user] = snapshot.value
 //                            data[ConstantKey.id] = k
-                            if let index = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
+                            if let index = self.feedData.index(where: {
+                                if let indexId = $0[ConstantKey.id] as? String {
+                                    if indexId == k {
+                                        return true
+                                    }
+                                    else {
+                                        return false
+                                    }
+                                }
+                                else {
+                                    return false
+                                }
+                            }) {
                                 self.feedData.remove(at: index)
-                                changedIndex.append(index)
-                                isItemChanged = true
+                                if changedIndex.contains(index) == false {
+                                    changedIndex.append(index)
+                                    isItemChanged = true
+                                }
                             }
+                            
                             self.feedData.append(data)
                         }
                     }
-                    if isItemChanged {
-                        let indexPaths = changedIndex.map({IndexPath(row: $0, section: 0)})
-                        self.tableView.reloadRows(at: indexPaths, with: .none)
-                    }
-                    else {
-                        let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
-                        self.feedData = sortedArray
-                        self.tableView.reloadData()
-                        self.collectionView.reloadData()
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
-                            self.postLabel.text = "\(self.feedData.count)"
-                        })
-                    }
+                   
+                    let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+                    self.feedData = sortedArray
+                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+                        self.postLabel.text = "\(self.feedData.count)"
+                    })
                 }
             })
         }

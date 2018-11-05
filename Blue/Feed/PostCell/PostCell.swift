@@ -226,7 +226,7 @@ class PostCell: UITableViewCell {
     func sendLikeNotification() {
         let adminUserID = object[ConstantKey.userid] as! String
         let likedUserID = firebaseUser.uid
-        
+        JDB.log("Likeed Object ==>%@", object)
         if adminUserID != likedUserID {
             var json = [String:Any]()
             if object[ConstantKey.image] != nil {
@@ -235,6 +235,9 @@ class PostCell: UITableViewCell {
                 else {
                     json[ConstantKey.image] = object[ConstantKey.image]
                 }
+            }
+            else {
+                json[ConstantKey.caption] = object[ConstantKey.caption]
             }
             json[ConstantKey.id] = likedUserID
             json[ConstantKey.date] = Date().timeStamp

@@ -24,7 +24,6 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 //        else {
 //            self.emailField.text = "ketansangani@gmail.com"
 //        }
-//        
 //        self.passwordField.text = "123456"
     }
     override func viewWillAppear(_ animated: Bool) {

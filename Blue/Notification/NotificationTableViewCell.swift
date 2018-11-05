@@ -20,6 +20,7 @@ class NotificationTableViewCell: UITableViewCell {
     
     var object:[String:Any] = [String:Any]() {
         didSet(newValue) {
+            
             let type:NotificationType = NotificationType(rawValue: object[ConstantKey.contentType] as! Int)!
             let userID = object[ConstantKey.id] as! String
             if let timeStamp = object[ConstantKey.date] as? Double {

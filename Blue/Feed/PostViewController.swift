@@ -262,7 +262,7 @@ class PostViewController: UIViewController {
         if let like = object[ConstantKey.likes] as? NSArray {
             likes = NSMutableArray(array: like)
         }
-        let feedID = object[ConstantKey.id] as! String
+        guard let feedID = object[ConstantKey.id] as? String else {return}
         let userID = object[ConstantKey.userid] as! String
         
         if self.likeImg.tag == 0 {
@@ -325,6 +325,9 @@ class PostViewController: UIViewController {
                 else {
                     json[ConstantKey.image] = object[ConstantKey.image]
                 }
+            }
+            else {
+                json[ConstantKey.caption] = object[ConstantKey.caption]
             }
             json[ConstantKey.id] = likedUserID
             json[ConstantKey.date] = Date().timeStamp

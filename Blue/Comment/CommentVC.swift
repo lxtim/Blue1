@@ -132,6 +132,9 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     json[ConstantKey.image] = post[ConstantKey.image]
                 }
             }
+            else {
+                json[ConstantKey.caption] = post[ConstantKey.caption]
+            }
             json[ConstantKey.id] = commentUserID
             json[ConstantKey.date] = Date().timeStamp
             json[ConstantKey.contentType] = NotificationType.comment.rawValue

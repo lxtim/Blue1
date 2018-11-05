@@ -46,7 +46,14 @@ class NotificationVC: UIViewController , UITableViewDelegate , UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let object = self.notification[indexPath.row]
+        if let captin = object[ConstantKey.caption] as? String {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Caption", message: captin, actions: UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                    
+                }))
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

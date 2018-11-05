@@ -226,6 +226,9 @@ class ShareTableViewCell: UITableViewCell {
                     json[ConstantKey.image] = self.post[ConstantKey.image]
                 }
             }
+            else {
+                json[ConstantKey.caption] = self.post[ConstantKey.caption]
+            }
             json[ConstantKey.id] = likedUserID
             json[ConstantKey.date] = Date().timeStamp
             json[ConstantKey.contentType] = NotificationType.like.rawValue
