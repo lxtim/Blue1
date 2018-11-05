@@ -96,6 +96,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                     return
                                 }
                                 DispatchQueue.main.async {
+                                    let postRef = self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId()
                                     var json = [String:Any]()
                                     json[ConstantKey.userid] = firebaseUser.uid
                                     json[ConstantKey.image] = videoURL.absoluteString
@@ -105,16 +106,17 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                     json[ConstantKey.likes] = []
                                     json[ConstantKey.date] = Date().timeStamp
                                     json[ConstantKey.duration] = CMTimeGetSeconds(curentItem.duration)
+                                    json[ConstantKey.id] = postRef.key
                                     
-                                    self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
-                                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
-                                            HUD.dismiss()
-                                            let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-                                                self.navigationController?.popViewController(animated: true)
-                                            })
-                                            self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                    postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
+                                        HUD.dismiss()
+                                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                                            self.navigationController?.popViewController(animated: true)
                                         })
+                                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+//                                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+//                                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+//                                        })
                                     })
                                 }
                             })
@@ -157,6 +159,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                 return
                             }
                             DispatchQueue.main.async {
+                                let postRef = self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId()
                                 var json = [String:Any]()
                                 json[ConstantKey.userid] = firebaseUser.uid
                                 json[ConstantKey.image] = downloadURL.absoluteString
@@ -164,16 +167,18 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                 json[ConstantKey.caption] = caption
                                 json[ConstantKey.likes] = []
                                 json[ConstantKey.date] = Date().timeStamp
-                                
-                                self.ref.child(ConstantKey.feed).child(firebaseUser.uid).childByAutoId().setValue(json, withCompletionBlock: { (error, databaseRef) in
-                                    databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                                        databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
-                                        HUD.dismiss()
-                                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-                                            self.navigationController?.popViewController(animated: true)
-                                        })
-                                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                json[ConstantKey.id] = postRef.key
+                                postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
+                                    HUD.dismiss()
+                                    let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                                        self.navigationController?.popViewController(animated: true)
                                     })
+                                    self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                    
+//                                    databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+//                                        databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+//
+//                                    })
                                 })
                             }
                         })
