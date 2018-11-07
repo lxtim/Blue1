@@ -110,10 +110,12 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                     
                                     postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                                         HUD.dismiss()
-                                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-                                            self.navigationController?.popViewController(animated: true)
-                                        })
-                                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                        self.navigationController?.popViewController(animated: true)
+                                        
+//                                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+//                                            self.navigationController?.popViewController(animated: true)
+//                                        })
+//                                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
 //                                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
 //                                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
 //                                        })
@@ -170,10 +172,11 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                 json[ConstantKey.id] = postRef.key
                                 postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                                     HUD.dismiss()
-                                    let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-                                        self.navigationController?.popViewController(animated: true)
-                                    })
-                                    self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                    self.navigationController?.popViewController(animated: true)
+//                                    let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+//                                        self.navigationController?.popViewController(animated: true)
+//                                    })
+//                                    self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
                                     
 //                                    databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
 //                                        databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
@@ -197,10 +200,11 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                     json[ConstantKey.id] = postRef.key
                     postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                         HUD.dismiss()
-                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-                            self.navigationController?.popViewController(animated: true)
-                        })
-                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)                        
+                        self.navigationController?.popViewController(animated: true)
+//                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+//                            self.navigationController?.popViewController(animated: true)
+//                        })
+//                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)                        
 //                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
 //                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
 //

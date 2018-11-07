@@ -133,7 +133,7 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.25882352941176467" green="0.54509803921568623" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -141,7 +141,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gq-mp-sbT">
-                                <rect key="frame" x="180" y="416" width="47" height="22"/>
+                                <rect key="frame" x="183" y="416" width="44" height="22"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 <state key="normal" image="btn_share"/>
                                 <connections>
@@ -205,6 +205,6 @@
         <image name="Filledheart" width="25" height="21"/>
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="btn_play" width="72" height="72"/>
-        <image name="btn_share" width="27" height="18"/>
+        <image name="btn_share" width="24" height="14"/>
     </resources>
 </document>

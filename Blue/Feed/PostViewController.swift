@@ -151,7 +151,7 @@ class PostViewController: UIViewController {
     }
     
     @IBAction func btnMoreAction(_ sender: UIButton) {
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             
             HUD.show()
 

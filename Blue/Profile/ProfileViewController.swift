@@ -57,6 +57,8 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     
     var lastContentOffset: CGFloat = 0.0
     
+    var refreshControll:UIRefreshControl = UIRefreshControl()
+    
     var layoutType:FeedLayout = FeedLayout.list {
         didSet(newValue) {
             if self.layoutType == .list {
@@ -102,12 +104,21 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
         else {
             self.btnFollow.setTitle("Settings", for: .normal)
-            self.btnFollow.borderColor = UIColor("9B9B9B")
-            self.btnFollow.setTitleColor(UIColor("9B9B9B"), for: .normal)
+            self.btnFollow.borderColor = UIColor("4A4A4A")
+            self.btnFollow.setTitleColor(UIColor("4A4A4A"), for: .normal)
             self.btnFollow.backgroundColor = .clear
             self.getFeed()
         }
         self.addObserver()
+        
+        refreshControll.addTarget(self, action: #selector(pullTORefreh(_:)), for: .valueChanged)
+        self.scrollView.addSubview(refreshControll)
+    }
+    
+    @objc func pullTORefreh(_ sender:UIRefreshControl) {
+        DispatchQueue.main.async {
+            self.viewWillAppear(true)
+        }
     }
     
     func addObserver() {
@@ -129,6 +140,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
 //            if let layout = userProfileData[ConstantKey.layout] as? Int {
 //                self.layoutType = FeedLayout(rawValue: layout)!
 //            }
+            self.refreshControll.endRefreshing()
         }
         else {
             self.userRef.child(firebaseUser.uid).observeSingleEvent(of: .value) { (snapshot) in
@@ -145,7 +157,9 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 else {
                     self.layoutType = .list
                 }
+                self.refreshControll.endRefreshing()
             }
+            
         }
         
         if let parent = self.parent as? PageViewController {
@@ -189,7 +203,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         self.navigationController?.pushViewController(object, animated: true)
     }
     
-    @IBAction func imageViewDidTapAction(_ sender: UITapGestureRecognizer) {
+    @IBAction func imageViewDidTapAction(_ sender: UIButton) {
         if isOtherUserProfile == true {
             return
         }
@@ -300,7 +314,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.btnFollow.tag = 1
             self.btnFollow.setTitle("Following", for: .normal)
             self.btnFollow.borderColor = UIColor("54C7FC")
-            self.btnFollow.setTitleColor(UIColor("54C7FC"), for: .normal)
+            self.btnFollow.setTitleColor(.black, for: .normal)
             self.btnFollow.backgroundColor = .clear
         }
         else {

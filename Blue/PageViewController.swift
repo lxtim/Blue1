@@ -57,6 +57,12 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.pageControl.frame = CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50)
         self.pageControl.isUserInteractionEnabled = false
+        
+        guard let controllers = self.viewControllers else {return}
+        
+        if let first = controllers.first {
+            first.viewWillAppear(animated)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

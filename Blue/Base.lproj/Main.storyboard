@@ -773,7 +773,7 @@
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kyt-1W-8lv">
                                         <rect key="frame" x="10" y="43" width="355" height="1"/>
-                                        <color key="backgroundColor" red="0.0" green="0.66274509803921566" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="poY-7R-PAM"/>
                                         </constraints>
@@ -890,6 +890,12 @@
                                                     <constraint firstAttribute="width" constant="72" id="qpb-Ce-tdH"/>
                                                 </constraints>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="smu-NI-hdo">
+                                                <rect key="frame" x="15" y="10" width="72" height="72"/>
+                                                <connections>
+                                                    <action selector="imageViewDidTapAction:" destination="TAq-G2-abd" eventType="touchUpInside" id="A0R-Wc-GKD"/>
+                                                </connections>
+                                            </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iNr-fk-H2i">
                                                 <rect key="frame" x="97" y="35.5" width="87.5" height="22.5"/>
                                                 <subviews>
@@ -911,9 +917,9 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rA-Nk-TOl">
-                                                <rect key="frame" x="279" y="33" width="81" height="27"/>
+                                                <rect key="frame" x="289" y="30" width="71" height="33"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="5" maxX="20" maxY="5"/>
+                                                <inset key="contentEdgeInsets" minX="15" minY="8" maxX="15" maxY="8"/>
                                                 <state key="normal" title="Follow">
                                                     <color key="titleColor" red="0.15686274510000001" green="0.63921568630000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
@@ -1063,6 +1069,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="smu-NI-hdo" firstAttribute="top" secondItem="XQ8-1D-aPN" secondAttribute="top" id="2GF-Rt-5Ep"/>
                                             <constraint firstAttribute="trailing" secondItem="mpT-0H-B3y" secondAttribute="trailing" constant="20" id="4lS-UH-kwu"/>
                                             <constraint firstAttribute="trailing" secondItem="gmY-JP-8Zo" secondAttribute="trailing" constant="20" id="7nU-4d-khj"/>
                                             <constraint firstItem="7rA-Nk-TOl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iNr-fk-H2i" secondAttribute="trailing" constant="20" id="83H-mH-usB"/>
@@ -1077,10 +1084,13 @@
                                             <constraint firstItem="u06-HC-ga1" firstAttribute="leading" secondItem="fRF-5q-ysQ" secondAttribute="leading" constant="20" id="LAr-QT-sMa"/>
                                             <constraint firstItem="gmY-JP-8Zo" firstAttribute="leading" secondItem="fRF-5q-ysQ" secondAttribute="leading" constant="20" id="Rey-Td-ISw"/>
                                             <constraint firstItem="fVD-JV-X0b" firstAttribute="top" secondItem="u06-HC-ga1" secondAttribute="top" id="V37-b9-5Fg"/>
+                                            <constraint firstItem="smu-NI-hdo" firstAttribute="bottom" secondItem="XQ8-1D-aPN" secondAttribute="bottom" id="VNX-7a-N9k"/>
                                             <constraint firstItem="gmY-JP-8Zo" firstAttribute="top" secondItem="mpT-0H-B3y" secondAttribute="bottom" constant="15" id="a04-KX-U9P"/>
+                                            <constraint firstItem="smu-NI-hdo" firstAttribute="leading" secondItem="XQ8-1D-aPN" secondAttribute="leading" id="cDV-GZ-cAO"/>
                                             <constraint firstItem="fVD-JV-X0b" firstAttribute="leading" secondItem="u06-HC-ga1" secondAttribute="leading" id="cGc-zg-LzO"/>
                                             <constraint firstItem="u06-HC-ga1" firstAttribute="height" secondItem="XQ8-1D-aPN" secondAttribute="height" multiplier="0.7" id="fQf-f9-qrX"/>
                                             <constraint firstItem="mpT-0H-B3y" firstAttribute="leading" secondItem="fRF-5q-ysQ" secondAttribute="leading" constant="20" id="h91-Lc-XRE"/>
+                                            <constraint firstItem="smu-NI-hdo" firstAttribute="trailing" secondItem="XQ8-1D-aPN" secondAttribute="trailing" id="mac-8P-sgU"/>
                                             <constraint firstItem="iNr-fk-H2i" firstAttribute="leading" secondItem="XQ8-1D-aPN" secondAttribute="trailing" constant="10" id="p8V-ul-ygw"/>
                                             <constraint firstAttribute="trailing" secondItem="7rA-Nk-TOl" secondAttribute="trailing" constant="15" id="wOd-pr-seZ"/>
                                             <constraint firstAttribute="bottom" secondItem="gmY-JP-8Zo" secondAttribute="bottom" constant="1" id="wa0-XO-tHD"/>
@@ -1163,12 +1173,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GXK-pF-k6e" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="eBv-9I-iDP" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="jNA-wO-McC">
-                    <connections>
-                        <action selector="imageViewDidTapAction:" destination="eBv-9I-iDP" id="REa-Kb-HQ2"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4088.8000000000002" y="-134.48275862068968"/>
         </scene>

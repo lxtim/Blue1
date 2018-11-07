@@ -97,7 +97,6 @@ class PostCell: UITableViewCell {
                 self.timeAgoLabel.text = Date().offset(from: date) + " ago"
             }
             
-            
             //Set Like Button
             if let likes = object[ConstantKey.likes] as? [String] {
                 if likes.contains(firebaseUser.uid) {

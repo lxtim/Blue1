@@ -40,6 +40,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     var changeObserver:[String:[UInt]] = [String:[UInt]]()
     
+    var refreshControl:UIRefreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,9 +54,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
 //        self.configurePlayer()
 //        addTableViewObservers()
 //        NotificationCenter.default.addObserver(self, selector: #selector(deleteData), name: NSNotification.Name.RefreshFeedData, object: nil)
-    
+        refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
     }
 
+    @objc func pullToRefresh(_ sender:UIRefreshControl) {
+        self.getFeed()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -314,6 +320,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
 //                    }
 //                }
 //            }
+            self.refreshControl.endRefreshing()
             return
         }
         else {
