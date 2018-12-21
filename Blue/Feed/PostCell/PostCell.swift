@@ -65,8 +65,8 @@ class PostCell: UITableViewCell {
         didSet(newValue) {
             if let user = object[ConstantKey.user] as? [String:Any] {
                 self.usernameLbl.text = user[ConstantKey.username] as? String
-                if let url = user[ConstantKey.image] as? String {
-                    self.profileImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                if let url = user[ConstantKey.image] as? String , url != "" {
+                    self.profileImg.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
             
@@ -81,11 +81,11 @@ class PostCell: UITableViewCell {
                         self.autoPlay = false
                     }
                     if let thumb = object[ConstantKey.thumb_image] as? String {
-                        self.postImg.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                        self.postImg.sd_setImage(with: URL(string: thumb), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                     }
                 }
                 else if type == .image {
-                    self.postImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                    self.postImg.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 }
             }
             

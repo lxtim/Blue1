@@ -93,8 +93,14 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="0EJ-9L-7Th"/>
                                         </connections>
                                     </textField>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Filledheart" translatesAutoresizingMaskIntoConstraints="NO" id="RQM-IU-4rY">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQM-IU-4rY">
                                         <rect key="frame" x="175" y="50" width="25" height="21"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="0Qb-Pl-sOR"/>
+                                            <constraint firstAttribute="width" constant="25" id="7zE-LX-buF"/>
+                                        </constraints>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eoM-be-gRw">
                                         <rect key="frame" x="50" y="131" width="275" height="40"/>
@@ -228,8 +234,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="FEi-wA-8Uj"/>
                                 </connections>
                             </textField>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Filledheart" translatesAutoresizingMaskIntoConstraints="NO" id="KV6-CP-vt1">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KV6-CP-vt1">
                                 <rect key="frame" x="175" y="50" width="25" height="21"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="KVB-7W-kJi"/>
+                                    <constraint firstAttribute="height" constant="21" id="OOu-R5-JEg"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRm-AW-YKX">
                                 <rect key="frame" x="50" y="186" width="275" height="30"/>
@@ -410,8 +421,13 @@
                                             <action selector="nextPressed:" destination="eF6-cK-uAw" eventType="touchUpInside" id="hYa-2K-VE1"/>
                                         </connections>
                                     </button>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Filledheart" translatesAutoresizingMaskIntoConstraints="NO" id="cdJ-8e-FDI">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdJ-8e-FDI">
                                         <rect key="frame" x="175" y="50" width="25" height="21"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="LNC-uH-n06"/>
+                                            <constraint firstAttribute="height" constant="21" id="QtX-wO-Nea"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -2285,6 +2301,6 @@
         <image name="square_selected" width="115" height="146"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2CZ-St-csw"/>
+        <segue reference="3zm-lb-Kcx"/>
     </inferredMetricsTieBreakers>
 </document>

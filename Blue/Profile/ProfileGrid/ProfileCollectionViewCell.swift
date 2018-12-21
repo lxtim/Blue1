@@ -35,15 +35,15 @@ class ProfileCollectionViewCell: UICollectionViewCell {
                 self.postTextView.text = object[ConstantKey.caption] as? String
                 self.postTextView.isUserInteractionEnabled = false
             }
-            if let url = object[ConstantKey.image] as? String {
+            if let url = object[ConstantKey.image] as? String ,url != "" {
                 if postType == .video {
-                    if let thumb = object[ConstantKey.thumb_image] as? String {
-                        self.postImageView.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                    if let thumb = object[ConstantKey.thumb_image] as? String , thumb != ""{
+                        self.postImageView.sd_setImage(with: URL(string: thumb), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                     }
                 }
                 else if postType == .image {
                     if let imageView = self.postImageView {
-                        imageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                        imageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                     }
                 }
             }

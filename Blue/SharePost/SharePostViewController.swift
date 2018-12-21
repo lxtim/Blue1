@@ -38,7 +38,7 @@ class SharePostViewController: UIViewController {
         
         self.nameLabel.text = user[ConstantKey.username] as? String
         if let url = user[ConstantKey.image] as? String {
-            self.profileImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+            self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
         }
         
         if let content = post[ConstantKey.image] as? String {
@@ -65,7 +65,7 @@ class SharePostViewController: UIViewController {
             }
             else {
                 //Image
-                self.feedImageView.sd_setImage(with: URL(string: content)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                self.feedImageView.sd_setImage(with: URL(string: content), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 self.contentType = .image
             }
         }

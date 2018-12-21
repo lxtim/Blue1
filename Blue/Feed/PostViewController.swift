@@ -56,7 +56,7 @@ class PostViewController: UIViewController {
         if let user = object[ConstantKey.user] as? [String:Any] {
             self.usernameLbl.text = user[ConstantKey.username] as? String
             if let url = user[ConstantKey.image] as? String {
-                self.profileImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                self.profileImg.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
             if let id =  user[ConstantKey.id] as? String , id == firebaseUser.uid {
                 self.btnMore.isHidden = false
@@ -88,12 +88,12 @@ class PostViewController: UIViewController {
                 }
                 
                 if let thumb = object[ConstantKey.thumb_image] as? String {
-                    self.postImg.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                    self.postImg.sd_setImage(with: URL(string: thumb), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 }
             }
             else {
                 self.btnPlayVideo.isHidden = true
-                self.postImg.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                self.postImg.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
             }
         }
         else {

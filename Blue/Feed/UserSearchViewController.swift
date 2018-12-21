@@ -25,8 +25,9 @@ class UserSearchCell : UITableViewCell {
     var imageURLString:String = "" {
         didSet(newValue) {
             self.profileImageView.image = #imageLiteral(resourceName: "profile_placeHolder")
-            
-        self.profileImageView?.sd_setImage(with: URL(string: imageURLString)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+//            if imageURLString != "" {
+                self.profileImageView?.sd_setImage(with: URL(string: imageURLString), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+//            }
         }
     }
 }

@@ -33,7 +33,7 @@ class CommentTableViewCell: UITableViewCell {
                 guard let value = snapshot.value as? [String:Any] else {return}
                 self.userNameLabel.text = value[ConstantKey.username] as? String
                 if let url = value[ConstantKey.image] as? String {
-                    self.profileImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                    self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
         }

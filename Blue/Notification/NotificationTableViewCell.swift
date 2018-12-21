@@ -29,7 +29,7 @@ class NotificationTableViewCell: UITableViewCell {
             }
             
             if let image = object[ConstantKey.image] as? String {
-                self.contentImageView.sd_setImage(with: URL(string: image)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                self.contentImageView.sd_setImage(with: URL(string: image), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
             }
             else {
                 self.contentImageView.image = nil
@@ -46,7 +46,7 @@ class NotificationTableViewCell: UITableViewCell {
                     self.titleLabel.text = "\(value[ConstantKey.username] as! String) liked your content."
                 }
                 if let url = value[ConstantKey.image] as? String {
-                    self.profileImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                    self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
         }

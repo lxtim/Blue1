@@ -93,7 +93,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         if isOtherUserProfile {
             self.checkFollow()
             self.getNumberOfPost()
-            if let url = userProfileData.value(forKey: ConstantKey.image) as? String {
+            if let url = userProfileData.value(forKey: ConstantKey.image) as? String , url != "" {
                 self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
             self.userNameLabel.text = userProfileData.value(forKey: ConstantKey.username) as? String
@@ -146,7 +146,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.userRef.child(firebaseUser.uid).observeSingleEvent(of: .value) { (snapshot) in
                 guard let userData = snapshot.value as? [String:Any] else {return}
                 if let image = userData[ConstantKey.image] as? String {
-                    self.profileImageView.sd_setImage(with: URL(string: image)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                    self.profileImageView.sd_setImage(with: URL(string: image), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
                 self.captionLabel.text = userData[ConstantKey.caption] as? String
                 self.userNameLabel.text = userData[ConstantKey.username] as? String

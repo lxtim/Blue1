@@ -60,11 +60,11 @@ class ShareTableViewCell: UITableViewCell {
             if let url = post[ConstantKey.image] as? String {
                 if self.postType == .video {
                     if let thumb = post[ConstantKey.thumb_image] as? String {
-                        self.feedImageView.sd_setImage(with: URL(string: thumb)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                        self.feedImageView.sd_setImage(with: URL(string: thumb), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                     }
                 }
                 else if self.postType == .image {
-                    self.feedImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
+                    self.feedImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "Filledheart"), options: .continueInBackground, completed: nil)
                 }
             }
             
@@ -118,7 +118,7 @@ class ShareTableViewCell: UITableViewCell {
                 
                 self.adminUserNameLabel.text = postUser[ConstantKey.username] as? String
                 if let url = postUser[ConstantKey.image] as? String {
-                    self.adminUserImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                    self.adminUserImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
             
@@ -126,7 +126,7 @@ class ShareTableViewCell: UITableViewCell {
                 guard let shareUser = snapshot.value as? [String:Any] else {return}
                 self.shareUserNameLabel.text = shareUser[ConstantKey.username] as? String
                 if let url = shareUser[ConstantKey.image] as? String {
-                    self.shareUserImageView.sd_setImage(with: URL(string: url)!, placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
+                    self.shareUserImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
             }
         }
