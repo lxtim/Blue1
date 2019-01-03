@@ -13,7 +13,7 @@ import MobileCoreServices
 import AVFoundation
 
 class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITextViewDelegate {
-
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
     var player: VGPlayer!
@@ -34,7 +34,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
             $0.edges.equalTo(self.playerContentView)
         }
     }
-
+    
     @IBAction func btnAddImageAction(_ sender: UIButton) {
         
         let actionSheet = UIAlertController(title: "Choose Option", message: nil, preferredStyle: .actionSheet)
@@ -51,7 +51,9 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
             if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
                 self.imagePicker.delegate = self
                 self.imagePicker.sourceType = .photoLibrary;
-                self.imagePicker.mediaTypes = ["public.image", "public.movie"]
+                self.imagePicker.mediaTypes = ["public.image"]
+                //                self.imagePicker.sourceType = .photoLibrary;
+                //                self.imagePicker.mediaTypes = ["public.image", "public.movie"]
                 self.imagePicker.allowsEditing = false
                 
                 self.present(self.imagePicker, animated: true, completion: nil)
@@ -88,6 +90,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                         }
                         
                         let image = self.imageView.image?.resizeWithWidthOrHeight(200)
+                        //let image = self.imageView.image
                         if let img = image {
                             self.uploadThumbImage(img, completion: { (thumbURL:URL?) -> (Void) in
                                 guard let thumb = thumbURL else {
@@ -112,13 +115,13 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                         HUD.dismiss()
                                         self.navigationController?.popViewController(animated: true)
                                         
-//                                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-//                                            self.navigationController?.popViewController(animated: true)
-//                                        })
-//                                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
-//                                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//                                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
-//                                        })
+                                        //                                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                                        //                                            self.navigationController?.popViewController(animated: true)
+                                        //                                        })
+                                        //                                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                        //                                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                        //                                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                                        //                                        })
                                     })
                                 }
                             })
@@ -132,7 +135,8 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
             }
         }
         else {
-            let image = self.imageView.image?.resizeWithWidthOrHeight(700)
+            //let image = self.imageView.image?.resizeWithWidthOrHeight(700)
+            let image = self.imageView.image
             
             if image == nil && caption == "" {
                 self.showAlert("Please set image or enter caption")
@@ -173,15 +177,15 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                 postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                                     HUD.dismiss()
                                     self.navigationController?.popViewController(animated: true)
-//                                    let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-//                                        self.navigationController?.popViewController(animated: true)
-//                                    })
-//                                    self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                                    //                                    let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                                    //                                        self.navigationController?.popViewController(animated: true)
+                                    //                                    })
+                                    //                                    self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
                                     
-//                                    databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//                                        databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
-//
-//                                    })
+                                    //                                    databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                    //                                        databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                                    //
+                                    //                                    })
                                 })
                             }
                         })
@@ -201,14 +205,14 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                     postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                         HUD.dismiss()
                         self.navigationController?.popViewController(animated: true)
-//                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-//                            self.navigationController?.popViewController(animated: true)
-//                        })
-//                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)                        
-//                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
-//
-//                        })
+                        //                        let okaction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                        //                            self.navigationController?.popViewController(animated: true)
+                        //                        })
+                        //                        self.showAlert(title: "Post shared successfully ", message: nil, actions: okaction)
+                        //                        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        //                            databaseRef.updateChildValues([ConstantKey.id:snapshot.key])
+                        //
+                        //                        })
                     })
                 }
             }
@@ -250,7 +254,6 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
     func uploadThumbImage(_ image:UIImage, completion:@escaping((_ thumbURL:URL?)->(Void))) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
-        
         let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueImageFileName())
         let storageMetaData = StorageMetadata()
         storageMetaData.contentType = "image/png"
@@ -302,15 +305,15 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

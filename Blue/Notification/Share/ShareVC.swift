@@ -10,10 +10,10 @@ import Firebase
 import VGPlayer
 
 class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,FeedPostCellDelegate {
-
+    
     
     @IBOutlet weak var shareTableView: UITableView!
-
+    
     var follow:[String] = [String]()
     
     var ref = Database.database().reference()
@@ -29,7 +29,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     var isFirstTime:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.shareTableView.register(UINib(nibName: "ShareTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareTableViewCell")
         self.shareTableView.register(UINib(nibName: "ShareImageTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareImageTableViewCell")
         self.shareTableView.register(UINib(nibName: "ShareVideoTableViewCell", bundle: .main), forCellReuseIdentifier: "ShareVideoTableViewCell")
@@ -93,9 +93,17 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
             if let response = snapshot.value as? [String:Any] {
                 JDB.log("Response ==>%@", response)
                 let data = response.map({$1 as! [String:Any]})
+                
                 for item in data {
-                    self.shareTableData.append(item)
+                    if item[ConstantKey.contentType] as! Int == 2 {
+                        
+                    }else {
+                        self.shareTableData.append(item)
+                    }
                 }
+                
+                JDB.log("share data printed ====>%@", self.shareTableData)
+                JDB.log("share data count ====>%@", self.shareTableData.count)
                 
             }
             let nextCount = count + 1
@@ -134,7 +142,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
             
             let postUserID = object[ConstantKey.userid] as! String
             let postID = object[ConstantKey.postID] as! String
-
+            
             self.ref.child(ConstantKey.feed).child(postUserID).child(postID).observe(.value) { (snapshot) in
                 if let post = snapshot.value as? [String:Any] {
                     self.shareTableData[count][ConstantKey.post] = post
