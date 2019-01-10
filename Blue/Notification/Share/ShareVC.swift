@@ -95,11 +95,31 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
                 let data = response.map({$1 as! [String:Any]})
                 
                 for item in data {
-                    if item[ConstantKey.contentType] as! Int == 2 {
-                        
-                    }else {
-                        self.shareTableData.append(item)
+                    if let contentType = item[ConstantKey.contentType] as? Int , contentType != 2 {
+                        if let storyType = item[ConstantKey.storyType] as? String {
+                            if storyType == StoryType.story {
+                                if let timeStamp = item[ConstantKey.storyDate] as? Double {
+                                    let postDate = Date(timeIntervalSince1970: timeStamp)
+                                    let hours = Date().hours(from: postDate)
+                                    if hours < storyTime {
+                                        self.shareTableData.append(item)
+                                    }
+                                }
+                            }
+                            else {
+                                self.shareTableData.append(item)
+                            }
+                        }
+                        else {
+                            self.shareTableData.append(item)
+                        }
                     }
+                    
+//                    if item[ConstantKey.contentType] as! Int == 2 {
+//
+//                    }else {
+//                        self.shareTableData.append(item)
+//                    }
                 }
                 
                 JDB.log("share data printed ====>%@", self.shareTableData)

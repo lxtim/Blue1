@@ -13,8 +13,9 @@ import Firebase
 import VGPlayer
 import AVKit
 
+let storyTime:Int = 24
 
-struct ConstantKey {
+struct ConstantKey  {
     static let feed:String = "Feed"
     static let Users:String = "Users"
     static let username:String = "username"
@@ -38,6 +39,8 @@ struct ConstantKey {
     static let duration:String = "duration"
     static let unreadCount:String = "unread"
     static let post:String = "post"
+    static let storyType:String = "storyType"
+    static let storyDate:String = "storyDate"
     
 }
 struct Platform {
@@ -48,6 +51,48 @@ struct Platform {
         return false
         #endif
     }()
+}
+
+struct StoryType  {
+    static let regular: String = "regular"
+    static let story: String = "story"
+}
+
+@objc protocol StorySelctionDelegate  {
+     func storyTypeDidSelect(_ type:String)
+}
+
+class StoryButtonView : UIView  {
+    @IBOutlet weak var btnRegular: UIButton!
+    @IBOutlet weak var btnStory: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet var delegate:StorySelctionDelegate?
+    
+    @IBAction func btnRegularAction(_ sender: UIButton) {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.imageView.frame = sender.frame
+            sender.setTitleColor(UIColor.white, for: UIControlState.normal)
+            self.btnStory.setTitleColor(UIColor.black, for: UIControlState.normal)
+        }) { (finished) in
+            if let delegate = self.delegate {
+                delegate.storyTypeDidSelect(StoryType.regular)
+            }
+        }
+    }
+    
+    @IBAction func btnStoryAction(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.imageView.frame = sender.frame
+            sender.setTitleColor(UIColor.white, for: UIControlState.normal)
+            self.btnRegular.setTitleColor(UIColor.black, for: UIControlState.normal)
+        }) { (finished) in
+            if let delegate = self.delegate {
+                delegate.storyTypeDidSelect(StoryType.story)
+            }
+        }
+    }
 }
 
 enum ScrollDirection : Int {

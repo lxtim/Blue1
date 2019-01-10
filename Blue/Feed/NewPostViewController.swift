@@ -12,7 +12,7 @@ import VGPlayer
 import MobileCoreServices
 import AVFoundation
 
-class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITextViewDelegate {
+class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITextViewDelegate , StorySelctionDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -20,6 +20,8 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
     
     @IBOutlet weak var playerContentView: UIView!
     var isVideo = false
+    
+    var storyType:String = StoryType.regular
     
     var imagePicker = UIImagePickerController()
     var ref: DatabaseReference = Database.database().reference()
@@ -43,7 +45,8 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                 self.imagePicker.delegate = self
                 self.imagePicker.sourceType = .camera;
                 self.imagePicker.allowsEditing = false
-                self.imagePicker.mediaTypes = ["public.image", "public.movie"]
+                self.imagePicker.mediaTypes = ["public.image"]
+//                self.imagePicker.mediaTypes = ["public.image", "public.movie"]
                 self.present(self.imagePicker, animated: true, completion: nil)
             }
         }
@@ -174,6 +177,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                                 json[ConstantKey.likes] = []
                                 json[ConstantKey.date] = Date().timeStamp
                                 json[ConstantKey.id] = postRef.key
+                                json[ConstantKey.storyType] = self.storyType
                                 postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                                     HUD.dismiss()
                                     self.navigationController?.popViewController(animated: true)
@@ -202,6 +206,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                     json[ConstantKey.likes] = []
                     json[ConstantKey.date] = Date().timeStamp
                     json[ConstantKey.id] = postRef.key
+                    json[ConstantKey.storyType] = self.storyType
                     postRef.setValue(json, withCompletionBlock: { (error, databaseRef) in
                         HUD.dismiss()
                         self.navigationController?.popViewController(animated: true)
@@ -271,6 +276,12 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
             })
         }
     }
+    
+    //MARK:- StorySelectionDelegate
+    func storyTypeDidSelect(_ type: String) {
+        self.storyType = type
+    }
+    
     //MARK:- UIImagePicker Controller Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         

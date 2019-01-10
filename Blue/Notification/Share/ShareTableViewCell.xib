@@ -87,16 +87,39 @@
                                 <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storyDot" translatesAutoresizingMaskIntoConstraints="NO" id="its-IM-ea5">
+                                <rect key="frame" x="100" y="43" width="5" height="5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="5" id="egE-cv-k9a"/>
+                                    <constraint firstAttribute="width" constant="5" id="ggP-Sl-BiA"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98F-kw-OJi">
+                                <rect key="frame" x="109" y="36.5" width="33.5" height="16.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="CJG-Jl-Ifj"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="10" id="CQT-Rz-TsH"/>
+                            <constraint firstItem="its-IM-ea5" firstAttribute="leading" secondItem="how-xf-yOc" secondAttribute="trailing" constant="4" id="CrI-Q3-3mI"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ezh-NT-dn7" secondAttribute="trailing" constant="20" id="Hvt-Gy-l30"/>
+                            <constraint firstItem="98F-kw-OJi" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="Kcm-W2-xzY"/>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="15" id="NMu-F1-icu"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="98F-kw-OJi" secondAttribute="trailing" constant="20" id="QNa-eE-2sc"/>
                             <constraint firstAttribute="bottom" secondItem="wag-8N-3gP" secondAttribute="bottom" constant="5" id="U1s-7b-uZl"/>
+                            <constraint firstItem="its-IM-ea5" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="UaJ-4R-A9F"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="top" secondItem="Ezh-NT-dn7" secondAttribute="bottom" constant="5" id="WbX-C7-x5s"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="how-xf-yOc" secondAttribute="trailing" constant="20" id="aRX-H4-loR"/>
+                            <constraint firstItem="98F-kw-OJi" firstAttribute="leading" secondItem="its-IM-ea5" secondAttribute="trailing" constant="4" id="bHd-ED-KfT"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="eh7-4g-7rN"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="leading" secondItem="TLY-LG-PCg" secondAttribute="leading" constant="5" id="qeA-Rj-AOo"/>
                         </constraints>
@@ -132,24 +155,11 @@
                                     <action selector="btnLikeHeartAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="182-iu-4aT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
-                                <rect key="frame" x="10" y="9.5" width="58" height="26"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
+                                <rect key="frame" x="10" y="9.5" width="29" height="26"/>
+                                <state key="normal" image="commentBg" backgroundImage="commentBg">
                                     <color key="titleColor" white="0.0" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.25882352941176467" green="0.54509803921568623" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="btnCommentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nST-rf-uW8"/>
                                 </connections>
@@ -196,6 +206,8 @@
                 <outlet property="shareUserDateLabel" destination="Qk1-DH-yqi" id="ZBj-Mm-4Y2"/>
                 <outlet property="shareUserImageView" destination="JDf-au-d8J" id="KeV-pf-Dez"/>
                 <outlet property="shareUserNameLabel" destination="f8I-wB-9rD" id="e1D-UJ-kqj"/>
+                <outlet property="storyDotImageView" destination="its-IM-ea5" id="9mU-fk-vUg"/>
+                <outlet property="storyLabel" destination="98F-kw-OJi" id="oIM-Du-oZ7"/>
             </connections>
             <point key="canvasLocation" x="25" y="116.5"/>
         </tableViewCell>
@@ -204,5 +216,7 @@
         <image name="Filledheart" width="25" height="21"/>
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="Star" width="25" height="23"/>
+        <image name="commentBg" width="29" height="26"/>
+        <image name="storyDot" width="4" height="4"/>
     </resources>
 </document>

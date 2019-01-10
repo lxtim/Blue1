@@ -500,7 +500,7 @@
             </objects>
             <point key="canvasLocation" x="3158" y="-618"/>
         </scene>
-        <!--New Post-->
+        <!--Delegate-->
         <scene sceneID="3wI-JK-OV4">
             <objects>
                 <viewController storyboardIdentifier="NewPostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I86-UM-Umi" customClass="NewPostViewController" customModule="Blue" customModuleProvider="target" sceneMemberID="viewController">
@@ -565,6 +565,58 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAz-Fa-LFf" customClass="StoryButtonView" customModule="Blue" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="493" width="255" height="35.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Rectangle" translatesAutoresizingMaskIntoConstraints="NO" id="MJN-fu-aP3">
+                                                <rect key="frame" x="0.0" y="0.0" width="128" height="36"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hm-zn-KBi">
+                                                <rect key="frame" x="0.0" y="0.0" width="127.5" height="35.5"/>
+                                                <state key="normal" title="Regular">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnRegularAction:" destination="RAz-Fa-LFf" eventType="touchUpInside" id="WEM-Eh-tTU"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXB-Fg-sHR">
+                                                <rect key="frame" x="127.5" y="0.0" width="127.5" height="35.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="rXB-Fg-sHR" secondAttribute="height" multiplier="107:30" id="h3K-kw-X45"/>
+                                                </constraints>
+                                                <state key="normal" title="Story">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnStoryAction:" destination="RAz-Fa-LFf" eventType="touchUpInside" id="z5A-tv-DYs"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="rXB-Fg-sHR" firstAttribute="leading" secondItem="5hm-zn-KBi" secondAttribute="trailing" id="JjF-om-jm7"/>
+                                            <constraint firstAttribute="bottom" secondItem="rXB-Fg-sHR" secondAttribute="bottom" id="RDi-m2-t6L"/>
+                                            <constraint firstItem="rXB-Fg-sHR" firstAttribute="top" secondItem="RAz-Fa-LFf" secondAttribute="top" id="TKI-7z-5m3"/>
+                                            <constraint firstItem="5hm-zn-KBi" firstAttribute="leading" secondItem="RAz-Fa-LFf" secondAttribute="leading" id="V9h-Zc-0xM"/>
+                                            <constraint firstAttribute="bottom" secondItem="5hm-zn-KBi" secondAttribute="bottom" id="Ys1-np-UoW"/>
+                                            <constraint firstItem="5hm-zn-KBi" firstAttribute="top" secondItem="RAz-Fa-LFf" secondAttribute="top" id="aWb-Pd-AcT"/>
+                                            <constraint firstItem="rXB-Fg-sHR" firstAttribute="width" secondItem="5hm-zn-KBi" secondAttribute="width" id="w8m-Ru-BGu"/>
+                                            <constraint firstAttribute="trailing" secondItem="rXB-Fg-sHR" secondAttribute="trailing" id="xcn-Qd-XT8"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="btnRegular" destination="5hm-zn-KBi" id="zar-fr-o2Y"/>
+                                            <outlet property="btnStory" destination="rXB-Fg-sHR" id="zfK-NS-K0K"/>
+                                            <outlet property="delegate" destination="I86-UM-Umi" id="bVt-Wk-4Vh"/>
+                                            <outlet property="imageView" destination="MJN-fu-aP3" id="KMF-to-7hL"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="6ao-TE-b5J" firstAttribute="leading" secondItem="0B1-6o-1al" secondAttribute="leading" constant="20" id="0SO-I5-2xU"/>
@@ -574,15 +626,18 @@
                                     <constraint firstAttribute="trailing" secondItem="6ao-TE-b5J" secondAttribute="trailing" constant="20" id="7gS-6R-BU6"/>
                                     <constraint firstItem="rzs-zP-ms8" firstAttribute="bottom" secondItem="6ao-TE-b5J" secondAttribute="bottom" id="Fbt-nL-e4I"/>
                                     <constraint firstAttribute="trailing" secondItem="9Lq-Tn-k8m" secondAttribute="trailing" constant="20" id="I1Q-dV-ER9"/>
+                                    <constraint firstAttribute="trailing" secondItem="RAz-Fa-LFf" secondAttribute="trailing" constant="60" id="J2C-y3-kvg"/>
+                                    <constraint firstAttribute="bottom" secondItem="RAz-Fa-LFf" secondAttribute="bottom" constant="30" id="LZ9-pG-OKd"/>
                                     <constraint firstItem="rzs-zP-ms8" firstAttribute="leading" secondItem="6ao-TE-b5J" secondAttribute="leading" id="RTg-UF-qbI"/>
                                     <constraint firstItem="rzs-zP-ms8" firstAttribute="trailing" secondItem="6ao-TE-b5J" secondAttribute="trailing" id="Ugc-sk-yeX"/>
                                     <constraint firstItem="6ao-TE-b5J" firstAttribute="top" secondItem="aX2-Lp-TCS" secondAttribute="bottom" constant="5" id="do8-eJ-z3s"/>
                                     <constraint firstItem="5cm-9s-9CG" firstAttribute="top" secondItem="0B1-6o-1al" secondAttribute="top" constant="20" id="enV-H5-crL"/>
                                     <constraint firstItem="uRD-Mz-6hi" firstAttribute="leading" secondItem="0B1-6o-1al" secondAttribute="leading" constant="20" id="fZd-pd-XDz"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5cm-9s-9CG" secondAttribute="trailing" constant="20" id="g5Q-dk-eqV"/>
-                                    <constraint firstAttribute="bottom" secondItem="9Lq-Tn-k8m" secondAttribute="bottom" constant="20" id="hlO-8x-Tv1"/>
+                                    <constraint firstItem="RAz-Fa-LFf" firstAttribute="leading" secondItem="0B1-6o-1al" secondAttribute="leading" constant="60" id="h34-Mf-3Fe"/>
                                     <constraint firstItem="9Lq-Tn-k8m" firstAttribute="top" secondItem="uRD-Mz-6hi" secondAttribute="bottom" constant="10" id="iIJ-JR-VdL"/>
                                     <constraint firstItem="5cm-9s-9CG" firstAttribute="leading" secondItem="0B1-6o-1al" secondAttribute="leading" constant="20" id="jYq-Z2-It2"/>
+                                    <constraint firstItem="RAz-Fa-LFf" firstAttribute="top" secondItem="9Lq-Tn-k8m" secondAttribute="bottom" constant="60" id="kkq-7l-SrM"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aX2-Lp-TCS" secondAttribute="trailing" constant="20" id="ofI-HO-AuC"/>
                                     <constraint firstItem="aX2-Lp-TCS" firstAttribute="leading" secondItem="0B1-6o-1al" secondAttribute="leading" constant="20" id="qb7-8Q-T4N"/>
                                     <constraint firstItem="uRD-Mz-6hi" firstAttribute="top" secondItem="6ao-TE-b5J" secondAttribute="bottom" constant="30" id="uUH-VI-Ns0"/>
@@ -616,7 +671,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Olh-Rr-HcI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4897" y="-870"/>
+            <point key="canvasLocation" x="4896.8000000000002" y="-870.31484257871068"/>
         </scene>
         <!--Share-->
         <scene sceneID="Okg-f5-JFp">
@@ -2287,6 +2342,7 @@
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="Logo_icon" width="30" height="30"/>
         <image name="More" width="30" height="30"/>
+        <image name="Rectangle" width="110" height="36"/>
         <image name="Rectangle 7" width="375" height="667"/>
         <image name="Star" width="25" height="23"/>
         <image name="addimage" width="32" height="32"/>

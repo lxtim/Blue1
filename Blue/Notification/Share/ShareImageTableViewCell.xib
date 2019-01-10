@@ -88,17 +88,40 @@
                                 <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storyDot" translatesAutoresizingMaskIntoConstraints="NO" id="J0K-FJ-RoV">
+                                <rect key="frame" x="105" y="44" width="5" height="5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="5" id="AdS-A0-E4b"/>
+                                    <constraint firstAttribute="height" constant="5" id="F3f-fi-X7X"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edY-EZ-dS8">
+                                <rect key="frame" x="114" y="44" width="33.5" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="edY-EZ-dS8" firstAttribute="leading" secondItem="J0K-FJ-RoV" secondAttribute="trailing" constant="4" id="4sc-Im-AYP"/>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="CJG-Jl-Ifj"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="10" id="CQT-Rz-TsH"/>
+                            <constraint firstItem="J0K-FJ-RoV" firstAttribute="leading" secondItem="how-xf-yOc" secondAttribute="trailing" constant="4" id="E9Y-I1-Gkh"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ezh-NT-dn7" secondAttribute="trailing" constant="20" id="Hvt-Gy-l30"/>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="15" id="NMu-F1-icu"/>
                             <constraint firstAttribute="bottom" secondItem="wag-8N-3gP" secondAttribute="bottom" constant="5" id="U1s-7b-uZl"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="top" secondItem="Ezh-NT-dn7" secondAttribute="bottom" constant="5" id="WbX-C7-x5s"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="how-xf-yOc" secondAttribute="trailing" constant="20" id="aRX-H4-loR"/>
+                            <constraint firstItem="edY-EZ-dS8" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="c7A-3F-CCS"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="edY-EZ-dS8" secondAttribute="trailing" constant="20" id="cZV-zq-a5Q"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="eh7-4g-7rN"/>
+                            <constraint firstItem="J0K-FJ-RoV" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="pqs-gn-SW3"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="leading" secondItem="TLY-LG-PCg" secondAttribute="leading" constant="5" id="qeA-Rj-AOo"/>
                         </constraints>
                     </view>
@@ -139,24 +162,11 @@
                                     <action selector="btnLikeHeartAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="q0f-JF-MD7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
-                                <rect key="frame" x="10" y="9.5" width="58" height="26"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
+                                <rect key="frame" x="20" y="9.5" width="29" height="26"/>
+                                <state key="normal" image="commentBg" backgroundImage="commentBg">
                                     <color key="titleColor" white="0.0" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.25882352941176467" green="0.54509803921568623" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="btnCommentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wfG-bz-H6r"/>
                                 </connections>
@@ -207,6 +217,8 @@
                 <outlet property="shareUserDateLabel" destination="Qk1-DH-yqi" id="ZBj-Mm-4Y2"/>
                 <outlet property="shareUserImageView" destination="JDf-au-d8J" id="KeV-pf-Dez"/>
                 <outlet property="shareUserNameLabel" destination="f8I-wB-9rD" id="e1D-UJ-kqj"/>
+                <outlet property="storyDotImageView" destination="J0K-FJ-RoV" id="0i6-hJ-Wkb"/>
+                <outlet property="storyLabel" destination="edY-EZ-dS8" id="orh-FR-jmA"/>
             </connections>
             <point key="canvasLocation" x="31" y="304"/>
         </tableViewCell>
@@ -215,5 +227,7 @@
         <image name="Filledheart" width="25" height="21"/>
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="Star" width="25" height="23"/>
+        <image name="commentBg" width="29" height="26"/>
+        <image name="storyDot" width="4" height="4"/>
     </resources>
 </document>

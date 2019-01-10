@@ -97,6 +97,13 @@ class SharePostViewController: UIViewController {
         savedData[ConstantKey.caption] = self.captionTextView.text
         savedData[ConstantKey.contentType] = self.contentType.rawValue
         
+        if let type = post[ConstantKey.storyType] as? String {
+            if type == StoryType.story {
+                savedData[ConstantKey.storyType] = type
+                savedData[ConstantKey.storyDate] = post[ConstantKey.date]
+            }
+        }
+        
         self.ref.child(ConstantKey.share).child(firebaseUser.uid).childByAutoId().setValue(savedData) { (error, dabaseRef) in
             
             if error == nil {

@@ -41,21 +41,45 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VG4-KP-mcb">
-                                        <rect key="frame" x="0.0" y="23.5" width="73.5" height="16.5"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Lf-q8-ltV">
+                                        <rect key="frame" x="-64" y="-35.5" width="200" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VG4-KP-mcb">
+                                                <rect key="frame" x="63" y="46" width="73.5" height="16.5"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storyDot" translatesAutoresizingMaskIntoConstraints="NO" id="CXS-mA-jou">
+                                                <rect key="frame" x="73" y="56" width="5" height="5"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="5" id="Uvp-1P-fNp"/>
+                                                    <constraint firstAttribute="height" constant="5" id="nLE-y1-Hmj"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="2.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zm5-Uv-ezs">
+                                                <rect key="frame" x="82" y="56" width="33.5" height="20"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="zm5-Uv-ezs" firstAttribute="leading" secondItem="CXS-mA-jou" secondAttribute="trailing" constant="4" id="AUZ-k4-MT0"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="VG4-KP-mcb" secondAttribute="trailing" id="Rtm-rM-7eB"/>
-                                    <constraint firstAttribute="bottom" secondItem="VG4-KP-mcb" secondAttribute="bottom" id="cOU-lr-oRc"/>
+                                    <constraint firstItem="3Lf-q8-ltV" firstAttribute="height" secondItem="I80-r1-DaK" secondAttribute="height" id="BGE-gt-V2u"/>
                                     <constraint firstItem="I80-r1-DaK" firstAttribute="top" secondItem="ngq-BC-wVt" secondAttribute="top" id="cRR-ty-2Uu"/>
-                                    <constraint firstItem="VG4-KP-mcb" firstAttribute="top" secondItem="I80-r1-DaK" secondAttribute="bottom" id="eRR-VU-9Ih"/>
                                     <constraint firstItem="I80-r1-DaK" firstAttribute="leading" secondItem="ngq-BC-wVt" secondAttribute="leading" id="qEB-lv-jn4"/>
                                     <constraint firstAttribute="trailing" secondItem="I80-r1-DaK" secondAttribute="trailing" id="rFQ-Q2-j5p"/>
-                                    <constraint firstItem="VG4-KP-mcb" firstAttribute="leading" secondItem="ngq-BC-wVt" secondAttribute="leading" id="yTx-I1-KIm"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsR-XQ-rf7">
@@ -118,24 +142,12 @@
                                     <action selector="btnLikeAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZSl-PH-DJd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clR-Qw-S77">
-                                <rect key="frame" x="10" y="412" width="58" height="26"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clR-Qw-S77">
+                                <rect key="frame" x="15" y="407" width="49" height="36"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" backgroundImage="commentBg">
                                     <color key="titleColor" white="0.0" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.25882352941176467" green="0.54509803921568623" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="btnCommentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pf5-Km-xWi"/>
                                 </connections>
@@ -195,6 +207,8 @@
                 <outlet property="playerContentView" destination="gPk-we-WC3" id="6ia-Hg-I0h"/>
                 <outlet property="postImg" destination="X2F-0W-p7t" id="3SW-XH-9qL"/>
                 <outlet property="profileImg" destination="v2y-f8-QwW" id="Mvg-h1-3yz"/>
+                <outlet property="storyDotImageView" destination="CXS-mA-jou" id="HMH-E5-Vmt"/>
+                <outlet property="storyLabel" destination="zm5-Uv-ezs" id="wQn-Kw-XBK"/>
                 <outlet property="timeAgoLabel" destination="VG4-KP-mcb" id="9I6-8G-A66"/>
                 <outlet property="usernameLbl" destination="I80-r1-DaK" id="ms2-qF-Nzt"/>
             </connections>
@@ -206,5 +220,7 @@
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="btn_play" width="72" height="72"/>
         <image name="btn_share" width="24" height="14"/>
+        <image name="commentBg" width="29" height="26"/>
+        <image name="storyDot" width="4" height="4"/>
     </resources>
 </document>

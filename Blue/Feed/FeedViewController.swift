@@ -307,17 +307,28 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             JDB.log("feeddata ==>%@", sortedArray.count)
             JDB.log("feeddata ==>%@", sortedArray)
             
-            
-            for i in 0...sortedArray.count - 1 {
-                JDB.log("sorted count number ===>%@",i)
-                JDB.log("Sorted array ===>%@", sortedArray[i])
-                if sortedArray[i][ConstantKey.contentType] == nil || sortedArray[i][ConstantKey.contentType] as! String != ConstantKey.video {
-                    feedImageData.append(sortedArray[i])
-                }else if sortedArray[i][ConstantKey.contentType] as! String == "nil" {
-                    
+            for item in sortedArray {
+                if item[ConstantKey.contentType] == nil || item[ConstantKey.contentType] as! String != ConstantKey.video {
+                    if let story = item[ConstantKey.storyType] as? String {
+                        if story == StoryType.story {
+                            // check date for 24 hours
+                            if let timeStamp = item[ConstantKey.date] as? Double {
+                                let postDate = Date(timeIntervalSince1970: timeStamp)
+                                let hours = Date().hours(from: postDate)
+                                if hours < storyTime {
+                                    feedImageData.append(item)
+                                }
+                            }
+                        }
+                        else {
+                            feedImageData.append(item)
+                        }
+                    }
+                    else {
+                        feedImageData.append(item)
+                    }
                 }
             }
-            
             self.feedData = feedImageData
             
             //            for i in 0...feedData.count - 1 {

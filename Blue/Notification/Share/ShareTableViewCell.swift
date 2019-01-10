@@ -32,6 +32,10 @@ class ShareTableViewCell: UITableViewCell {
     
     @IBOutlet weak var playerContentView: UIView!
     
+    
+    @IBOutlet weak var storyDotImageView: UIImageView!
+    @IBOutlet weak var storyLabel: UILabel!
+    
     var postType:PostType = .caption
     
     var delegate:FeedPostCellDelegate? = nil
@@ -75,6 +79,21 @@ class ShareTableViewCell: UITableViewCell {
                 self.adminDateLabel.text = Date().offset(from: date) + " ago"
             }
             
+            if let story = object[ConstantKey.storyType] as? String {
+                if story == StoryType.story {
+                    self.storyLabel.isHidden = false
+                    self.storyDotImageView.isHidden = false
+                }
+                else {
+                    self.storyLabel.isHidden = true
+                    self.storyDotImageView.isHidden = true
+                }
+            }
+            else {
+                self.storyLabel.isHidden = true
+                self.storyDotImageView.isHidden = true
+            }
+            
             //Set Like Button
             if let likes = post[ConstantKey.likes] as? NSArray {
                 if likes.contains(firebaseUser.uid) {
@@ -96,20 +115,20 @@ class ShareTableViewCell: UITableViewCell {
             else {
                 self.btnLikeImage.isSelected = true
                 self.btnLikeImage.tag = 0
-                self.btnLikeCount.setTitle("0 Like", for: .normal)
+                self.btnLikeCount.setTitle("0 Likes", for: .normal)
             }
             
             //Set Comment button
             if let comment = post[ConstantKey.comment] as? [String] {
                 if comment.count == 1 {
-                    self.btnFeedComment.setTitle("1 comment", for: .normal)
+                    //self.btnFeedComment.setTitle("1 comment", for: .normal)
                 }
                 else {
-                    self.btnFeedComment.setTitle("\(comment.count) comments", for: .normal)
+                   // self.btnFeedComment.setTitle("\(comment.count) comments", for: .normal)
                 }
             }
             else {
-                self.btnFeedComment.setTitle("comment", for: .normal)
+                //self.btnFeedComment.setTitle("comment", for: .normal)
             }
             
             self.ref.child(ConstantKey.Users).child(postUserID).observeSingleEvent(of: .value) { (snapshot) in

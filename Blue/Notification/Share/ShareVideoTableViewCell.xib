@@ -89,18 +89,41 @@
                                 <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storyDot" translatesAutoresizingMaskIntoConstraints="NO" id="axU-aQ-zj3">
+                                <rect key="frame" x="105" y="47" width="5" height="5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="5" id="D2o-b2-wAV"/>
+                                    <constraint firstAttribute="height" constant="5" id="U5Z-uS-Irw"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1j5-Vs-DtG">
+                                <rect key="frame" x="114" y="47" width="33.5" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="CJG-Jl-Ifj"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="10" id="CQT-Rz-TsH"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ezh-NT-dn7" secondAttribute="trailing" constant="20" id="Hvt-Gy-l30"/>
+                            <constraint firstItem="1j5-Vs-DtG" firstAttribute="leading" secondItem="axU-aQ-zj3" secondAttribute="trailing" constant="4" id="I9C-XE-RZg"/>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="15" id="NMu-F1-icu"/>
+                            <constraint firstItem="axU-aQ-zj3" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="OUP-Pu-ccC"/>
                             <constraint firstAttribute="bottom" secondItem="wag-8N-3gP" secondAttribute="bottom" constant="5" id="U1s-7b-uZl"/>
+                            <constraint firstItem="axU-aQ-zj3" firstAttribute="leading" secondItem="how-xf-yOc" secondAttribute="trailing" constant="4" id="Uie-Bl-VK8"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="top" secondItem="Ezh-NT-dn7" secondAttribute="bottom" constant="5" id="WbX-C7-x5s"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="how-xf-yOc" secondAttribute="trailing" constant="20" id="aRX-H4-loR"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="eh7-4g-7rN"/>
+                            <constraint firstItem="1j5-Vs-DtG" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="f14-jI-xaM"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="leading" secondItem="TLY-LG-PCg" secondAttribute="leading" constant="5" id="qeA-Rj-AOo"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1j5-Vs-DtG" secondAttribute="trailing" constant="20" id="xyU-p8-035"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyo-u0-NHb">
@@ -150,11 +173,10 @@
                                     <action selector="btnLikeHeartAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hif-wc-BNn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
-                                <rect key="frame" x="10" y="9.5" width="58" height="26"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8y1-i8-IX0">
+                                <rect key="frame" x="15" y="9.5" width="39" height="26"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="commentBg" backgroundImage="commentBg">
                                     <color key="titleColor" white="0.0" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -219,6 +241,8 @@
                 <outlet property="shareUserDateLabel" destination="Qk1-DH-yqi" id="ZBj-Mm-4Y2"/>
                 <outlet property="shareUserImageView" destination="JDf-au-d8J" id="KeV-pf-Dez"/>
                 <outlet property="shareUserNameLabel" destination="f8I-wB-9rD" id="e1D-UJ-kqj"/>
+                <outlet property="storyDotImageView" destination="axU-aQ-zj3" id="JWK-4H-423"/>
+                <outlet property="storyLabel" destination="1j5-Vs-DtG" id="nEg-5c-6Xc"/>
             </connections>
             <point key="canvasLocation" x="31" y="304"/>
         </tableViewCell>
@@ -227,5 +251,7 @@
         <image name="Filledheart" width="25" height="21"/>
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="Star" width="25" height="23"/>
+        <image name="commentBg" width="29" height="26"/>
+        <image name="storyDot" width="4" height="4"/>
     </resources>
 </document>

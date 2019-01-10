@@ -361,9 +361,35 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                             self.feedData.append(data)
                         }
                     }
-                   
+                    
+                    var feedImageData:[[String:Any]] = [[String:Any]]()
+                    
                     let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
-                    self.feedData = sortedArray
+                    
+                    for item in sortedArray {
+                        if item[ConstantKey.contentType] == nil || item[ConstantKey.contentType] as! String != ConstantKey.video {
+                            if let story = item[ConstantKey.storyType] as? String {
+                                if story == StoryType.story {
+                                    // check date for StoryTime time
+                                    if let timeStamp = item[ConstantKey.date] as? Double {
+                                        let postDate = Date(timeIntervalSince1970: timeStamp)
+                                        let hours = Date().hours(from: postDate)
+                                        if hours < storyTime {
+                                            feedImageData.append(item)
+                                        }
+                                    }
+                                }
+                                else {
+                                    feedImageData.append(item)
+                                }
+                            }
+                            else {
+                                feedImageData.append(item)
+                            }
+                        }
+                    }
+                    
+                    self.feedData = feedImageData
                     self.tableView.reloadData()
                     self.collectionView.reloadData()
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {

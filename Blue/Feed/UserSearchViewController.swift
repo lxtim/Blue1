@@ -144,8 +144,8 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserSearchCell", for: indexPath) as! UserSearchCell
         let data = self.compareData[indexPath.row] as? NSDictionary
-        cell.title = (data?.value(forKey: ConstantKey.username) as? String)!
-        cell.imageURLString = (data?.value(forKey: ConstantKey.image) as? String)!
+        cell.title = data?.value(forKey: ConstantKey.username) as? String ?? ""
+        cell.imageURLString = data?.value(forKey: ConstantKey.image) as? String ?? ""
         return cell
     }
     
