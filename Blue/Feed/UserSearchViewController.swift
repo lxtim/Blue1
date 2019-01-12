@@ -72,7 +72,7 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
             else {
                 self.filterData = [Any]()
             }
-            self.compareData = self.filterData
+            self.compareData = []//self.filterData
             self.tableView.reloadData()
         }) { (error) in
             JDB.log("cancle error ==>>%@", error.localizedDescription)
@@ -92,7 +92,7 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText == "" {
-            self.compareData = self.filterData
+            self.compareData = []//self.filterData
         }
         else {
             self.compareData = self.filterData.filter({ (user) -> Bool in
