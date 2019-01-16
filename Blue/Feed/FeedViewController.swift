@@ -20,6 +20,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var ref: DatabaseReference = Database.database().reference()
     var userRef = Database.database().reference().child(ConstantKey.Users)
     var feedRef = Database.database().reference().child(ConstantKey.feed)
+    var shareRef = Database.database().reference().child(ConstantKey.share)
     
     var feedData:[[String:Any]] = [[String:Any]]()
     var allFeed:NSDictionary = NSDictionary()
@@ -41,6 +42,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var changeObserver:[String:[UInt]] = [String:[UInt]]()
     
     var refreshControl:UIRefreshControl = UIRefreshControl()
+    var selectedIndexPath:IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +74,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         
         
         self.getFeed()
+        
         //        if let indexPath = self.tableView.indexPathsForVisibleRows {
         //            tableView.beginUpdates()
         //            tableView.reloadRows(at: indexPath, with: .none)
@@ -304,8 +307,8 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             
             //self.feedData = sortedArray
             
-            JDB.log("feeddata ==>%@", sortedArray.count)
-            JDB.log("feeddata ==>%@", sortedArray)
+//            JDB.log("feeddata ==>%@", sortedArray.count)
+//            JDB.log("feeddata ==>%@", sortedArray)
             
             for item in sortedArray {
                 if item[ConstantKey.contentType] == nil || item[ConstantKey.contentType] as! String != ConstantKey.video {
@@ -343,6 +346,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             }
             
             self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: {
+                if let indexPath = self.selectedIndexPath {
+                    self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.none, animated: false)
+                    self.selectedIndexPath = nil
+                }
+            })
+            
             //            if self.isFirstTime {
             //                self.isFirstTime = false
             //                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
@@ -507,6 +517,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         let feed = self.feedData[indexPath.row]
         let object = Object(PostViewController.self)
         object.object = feed
+        self.selectedIndexPath = indexPath
         self.navigationController?.pushViewController(object, animated: true)
     }
     
@@ -545,6 +556,87 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         sharePostVC.post = post
         sharePostVC.user = user
         self.navigationController?.pushViewController(sharePostVC, animated: true)
+    }
+    
+    func feedDidDelete(post: [String : Any], user: [String : Any]) {
+        let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+            
+            HUD.show()
+            
+            func deleteSharePost() {
+                
+                guard let postID = post[ConstantKey.id] as? String else {return}
+                
+                self.shareRef.observeSingleEvent(of: DataEventType.value, with: { (snap) in
+                    if let value = snap.value as? [String:Any] {
+                        
+                        var sharePostKeys:[String:String] = [String:String]()
+                        for (k,v) in value {
+                            if let sharePost = v as? [String:Any] {
+                                for (k1,v1) in sharePost {
+                                    if let originalPost = v1 as? [String:Any] {
+                                        if let pID = originalPost[ConstantKey.postID] as? String , pID == postID {
+                                            sharePostKeys[k] = k1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        for (k,v) in sharePostKeys {
+                            self.shareRef.child(k).child(v).removeValue()
+                        }
+                        //MARK:- Refresh UI
+                        HUD.dismiss()
+                        
+                        self.tableView.reloadData()
+                    }
+                    else {
+                        //MARK:- Refresh UI
+                        HUD.dismiss()
+                        self.tableView.reloadData()
+                    }
+                })
+            }
+            
+            func deletePost() {
+                guard let userID = post[ConstantKey.userid] as? String else {return}
+                guard let postID = post[ConstantKey.id] as? String else {return}
+                self.feedRef.child(userID).child(postID).removeValue(completionBlock: { (error, ref) in
+                    deleteSharePost()
+                })
+            }
+            
+            if let image = post[ConstantKey.image] as? String  {
+                let storage = Storage.storage()
+                if let type = post[ConstantKey.contentType] as? String , type == ConstantKey.video {
+                    if let thumb = post[ConstantKey.thumb_image] as? String {
+                        let storageRef = storage.reference(forURL: thumb)
+                        storageRef.delete(completion: { (error) in
+                            let storageRef = storage.reference(forURL: image)
+                            storageRef.delete(completion: { (error) in
+                                deletePost()
+                            })
+                        })
+                    }
+                }
+                else {
+                    let storageRef = storage.reference(forURL: image)
+                    storageRef.delete(completion: { (error) in
+                        deletePost()
+                    })
+                }
+            }
+            else {
+                deletePost()
+            }
+            //            JDB.log("Delete Object ==>%@", self.object)
+        }
+        let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
+            
+        }
+        
+        self.showAlert(message: "Are you sure to delete post ?", actions: yesAction,noAction)
     }
     
     //MARK:- UserSearchDelegate

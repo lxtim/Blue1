@@ -24,6 +24,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
         else {
             self.emailField.text = "ketansangani@gmail.com"
         }
+        self.emailField.text = "jaydeeprudani@gmail.com"
         self.passwordField.text = "123456"
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +102,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
             if error == nil && authDataResult != nil {
                 if let result = authDataResult {
                     firebaseUser = result.user
-                    self.setPageController()
+                    JDB.log("Firebase user ID==>%@", firebaseUser.uid)
+                    Auth.auth().updateCurrentUser(result.user, completion: { (error) in
+                        if error == nil {
+                            self.setPageController()
+                        }
+                    })
                 }
                 else {
                     HUD.dismiss()

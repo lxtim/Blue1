@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A44096B2B1577DD12BD6C4D68CA71246"
+               BlueprintIdentifier = "16C073A0BC3DEADDB80731C0C0C32FDD"
                BuildableName = "VGPlayer.framework"
                BlueprintName = "VGPlayer"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A44096B2B1577DD12BD6C4D68CA71246"
+            BlueprintIdentifier = "16C073A0BC3DEADDB80731C0C0C32FDD"
             BuildableName = "VGPlayer.framework"
             BlueprintName = "VGPlayer"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -44,6 +44,8 @@ class PostViewController: UIViewController {
     
     @IBOutlet weak var btnMore: UIButton!
     
+    @IBOutlet weak var storyDotImageView: UIImageView!
+    @IBOutlet weak var storyLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,12 +60,29 @@ class PostViewController: UIViewController {
             if let url = user[ConstantKey.image] as? String {
                 self.profileImg.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
             }
+            
+            
             if let id =  user[ConstantKey.id] as? String , id == firebaseUser.uid {
                 self.btnMore.isHidden = false
             }
             else {
                 self.btnMore.isHidden = true
             }
+        }
+        
+        if let story = object[ConstantKey.storyType] as? String {
+            if story == StoryType.story {
+                self.storyLabel.isHidden = false
+                self.storyDotImageView.isHidden = false
+            }
+            else {
+                self.storyLabel.isHidden = true
+                self.storyDotImageView.isHidden = true
+            }
+        }
+        else {
+            self.storyLabel.isHidden = true
+            self.storyDotImageView.isHidden = true
         }
         
         if let url = object[ConstantKey.image] as? String {
@@ -133,26 +152,25 @@ class PostViewController: UIViewController {
         else {
             self.likeImg.isSelected = true
             self.likeImg.tag = 0
-            self.likebtn.setTitle("0 Like", for: .normal)
+            self.likebtn.setTitle("0 Likes", for: .normal)
         }
         
         //Set Comment button
         if let comment = object[ConstantKey.comment] as? [String] {
             if comment.count == 1 {
-                self.btnComment.setTitle("1 comment", for: .normal)
+                //self.btnComment.setTitle("1 comment", for: .normal)
             }
             else {
-                self.btnComment.setTitle("\(comment.count) comments", for: .normal)
+                //self.btnComment.setTitle("\(comment.count) comments", for: .normal)
             }
         }
         else {
-            self.btnComment.setTitle("comment", for: .normal)
+            //self.btnComment.setTitle("comment", for: .normal)
         }
     }
     
     @IBAction func btnMoreAction(_ sender: UIButton) {
         let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
-            
             HUD.show()
 
             func deleteSharePost() {

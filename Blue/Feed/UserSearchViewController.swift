@@ -58,6 +58,7 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
                 }
             }
         }
+        
         if #available(iOS 11.0, *) {
             searchBar.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
         }

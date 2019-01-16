@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5D180B2B2F4DC0DFB833AED36219D05A"
+               BlueprintIdentifier = "26190320B74F3AC28CADB6C52CD539AC"
                BuildableName = "ScrollableSegmentedControl.framework"
                BlueprintName = "ScrollableSegmentedControl"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D180B2B2F4DC0DFB833AED36219D05A"
+            BlueprintIdentifier = "26190320B74F3AC28CADB6C52CD539AC"
             BuildableName = "ScrollableSegmentedControl.framework"
             BlueprintName = "ScrollableSegmentedControl"
             ReferencedContainer = "container:Pods.xcodeproj">

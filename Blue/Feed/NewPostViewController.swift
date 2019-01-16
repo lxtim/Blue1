@@ -11,30 +11,35 @@ import Firebase
 import VGPlayer
 import MobileCoreServices
 import AVFoundation
+import CropViewController
 
-class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITextViewDelegate , StorySelctionDelegate {
+class NewPostViewController: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITextViewDelegate , StorySelctionDelegate , CropViewControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
     var player: VGPlayer!
-    
     @IBOutlet weak var playerContentView: UIView!
+    @IBOutlet weak var previewView: UIView!
+    
+    
     var isVideo = false
     
     var storyType:String = StoryType.regular
     
     var imagePicker = UIImagePickerController()
     var ref: DatabaseReference = Database.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.playerContentView.isHidden = true
-        let playerView = VGEmbedPlayerView()
-        self.player = VGPlayer(playerView: playerView)
-        
-        self.playerContentView.addSubview(self.player.displayView)
-        self.player.displayView.snp.makeConstraints {
-            $0.edges.equalTo(self.playerContentView)
-        }
+        self.previewView.isHidden = true
+//        let playerView = VGEmbedPlayerView()
+//        self.player = VGPlayer(playerView: playerView)
+//
+//        self.playerContentView.addSubview(self.player.displayView)
+//        self.player.displayView.snp.makeConstraints {
+//            $0.edges.equalTo(self.playerContentView)
+//        }
     }
     
     @IBAction func btnAddImageAction(_ sender: UIButton) {
@@ -286,7 +291,14 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.imageView.image = image
+            let cropController = CropViewController(image: image)
+            cropController.delegate = self
+            cropController.customAspectRatio = CGSize(width: 25.0, height: 17.0)
+            cropController.aspectRatioLockEnabled = true
+            cropController.resetAspectRatioEnabled = false
+            picker.pushViewController(cropController, animated: true)
+            
+            //self.imageView.image = image
             JDB.log("Image selected")
             self.isVideo = false
         }
@@ -299,10 +311,25 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
             self.playerContentView.isHidden = false
             self.isVideo = true
         }
+
         
-        self.dismiss(animated: true, completion: { () -> Void in
-        })
+//        self.dismiss(animated: true, completion: { () -> Void in
+//        })
     }
+    
+    //MARK:- CropViewDelegate
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true) {}
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        self.imageView.image = image
+        self.isVideo = false
+        self.previewView.isHidden = false
+        cropViewController.dismiss(animated: true) {
+        }
+    }
+    
     //MARK:- UITextViewDelegate
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)

@@ -62,6 +62,7 @@ class SettingViewController: UIViewController , UITextViewDelegate {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            JDB.log("Setting User default ==>%@", UserDefaults.standard.dictionaryRepresentation)
             let signInViewController = Object(SignInViewController.self)
             self.navigationController?.setViewControllers([signInViewController], animated: true)
         } catch let error {

@@ -11,7 +11,6 @@ import VGPlayer
 
 class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,FeedPostCellDelegate {
     
-    
     @IBOutlet weak var shareTableView: UITableView!
     
     var follow:[String] = [String]()
@@ -257,6 +256,11 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         sharePostVC.user = user
         self.navigationController?.pushViewController(sharePostVC, animated: true)
     }
+    
+    func feedDidDelete(post: [String : Any], user: [String : Any]) {
+        
+    }
+    
 }
 
 extension UITableView {

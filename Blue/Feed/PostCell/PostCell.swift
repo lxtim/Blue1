@@ -29,6 +29,7 @@ protocol FeedPostCellDelegate {
     func feedProfileDidSelect(user:[String:Any])
     func feedCommentDidSelect(post:[String:Any],user:[String:Any])
     func feedShareDidSelect(post:[String:Any],user:[String:Any])
+    func feedDidDelete(post:[String:Any],user:[String:Any])
 }
 class PostCell: UITableViewCell {
 
@@ -39,6 +40,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var likebtn: UIButton!
     @IBOutlet weak var btnComment: UIButton!
+    @IBOutlet weak var btnDelete: UIButton!
     
     
     @IBOutlet weak var postImg: UIImageView!
@@ -58,6 +60,7 @@ class PostCell: UITableViewCell {
     var ref: DatabaseReference = Database.database().reference()
     var delegate:FeedPostCellDelegate? = nil
     
+    
     var playCallBack:((IndexPath?) -> Swift.Void)?
     
     override func awakeFromNib() {
@@ -71,7 +74,16 @@ class PostCell: UITableViewCell {
                 if let url = user[ConstantKey.image] as? String , url != "" {
                     self.profileImg.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
+                
+                if let id =  user[ConstantKey.id] as? String , id == firebaseUser.uid {
+                    self.btnDelete.isHidden = false
+                }
+                else {
+                    self.btnDelete.isHidden = true
+                }
+                
             }
+            
             
             if let story = object[ConstantKey.storyType] as? String {
                 if story == StoryType.story {
@@ -161,6 +173,24 @@ class PostCell: UITableViewCell {
     }
     
     
+    @IBAction func btnDeleteAction(_ sender: UIButton) {
+        if object[ConstantKey.userid] != nil {
+            if let delegate = self.delegate {
+                if let id = object[ConstantKey.userid] as? String {
+                    if id == firebaseUser.uid {
+                        delegate.feedDidDelete(post: object, user: object[ConstantKey.user] as! [String:Any])
+                    }
+//                    else {
+//                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
+//                            if let value = snapshot.value as? [String:Any] {
+//                                self.delegate?.feedDidDelete(post: self.object, user: value)
+//                            }
+//                        }
+//                    }
+                }
+            }
+        }
+    }
     
     @IBAction func btnLikeAction(_ sender: UIButton) {
         if object[ConstantKey.likes] != nil {

@@ -143,8 +143,11 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             self.refreshControll.endRefreshing()
         }
         else {
+            JDB.log("Profile User default ==>%@", firebaseUser.uid)
+            
             self.userRef.child(firebaseUser.uid).observeSingleEvent(of: .value) { (snapshot) in
                 guard let userData = snapshot.value as? [String:Any] else {return}
+                JDB.log("Current User data ==>%@", userData)
                 if let image = userData[ConstantKey.image] as? String {
                     self.profileImageView.sd_setImage(with: URL(string: image), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }
@@ -371,13 +374,16 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                             if let story = item[ConstantKey.storyType] as? String {
                                 if story == StoryType.story {
                                     // check date for StoryTime time
-                                    if let timeStamp = item[ConstantKey.date] as? Double {
-                                        let postDate = Date(timeIntervalSince1970: timeStamp)
-                                        let hours = Date().hours(from: postDate)
-                                        if hours < storyTime {
-                                            feedImageData.append(item)
-                                        }
-                                    }
+                                    
+//No need to add story in profile
+                                    
+//                                    if let timeStamp = item[ConstantKey.date] as? Double {
+//                                        let postDate = Date(timeIntervalSince1970: timeStamp)
+//                                        let hours = Date().hours(from: postDate)
+//                                        if hours < storyTime {
+//                                            feedImageData.append(item)
+//                                        }
+//                                    }
                                 }
                                 else {
                                     feedImageData.append(item)
@@ -530,6 +536,8 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 cell.indexPath = indexPath
                 cell.likeImg.isUserInteractionEnabled = false
                 self.currentPlayIndexPath = indexPath
+                cell.btnDelete.isHidden = true
+                
                 cell.playCallBack = ({ [weak self] (indexPath: IndexPath?) -> Void in
                     guard let strongSelf = self else { return }
                     guard let index = indexPath else {return}
@@ -545,7 +553,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
                 cell.type = .image
                 cell.object = feed
                 cell.delegate = self
-                
+                cell.btnDelete.isHidden = true
                 cell.likeImg.isUserInteractionEnabled = false
                 return cell
             }
@@ -555,6 +563,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             cell.type = .caption
             cell.object = feed
             cell.delegate = self
+            cell.btnDelete.isHidden = true
             cell.likeImg.isUserInteractionEnabled = false
             return cell
         }
@@ -593,6 +602,10 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     }
     
     func feedShareDidSelect(post: [String : Any], user: [String : Any]) {
+        
+    }
+    
+    func feedDidDelete(post: [String : Any], user: [String : Any]) {
         
     }
     override func didReceiveMemoryWarning() {

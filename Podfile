@@ -19,7 +19,7 @@ target 'Blue' do
     pod 'ScrollableSegmentedControl'
 #    pod 'BMPlayer'
     pod 'YTBarButtonItemWithBadge'
-    
+    pod 'CropViewController'
 
   target 'BlueTests' do
     inherit! :search_paths
