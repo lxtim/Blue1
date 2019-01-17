@@ -79,13 +79,13 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
             JDB.log("cancle error ==>>%@", error.localizedDescription)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
     }
     
     @objc func keyBoardWillShow(_ notification:Notification) {
         guard let userInfo = (notification as NSNotification).userInfo else {return}
-        guard let endKeyBoardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
+        guard let endKeyBoardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
         self.tableView.tableFooterView = UIView(frame: endKeyBoardFrame)
     }
     

@@ -2,9 +2,9 @@ import Foundation
 import UIKit
 
 // MARK: - TableView
-class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDelegate {
+public class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDelegate {
     
-    override var frame:CGRect{
+    override public var frame:CGRect{
         willSet{
             super.frame = frame
         }
@@ -15,7 +15,7 @@ class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDel
         }
     }
     
-    override var contentSize:CGSize{
+    override public var contentSize:CGSize{
         willSet(newValue){
             if hasAutomaticKeyboardAvoidingBehaviour() {
                 super.contentSize = newValue
@@ -37,7 +37,7 @@ class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDel
     }
     
     
-    override init(frame: CGRect, style: UITableViewStyle) {
+    override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.setup()
     }
@@ -47,7 +47,7 @@ class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDel
         self.setup()
     }
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         setup()
     }
     
@@ -77,19 +77,19 @@ class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDel
         return self.TPKeyboardAvoiding_scrollToActiveTextField()
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
+    override public func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         if newSuperview != nil {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(TPKeyboardAvoiding_assignTextDelegateForViewsBeneathView(_:)), object: self)
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.TPKeyboardAvoiding_findFirstResponderBeneathView(self)?.resignFirstResponder()
         super.touchesEnded(touches, with: event)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    private func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if !self.focusNextTextField()
         {
             textField.resignFirstResponder()
@@ -97,7 +97,7 @@ class TPKeyboardAvoidingTableView:UITableView,UITextFieldDelegate, UITextViewDel
         return true
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(TPKeyboardAvoiding_assignTextDelegateForViewsBeneathView(_:)), object: self)
         
@@ -113,30 +113,30 @@ private extension TPKeyboardAvoidingTableView
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(TPKeyboardAvoiding_keyboardWillShow(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name:UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(TPKeyboardAvoiding_keyboardWillHide(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollToActiveTextField),
-                                               name: NSNotification.Name.UITextViewTextDidBeginEditing,
+                                               name: UITextView.textDidBeginEditingNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollToActiveTextField),
-                                               name: NSNotification.Name.UITextFieldTextDidBeginEditing,
+                                               name:UITextField.textDidBeginEditingNotification,
                                                object: nil)
     }
 }
 
 // MARK: - CollectionView
-class TPKeyboardAvoidingCollectionView:UICollectionView,UITextViewDelegate {
+public class TPKeyboardAvoidingCollectionView:UICollectionView,UITextViewDelegate {
     
-    override var contentSize:CGSize{
+    override public var contentSize:CGSize{
         willSet(newValue){
             if newValue.equalTo(self.contentSize)
             {
@@ -153,7 +153,7 @@ class TPKeyboardAvoidingCollectionView:UICollectionView,UITextViewDelegate {
     }
     
     
-    override var frame:CGRect{
+    override public var frame:CGRect{
         willSet{
             super.frame = frame
         }
@@ -179,7 +179,7 @@ class TPKeyboardAvoidingCollectionView:UICollectionView,UITextViewDelegate {
         
     }
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         setup()
     }
     
@@ -197,14 +197,14 @@ class TPKeyboardAvoidingCollectionView:UICollectionView,UITextViewDelegate {
         return self.TPKeyboardAvoiding_scrollToActiveTextField()
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
+    override public func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         if newSuperview != nil {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(TPKeyboardAvoiding_assignTextDelegateForViewsBeneathView(_:)), object: self)
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.TPKeyboardAvoiding_findFirstResponderBeneathView(self)?.resignFirstResponder()
         super.touchesEnded(touches, with: event)
     }
@@ -217,7 +217,7 @@ class TPKeyboardAvoidingCollectionView:UICollectionView,UITextViewDelegate {
         return true
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(TPKeyboardAvoiding_assignTextDelegateForViewsBeneathView(_:)), object: self)
         
@@ -231,37 +231,37 @@ private extension TPKeyboardAvoidingCollectionView
     {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(TPKeyboardAvoiding_keyboardWillShow(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name:UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(TPKeyboardAvoiding_keyboardWillHide(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollToActiveTextField),
-                                               name: NSNotification.Name.UITextViewTextDidBeginEditing,
+                                               name: UITextView.textDidBeginEditingNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollToActiveTextField),
-                                               name: NSNotification.Name.UITextFieldTextDidBeginEditing,
+                                               name: UITextField.textDidBeginEditingNotification,
                                                object: nil)
     }
 }
 
 // MARK: - ScrollView
-class TPKeyboardAvoidingScrollView:UIScrollView,UITextFieldDelegate,UITextViewDelegate
+public class TPKeyboardAvoidingScrollView:UIScrollView,UITextFieldDelegate,UITextViewDelegate
 {
-    override var contentSize:CGSize{
+    override public var contentSize:CGSize{
         didSet{
             self.TPKeyboardAvoiding_updateFromContentSizeChange()
         }
     }
     
     
-    override var frame:CGRect{
+    override public var frame:CGRect{
         didSet{
             self.TPKeyboardAvoiding_updateContentInset()
         }
@@ -272,7 +272,7 @@ class TPKeyboardAvoidingScrollView:UIScrollView,UITextFieldDelegate,UITextViewDe
         self.setup()
     }
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         setup()
     }
     
@@ -300,19 +300,19 @@ class TPKeyboardAvoidingScrollView:UIScrollView,UITextFieldDelegate,UITextViewDe
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
+    override public func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         if newSuperview != nil {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(TPKeyboardAvoiding_assignTextDelegateForViewsBeneathView(_:)), object: self)
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.TPKeyboardAvoiding_findFirstResponderBeneathView(self)?.resignFirstResponder()
         super.touchesEnded(touches, with: event)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    private func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if !self.focusNextTextField()
         {
             textField.resignFirstResponder()
@@ -320,7 +320,7 @@ class TPKeyboardAvoidingScrollView:UIScrollView,UITextFieldDelegate,UITextViewDe
         return true
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(TPKeyboardAvoiding_assignTextDelegateForViewsBeneathView(_:)), object: self)
         
@@ -334,22 +334,22 @@ private extension TPKeyboardAvoidingScrollView
     {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(TPKeyboardAvoiding_keyboardWillShow(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name:UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(TPKeyboardAvoiding_keyboardWillHide(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               name:UIResponder.keyboardWillHideNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollToActiveTextField),
-                                               name: NSNotification.Name.UITextViewTextDidBeginEditing,
+                                               name:UITextView.textDidBeginEditingNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollToActiveTextField),
-                                               name: NSNotification.Name.UITextFieldTextDidBeginEditing,
+                                               name:UITextField.textDidBeginEditingNotification,
                                                object: nil)
     }
 }
@@ -363,7 +363,7 @@ extension UIScrollView
     @objc func TPKeyboardAvoiding_keyboardWillShow(_ notification:Notification)
     {
         guard let userInfo = notification.userInfo else { return }
-        guard let rectNotification = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else
+        guard let rectNotification = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else
         {
             return
         }
@@ -397,9 +397,9 @@ extension UIScrollView
             }
         }
         
-        let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
-        let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? Int ?? 0
-        let options = UIViewAnimationOptions(rawValue: UInt(curve))
+        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
+        let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
+        let options = UIView.AnimationOptions(rawValue: UInt(curve))
         
         UIView.animate(withDuration: TimeInterval(duration),
                        delay: 0,
@@ -425,7 +425,7 @@ extension UIScrollView
     {
         guard let userInfo = notification.userInfo else { return }
         
-        guard let rectNotification = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue else
+        guard let rectNotification = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else
         {
             return
         }
@@ -443,9 +443,9 @@ extension UIScrollView
         state.keyboardRect = CGRect.zero
         state.keyboardVisible = false
         
-        let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
-        let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? Int ?? 0
-        let options = UIViewAnimationOptions(rawValue: UInt(curve))
+        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
+        let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
+        let options = UIView.AnimationOptions(rawValue: UInt(curve))
         
         UIView.animate(withDuration: TimeInterval(duration),
                        delay: 0,
@@ -614,7 +614,7 @@ extension UIScrollView
         let priorFrame = self.convert(priorView.frame, to: priorView.superview)
         let candidateFrame = bestCandidate == nil ? CGRect.zero : self.convert(bestCandidate!.frame, to: bestCandidate!.superview)
         
-        var bestCandidateHeuristic = -sqrt(candidateFrame.origin.x*candidateFrame.origin.x + candidateFrame.origin.y*candidateFrame.origin.y) + ( Float(fabs(candidateFrame.minY - priorFrame.minY)) < Float.ulpOfOne ? 1e6 : 0)
+        var bestCandidateHeuristic = -sqrt(candidateFrame.origin.x*candidateFrame.origin.x + candidateFrame.origin.y*candidateFrame.origin.y) + ( Float(abs(candidateFrame.minY - priorFrame.minY))<Float.ulpOfOne ? 1e6 : 0)
         
         for childView in view.subviews
         {
@@ -622,9 +622,9 @@ extension UIScrollView
             {
                 let frame = self.convert(childView.frame, to: view)
                 let heuristic = -sqrt(frame.origin.x*frame.origin.x + frame.origin.y*frame.origin.y)
-                    + (Float(fabs(frame.minY - priorFrame.minY)) < Float.ulpOfOne ? 1e6 : 0)
+                    + (Float(abs(frame.minY - priorFrame.minY)) < Float.ulpOfOne ? 1e6 : 0)
                 
-                if childView != priorView && (Float(fabs(frame.minY - priorFrame.minY)) < .ulpOfOne
+                if childView != priorView && (Float(abs(frame.minY - priorFrame.minY)) < Float.ulpOfOne
                     && frame.minX > priorFrame.minX
                     || frame.minY > priorFrame.minY)
                     && (bestCandidate == nil || heuristic > bestCandidateHeuristic)

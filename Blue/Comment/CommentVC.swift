@@ -31,8 +31,8 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
        // JDB.log("Post data ==>%@ \n User data ==>%@", post,user)
         
@@ -58,14 +58,14 @@ class CommentVC: UIViewController , UITableViewDelegate , UITableViewDataSource 
         DispatchQueue.main.async {
             if self.comments.count > 0 {
                 let indexPath = IndexPath(row: (self.comments.count - 1), section: 0)
-                self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: true)
+                self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: true)
             }
         }
     }
     
     @objc func keyBoardWillShow(_ notification:Notification) {
         guard let userInfo = (notification as NSNotification).userInfo else {return}
-        guard let endKeyBoardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
+        guard let endKeyBoardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
         
         UIView.animate(withDuration: 0.3) {
             self.bottomConstraint.constant = endKeyBoardFrame.height

@@ -160,7 +160,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
                 let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueImageFileName())
                 let storageMetaData = StorageMetadata()
                 storageMetaData.contentType = "image/png"
-                imageRef.putData(UIImageJPEGRepresentation(img, 0.5)!, metadata: storageMetaData) { (metadata, error) in
+                imageRef.putData(img.jpegData(compressionQuality: 0.5)!, metadata: storageMetaData) { (metadata, error) in
                     if metadata == nil {
                         HUD.dismiss()
                         return
@@ -267,7 +267,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
         let imageRef = storageRef.child(ConstantKey.image).child(BasicStuff.uniqueImageFileName())
         let storageMetaData = StorageMetadata()
         storageMetaData.contentType = "image/png"
-        imageRef.putData(UIImageJPEGRepresentation(image, 0.5)!, metadata: storageMetaData) { (metadata, error) in
+        imageRef.putData(image.jpegData(compressionQuality: 0.5)!, metadata: storageMetaData) { (metadata, error) in
             if metadata == nil {
                 completion(nil)
                 return
@@ -288,9 +288,12 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
     }
     
     //MARK:- UIImagePicker Controller Delegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             let cropController = CropViewController(image: image)
             cropController.delegate = self
             cropController.customAspectRatio = CGSize(width: 25.0, height: 17.0)
@@ -302,7 +305,7 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
             JDB.log("Image selected")
             self.isVideo = false
         }
-        else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
+        else if let videoURL = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaURL)] as? URL {
             JDB.log("video detected -==>%@",videoURL)
             if let image = getThumbnailImage(forUrl: videoURL) {
                 self.imageView.image = image
@@ -354,4 +357,14 @@ class NewPostViewController: UIViewController , UINavigationControllerDelegate, 
      }
      */
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

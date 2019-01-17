@@ -66,7 +66,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
+        let searchFeed:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.search, target: self, action: #selector(btnSearchAction(_:)))
         self.parent?.navigationItem.leftBarButtonItem = searchFeed
         self.parent?.navigationItem.title = "Feed"
         
@@ -348,7 +348,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
             self.tableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: {
                 if let indexPath = self.selectedIndexPath {
-                    self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.none, animated: false)
+                    self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.none, animated: false)
                     self.selectedIndexPath = nil
                 }
             })
@@ -467,11 +467,11 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

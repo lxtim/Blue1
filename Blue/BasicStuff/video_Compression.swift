@@ -28,14 +28,14 @@ public class VideoCompressor {
         assetExport.exportAsynchronously { () -> Void in
             
             switch assetExport.status {
-            case AVAssetExportSessionStatus.completed:
+            case AVAssetExportSession.Status.completed:
                 DispatchQueue.main.async {
                     print("successfully exported at \(savePathUrl.path))")
                     completionHandler(savePathUrl)
                 }
-            case  AVAssetExportSessionStatus.failed:
+            case  AVAssetExportSession.Status.failed:
                 print("failed \(String(describing: assetExport.error))")
-            case AVAssetExportSessionStatus.cancelled:
+            case AVAssetExportSession.Status.cancelled:
                 print("cancelled \(String(describing: assetExport.error))")
             default:
                 print("complete")

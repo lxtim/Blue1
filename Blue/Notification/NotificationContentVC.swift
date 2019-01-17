@@ -32,8 +32,8 @@ class NotificationContentVC: UIViewController {
         segmentView.selectedSegmentContentColor = UIColor("4A4A4A")
         segmentView.backgroundColor = UIColor.white
         
-        let normalColorAttribute = [NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Light", size: 18)!, NSAttributedStringKey.foregroundColor: UIColor("4A4A4A")]
-        let selectedColorAttribute = [NSAttributedStringKey.font: UIFont(name: "HelveticaNeue", size: 18)!, NSAttributedStringKey.foregroundColor: UIColor("4A4A4A")]
+        let normalColorAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light", size: 18)!, NSAttributedString.Key.foregroundColor: UIColor("4A4A4A")]
+        let selectedColorAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 18)!, NSAttributedString.Key.foregroundColor: UIColor("4A4A4A")]
         
         
         segmentView.setTitleTextAttributes(normalColorAttribute, for: .normal)
@@ -55,7 +55,7 @@ class NotificationContentVC: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let shared = self.childViewControllers[1] as? ShareVC {
+        if let shared = self.children[1] as? ShareVC {
             shared.player.cleanPlayer()
             shared.player.displayView.removeFromSuperview()
             shared.currentPlayIndexPath = nil
@@ -68,12 +68,12 @@ class NotificationContentVC: UIViewController {
         let width = self.scrollVIew.frame.size.width
         let rect:CGRect = CGRect(x: (width * CGFloat(index)), y: 0, width: width, height: scrollVIew.frame.size.height)
         if index == 1 {
-            if let shared = self.childViewControllers[index] as? ShareVC {
+            if let shared = self.children[index] as? ShareVC {
                 shared.getRefresh()
             }
         }
         else {
-            if let shared = self.childViewControllers[1] as? ShareVC {
+            if let shared = self.children[1] as? ShareVC {
                 shared.player.cleanPlayer()
                 shared.player.displayView.removeFromSuperview()
             }

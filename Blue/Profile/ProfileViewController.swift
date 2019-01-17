@@ -166,7 +166,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         }
         
         if let parent = self.parent as? PageViewController {
-            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
+            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItem.Style.done, target: self, action: #selector(btnSettingAction(_:)))
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
 //            parent.navigationItem.rightBarButtonItems = [settingItem]
@@ -184,7 +184,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
         super.viewDidAppear(animated)
         if let parent = self.parent as? PageViewController {
             
-            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.done, target: self, action: #selector(btnSettingAction(_:)))
+            let settingItem:UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItem.Style.done, target: self, action: #selector(btnSettingAction(_:)))
             
             parent.navigationItem.title = "Profile"
             parent.navigationItem.leftBarButtonItem = nil
@@ -450,9 +450,12 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     }
     //MARK:- UIImagepickerDelegate
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             self.profileImageView.image = image
             
             HUD.show()
@@ -463,7 +466,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             let storageMetaData = StorageMetadata()
             storageMetaData.contentType = "image/png"
             
-            imageRef.putData(UIImageJPEGRepresentation(image, 0.8)!, metadata: storageMetaData) { (metadata, error) in
+            imageRef.putData(image.jpegData(compressionQuality: 0.8)!, metadata: storageMetaData) { (metadata, error) in
                 if metadata == nil {
                     HUD.dismiss()
                     return
@@ -518,11 +521,11 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -914,3 +917,13 @@ extension UICollectionView {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
+}

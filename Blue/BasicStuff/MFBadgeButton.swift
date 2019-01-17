@@ -49,11 +49,11 @@ import UIKit
         labelText.string = self.badgeValue.uppercased()
         labelText.fontSize = 9.0
         labelText.font = UIFont(name: "HelveticaNeue", size: 9)!
-        labelText.alignmentMode = kCAAlignmentCenter
+        labelText.alignmentMode = CATextLayerAlignmentMode.center
         labelText.foregroundColor = UIColor.white.cgColor
         let labelString = self.badgeValue.uppercased() 
         let labelFont = UIFont(name: "HelveticaNeue", size: 9)! 
-        let attributes = [NSAttributedStringKey.font : labelFont]
+        let attributes = [NSAttributedString.Key.font : labelFont]
         let w = self.frame.size.width
         let h = CGFloat(10.0)  // fixed height
         let labelWidth = min(w * 0.8, 10.0)    // Starting point

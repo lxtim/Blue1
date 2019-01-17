@@ -76,7 +76,7 @@ open class VGPlayerView: UIView {
         return label
     }()
     open var closeButton : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         return button
     }()
     
@@ -88,11 +88,11 @@ open class VGPlayerView: UIView {
     }()
     open var timeSlider = VGPlayerSlider ()
     open var loadingIndicator = VGPlayerLoadingIndicator()
-    open var fullscreenButton : UIButton = UIButton(type: UIButtonType.custom)
+    open var fullscreenButton : UIButton = UIButton(type: UIButton.ButtonType.custom)
     open var timeLabel : UILabel = UILabel()
-    open var playButtion : UIButton = UIButton(type: UIButtonType.custom)
+    open var playButtion : UIButton = UIButton(type: UIButton.ButtonType.custom)
     open var volumeSlider : UISlider!
-    open var replayButton : UIButton = UIButton(type: UIButtonType.custom)
+    open var replayButton : UIButton = UIButton(type: UIButton.ButtonType.custom)
     open fileprivate(set) var panGestureDirection : VGPlayerViewPanGestureDirection = .horizontal
     fileprivate var isVolume : Bool = false
     fileprivate var sliderSeekTimeValue : TimeInterval = .nan
@@ -339,7 +339,7 @@ extension VGPlayerView {
         }, repeats: false)
     }
     internal func addDeviceOrientationNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationWillChange(_:)), name: .UIApplicationWillChangeStatusBarOrientation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationWillChange(_:)), name: UIApplication.willChangeStatusBarOrientationNotification, object: nil)
     }
     
     internal func configurationVolumeSlider() {

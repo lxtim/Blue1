@@ -73,8 +73,8 @@ class StoryButtonView : UIView  {
         
         UIView.animate(withDuration: 0.3, animations: {
             self.imageView.frame = sender.frame
-            sender.setTitleColor(UIColor.white, for: UIControlState.normal)
-            self.btnStory.setTitleColor(UIColor.black, for: UIControlState.normal)
+            sender.setTitleColor(UIColor.white, for: UIControl.State.normal)
+            self.btnStory.setTitleColor(UIColor.black, for: UIControl.State.normal)
         }) { (finished) in
             if let delegate = self.delegate {
                 delegate.storyTypeDidSelect(StoryType.regular)
@@ -85,8 +85,8 @@ class StoryButtonView : UIView  {
     @IBAction func btnStoryAction(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3, animations: {
             self.imageView.frame = sender.frame
-            sender.setTitleColor(UIColor.white, for: UIControlState.normal)
-            self.btnRegular.setTitleColor(UIColor.black, for: UIControlState.normal)
+            sender.setTitleColor(UIColor.white, for: UIControl.State.normal)
+            self.btnRegular.setTitleColor(UIColor.black, for: UIControl.State.normal)
         }) { (finished) in
             if let delegate = self.delegate {
                 delegate.storyTypeDidSelect(StoryType.story)
@@ -112,7 +112,7 @@ func getThumbnailImage(forUrl url: URL) -> UIImage? {
     let imageGenerator = AVAssetImageGenerator(asset: asset)
     
     do {
-        let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60) , actualTime: nil)
+        let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60) , actualTime: nil)
         return UIImage(cgImage: thumbnailImage)
     } catch let error {
         print(error)
@@ -206,7 +206,7 @@ extension UITextField{
             return self.placeHolderColor
         }
         set {
-            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedStringKey.foregroundColor: newValue!])
+            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedString.Key.foregroundColor: newValue!])
         }
     }
 }
@@ -478,14 +478,14 @@ func Object<T>(_ :T.Type) -> T {
 
 extension UIViewController {
     func showAlert(_ message:String)  {
-        let alertController = UIAlertController(title: "Blue", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Blue", message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
             
         }))
         self.present(alertController, animated: true, completion: nil)
     }
     func showAlert(title:String? = "Blue",message:String?,actions:UIAlertAction...)  {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         for action in actions {
             alertController.addAction(action)
         }
