@@ -476,8 +476,8 @@ extension VGPlayerView {
         let velocity = gesture.velocity(in: self)
         switch gesture.state {
         case .began:
-            let x = fabs(translation.x)
-            let y = fabs(translation.y)
+            let x = abs(translation.x)
+            let y = abs(translation.y)
             if x < y {
                 panGestureDirection = .vertical
                 if location.x > bounds.width / 2 {

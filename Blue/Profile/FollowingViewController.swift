@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import SJSegmentedScrollView
 
-class FollowingViewController: UIViewController , UITableViewDelegate , UITableViewDataSource {
+class FollowingViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , SJSegmentedViewControllerViewSource{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,6 +35,21 @@ class FollowingViewController: UIViewController , UITableViewDelegate , UITableV
         }
     }
 
+    func updateTableData() {
+        self.following = [[String:Any]]()
+        self.userRef.observeSingleEvent(of: DataEventType.value) { (snap) in
+            if let value = snap.value as? [String:Any] {
+                for (k,v) in value {
+                    if self.followingUsers.contains(k) {
+                        if let user = v as? [String:Any] {
+                            self.following.append(user)
+                        }
+                    }
+                }
+            }
+            self.tableView.reloadData()
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Followings"
@@ -71,15 +87,19 @@ class FollowingViewController: UIViewController , UITableViewDelegate , UITableV
     //MARK:- UItableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = self.following[indexPath.row]
-        let profile = Object(ProfileViewController.self)
+        let profile = Object(ProfileSegmentViewController.self)//Object(ProfileViewController.self)
         if let id = user[ConstantKey.id] as? String ,id == firebaseUser.uid {
             profile.isOtherUserProfile = false
         }
         else {
             profile.isOtherUserProfile = true
-            profile.userProfileData = NSMutableDictionary(dictionary: user)
+            profile.userProfileData = user//NSMutableDictionary(dictionary: user)
         }
         self.navigationController?.pushViewController(profile, animated: true)
+    }
+    
+    func viewForSegmentControllerToObserveContentOffsetChange() -> UIView {
+        return self.tableView
     }
     
     override func didReceiveMemoryWarning() {

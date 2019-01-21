@@ -531,13 +531,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     func feedProfileDidSelect(user: [String : Any]) {
-        let profile = Object(ProfileViewController.self)
+        let profile = Object(ProfileSegmentViewController.self)//Object(ProfileViewController.self)
         if let id = user[ConstantKey.userid] as? String ,id == firebaseUser.uid {
             profile.isOtherUserProfile = false
         }
         else {
             profile.isOtherUserProfile = true
-            profile.userProfileData = NSMutableDictionary(dictionary: user)
+            profile.userProfileData = user//NSMutableDictionary(dictionary: user)
         }
         self.navigationController?.pushViewController(profile, animated: true)
     }
@@ -640,11 +640,11 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     //MARK:- UserSearchDelegate
-    func userDidSelect(_ data: NSDictionary) {
+    func userDidSelect(_ data: [String:Any]) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        let profileVC = Object(ProfileViewController.self)
+        let profileVC = Object(ProfileSegmentViewController.self)
         profileVC.isOtherUserProfile = true
-        profileVC.userProfileData = NSMutableDictionary(dictionary: data)
+        profileVC.userProfileData = data //NSMutableDictionary(dictionary: data)
         self.parent?.navigationController?.pushViewController(profileVC, animated: true)
     }
     

@@ -104,8 +104,10 @@ class SharePostViewController: UIViewController {
             }
         }
         
-        self.ref.child(ConstantKey.share).child(firebaseUser.uid).childByAutoId().setValue(savedData) { (error, dabaseRef) in
-            
+        let shareRef = self.ref.child(ConstantKey.share).child(firebaseUser.uid).childByAutoId()
+        savedData[ConstantKey.shareID] = shareRef.key
+        
+        shareRef.setValue(savedData) { (error, dabaseRef) in
             if error == nil {
                 let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (action) in
                     DispatchQueue.main.async {
@@ -116,10 +118,6 @@ class SharePostViewController: UIViewController {
                             viewContrllers.append(notificationVC)
                             self.navigationController?.setViewControllers(viewContrllers, animated: true)
                         }
-                        
-//                        let notificationVC = Object(NotificationContentVC.self)
-//                        notificationVC.selectedIndex = 1
-//                        self.navigationController?.pushViewController(notificationVC, animated: true)
                     }
                 })
                 self.showAlert(message: "Post Shared Successfully.", actions: actionOK)

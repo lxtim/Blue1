@@ -11,7 +11,7 @@ import Firebase
 import SDWebImage
 
 protocol UserSearchDelegate {
-    func userDidSelect(_ data:NSDictionary)
+    func userDidSelect(_ data:[String:Any])
 }
 
 class UserSearchCell : UITableViewCell {
@@ -35,8 +35,8 @@ class UserSearchCell : UITableViewCell {
 class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
     
     var searchBar:UISearchBar = UISearchBar()
-    var filterData:[Any] = [Any]()
-    var compareData:[Any] = [Any]()
+    var filterData:[[String:Any]] = [[String:Any]]()
+    var compareData:[[String:Any]] = [[String:Any]]()
     var delegate:UserSearchDelegate? = nil
     
     var ref: DatabaseReference = Database.database().reference()
@@ -65,15 +65,16 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
         
         self.ref.child(ConstantKey.Users).queryOrdered(byChild: ConstantKey.username).observeSingleEvent(of: .value, with: { (snapshot) in
             guard let value = snapshot.value else {return}
-            if let dict = value as? NSDictionary {
-                let data = NSMutableDictionary(dictionary: dict)
-                data.removeObject(forKey: firebaseUser.uid)
-                self.filterData = data.allValues
+            if var dict = value as? [String:Any] {
+                dict.removeValue(forKey: firebaseUser.uid)
+                
+                self.filterData = dict.values.map({$0 as! [String:Any]})
             }
             else {
-                self.filterData = [Any]()
+                self.filterData = [[String:Any]]()
             }
-            self.compareData = []//self.filterData
+            self.compareData = [[String:Any]]()
+            
             self.tableView.reloadData()
         }) { (error) in
             JDB.log("cancle error ==>>%@", error.localizedDescription)
@@ -97,14 +98,9 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
         }
         else {
             self.compareData = self.filterData.filter({ (user) -> Bool in
-                if let user = user as? NSDictionary {
-                    if let username  = user.value(forKey: ConstantKey.username) as? String {
-                        if username.lowercased().contains(searchText.lowercased())  {
-                            return true
-                        }
-                        else {
-                            return false
-                        }
+                if let username  = user[ConstantKey.username] as? String {
+                    if username.lowercased().contains(searchText.lowercased())  {
+                        return true
                     }
                     else {
                         return false
@@ -114,9 +110,8 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
                     return false
                 }
             })
+            self.tableView.reloadData()
         }
-        
-        self.tableView.reloadData()        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -161,10 +156,9 @@ class UserSearchViewController: UITableViewController ,UISearchBarDelegate{
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let row  = self.compareData[indexPath.row] as? NSDictionary {
-            if let delegate = self.delegate {
-                delegate.userDidSelect(row)
-            }
+        let row  = self.compareData[indexPath.row]
+        if let delegate = self.delegate {
+            delegate.userDidSelect(row)
         }
         self.dismiss(animated: true, completion: nil)
     }

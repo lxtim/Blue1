@@ -196,12 +196,17 @@ class PostViewController: UIViewController {
                         for (k,v) in sharePostKeys {
                             self.shareRef.child(k).child(v).removeValue()
                         }
-                        self.navigationController?.popViewController(animated: true)
-                        HUD.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+                            HUD.dismiss()
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                        
                     }
                     else {
-                        self.navigationController?.popViewController(animated: true)
-                        HUD.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+                            HUD.dismiss()
+                            self.navigationController?.popViewController(animated: true)
+                        })
                     }
                 })
             }
@@ -257,16 +262,16 @@ class PostViewController: UIViewController {
         if object[ConstantKey.userid] != nil {
             if let id = object[ConstantKey.userid] as? String {
                 if id == firebaseUser.uid {
-                    let profile = Object(ProfileViewController.self)
+                    let profile = Object(ProfileSegmentViewController.self)
                     profile.isOtherUserProfile = false
                     self.navigationController?.pushViewController(profile, animated: true)
                 }
                 else {
                     self.userRef.child(id).observeSingleEvent(of: .value) { (snapshot) in
                         if let value = snapshot.value as? [String:Any] {
-                            let profile = Object(ProfileViewController.self)
+                            let profile = Object(ProfileSegmentViewController.self)
                             profile.isOtherUserProfile = true
-                            profile.userProfileData = NSMutableDictionary(dictionary: value)
+                            profile.userProfileData = value //NSMutableDictionary(dictionary: value)
                             self.navigationController?.pushViewController(profile, animated: true)
                         }
                     }

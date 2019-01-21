@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D66BF5FD8DCCC6C2417379AA115AB95A"
+               BlueprintIdentifier = "2E958B39F8B1800F0AE52A7CC4F14693"
                BlueprintName = "YTBarButtonItemWithBadge"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "YTBarButtonItemWithBadge.framework">

@@ -24,7 +24,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     
     lazy var orderedViewControllers: [UIViewController] = {
         return [Object(FeedViewController.self),
-                Object(ProfileViewController.self)]
+                Object(ProfileSegmentViewController.self)]
     }()
     
     override func viewDidLoad() {

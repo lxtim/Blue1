@@ -46,6 +46,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
     var allFeed:NSDictionary = NSDictionary()
     
     var isOtherUserProfile:Bool = false
+    
     var userProfileData:NSMutableDictionary = NSMutableDictionary()
     
     var followers:[[String:Any]] = [[String:Any]]()
@@ -329,6 +330,7 @@ class ProfileViewController: UIViewController , UINavigationControllerDelegate, 
             
         }
     }
+    
     func getFeed() {
         self.feedData = [[String:Any]]()
         self.userRef.child(firebaseUser.uid).observe(.value) { (snapshot) in

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "16C073A0BC3DEADDB80731C0C0C32FDD"
+               BlueprintIdentifier = "9F6FD9A611313C367E61987F750A7663"
                BlueprintName = "VGPlayer"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "VGPlayer.framework">

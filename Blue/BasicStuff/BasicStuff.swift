@@ -41,6 +41,7 @@ struct ConstantKey  {
     static let post:String = "post"
     static let storyType:String = "storyType"
     static let storyDate:String = "storyDate"
+    static let shareID:String = "shareID"
     
 }
 struct Platform {

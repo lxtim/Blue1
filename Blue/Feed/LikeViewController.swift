@@ -84,13 +84,13 @@ class LikeViewController: UIViewController , UITableViewDelegate , UITableViewDa
     //MARK:- UItableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = self.likes[indexPath.row]
-        let profile = Object(ProfileViewController.self)
+        let profile = Object(ProfileSegmentViewController.self)
         if let id = user[ConstantKey.id] as? String ,id == firebaseUser.uid {
             profile.isOtherUserProfile = false
         }
         else {
             profile.isOtherUserProfile = true
-            profile.userProfileData = NSMutableDictionary(dictionary: user)
+            profile.userProfileData = user//NSMutableDictionary(dictionary: user)
         }
         self.navigationController?.pushViewController(profile, animated: true)
     }

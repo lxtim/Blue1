@@ -26,7 +26,7 @@ open class VGPlayerCacheManager: NSObject {
     fileprivate let ioQueue = DispatchQueue(label: "com.vgplayer.ioQueue")
     fileprivate var fileManager: FileManager!
     
-    open static let shared = VGPlayerCacheManager()
+    public static let shared = VGPlayerCacheManager()
     open private(set) var cacheConfig = VGPlayerCacheConfiguration()
     
     public override init() {

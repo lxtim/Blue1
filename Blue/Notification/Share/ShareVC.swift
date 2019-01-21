@@ -19,6 +19,8 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     
     var shareTableData:[[String:Any]] = [[String:Any]]()
     
+    var removeShareDataObject:[String] = [String]()
+    
     var player : VGPlayer!
     var playerView : VGEmbedPlayerView!
     var currentPlayIndexPath : IndexPath?
@@ -90,28 +92,11 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         
         self.ref.child(ConstantKey.share).child(id).observeSingleEvent(of: .value) { (snapshot) in
             if let response = snapshot.value as? [String:Any] {
-                JDB.log("Response ==>%@", response)
                 let data = response.map({$1 as! [String:Any]})
                 
                 for item in data {
                     if let contentType = item[ConstantKey.contentType] as? Int , contentType != 2 {
-                        if let storyType = item[ConstantKey.storyType] as? String {
-                            if storyType == StoryType.story {
-                                if let timeStamp = item[ConstantKey.storyDate] as? Double {
-                                    let postDate = Date(timeIntervalSince1970: timeStamp)
-                                    let hours = Date().hours(from: postDate)
-                                    if hours < storyTime {
-                                        self.shareTableData.append(item)
-                                    }
-                                }
-                            }
-                            else {
-                                self.shareTableData.append(item)
-                            }
-                        }
-                        else {
-                            self.shareTableData.append(item)
-                        }
+                        self.shareTableData.append(item)
                     }
                     
 //                    if item[ConstantKey.contentType] as! Int == 2 {
@@ -120,10 +105,6 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
 //                        self.shareTableData.append(item)
 //                    }
                 }
-                
-                JDB.log("share data printed ====>%@", self.shareTableData)
-                JDB.log("share data count ====>%@", self.shareTableData.count)
-                
             }
             let nextCount = count + 1
             DispatchQueue.main.async {
@@ -136,36 +117,58 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         
         if count >= self.shareTableData.count {
             HUD.dismiss()
-            self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
-            JDB.log("Share data ==>%@", self.shareTableData)
-            
-            self.shareTableView.reloadData()
-            
-            if self.isFirstTime {
-                self.isFirstTime = false
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-                    let visibleCell = self.shareTableView.visibleCells
-                    for item in visibleCell {
-                        if let cell = item as? ShareTableViewCell , cell.postType == .video {
-                            self.currentPlayIndexPath = cell.indexPath
-                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.shareTableView, change: nil, context: nil)
-                        }
+            for index in self.removeShareDataObject {
+                JDB.log("Remove SHare Object ID ==>%@", index)
+                self.shareTableData = self.shareTableData.filter { (data) -> Bool in
+                    if let shareID = data[ConstantKey.shareID] as? String , shareID != index {
+                        return true
+                    }
+                    else {
+                        return false
                     }
                 }
             }
+            self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
+            self.shareTableView.reloadData()
+            
+//            if self.isFirstTime {
+//                self.isFirstTime = false
+//                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+//                    let visibleCell = self.shareTableView.visibleCells
+//                    for item in visibleCell {
+//                        if let cell = item as? ShareTableViewCell , cell.postType == .video {
+//                            self.currentPlayIndexPath = cell.indexPath
+//                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.shareTableView, change: nil, context: nil)
+//                        }
+//                    }
+//                }
+//            }
             return
         }
         else {
-            
             let object = self.shareTableData[count]
-            
             let postUserID = object[ConstantKey.userid] as! String
             let postID = object[ConstantKey.postID] as! String
             
             self.ref.child(ConstantKey.feed).child(postUserID).child(postID).observe(.value) { (snapshot) in
                 if let post = snapshot.value as? [String:Any] {
-                    self.shareTableData[count][ConstantKey.post] = post
+                    if let storyType = post[ConstantKey.storyType] as? String , storyType == StoryType.story {
+                        if let timeStamp = post[ConstantKey.date] as? Double {
+                            let postDate = Date(timeIntervalSince1970: timeStamp)
+                            let hours = Date().hours(from: postDate)
+                            if hours < storyTime {
+                                self.shareTableData[count][ConstantKey.post] = post
+                            }
+                        }
+                    }
+                    else {
+                        self.shareTableData[count][ConstantKey.post] = post
+                    }
                 }
+                else {
+                    self.removeShareDataObject.append(object[ConstantKey.shareID] as! String)
+                }
+                
                 let nextCount = count + 1
                 DispatchQueue.main.async {
                     self.getShareContent(count: nextCount)
@@ -232,13 +235,13 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     }
     
     func feedProfileDidSelect(user: [String : Any]) {
-        let profile = Object(ProfileViewController.self)
+        let profile = Object(ProfileSegmentViewController.self)
         if let id = user[ConstantKey.userid] as? String ,id == firebaseUser.uid {
             profile.isOtherUserProfile = false
         }
         else {
             profile.isOtherUserProfile = true
-            profile.userProfileData = NSMutableDictionary(dictionary: user)
+            profile.userProfileData = user//NSMutableDictionary(dictionary: user)
         }
         self.navigationController?.pushViewController(profile, animated: true)
     }
