@@ -15,8 +15,16 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var contentImageView: UIImageView!
+    @IBOutlet weak var btnProfile: UIButton!
     
     var userRef = Database.database().reference().child(ConstantKey.Users)
+    var user:[String:Any] = [String:Any]()
+    
+    var index:Int = 0 {
+        didSet(newValue) {
+            self.btnProfile.tag = index
+        }
+    }
     
     var object:[String:Any] = [String:Any]() {
         didSet(newValue) {
@@ -34,17 +42,22 @@ class NotificationTableViewCell: UITableViewCell {
             else {
                 self.contentImageView.image = nil
             }
+            
             self.userRef.child(userID).observeSingleEvent(of: .value) { (snapshot) in
                 guard let value = snapshot.value as? [String:Any] else {return}
+                self.user = value
+                
                 if type == NotificationType.comment {
                     self.titleLabel.text = "\(value[ConstantKey.username] as! String) commented on your content."
                 }
                 if type == NotificationType.follow {
                     self.titleLabel.text = "\(value[ConstantKey.username] as! String) started following you."
+                    self.contentImageView.image = nil
                 }
                 if type == NotificationType.like {
                     self.titleLabel.text = "\(value[ConstantKey.username] as! String) liked your content."
                 }
+                
                 if let url = value[ConstantKey.image] as? String {
                     self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
                 }

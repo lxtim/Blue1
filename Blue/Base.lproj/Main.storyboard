@@ -2670,9 +2670,15 @@
                                                     <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASh-gc-4g9">
+                                                    <rect key="frame" x="5" y="10" width="94.5" height="50"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="ASh-gc-4g9" firstAttribute="trailing" secondItem="Krp-0k-BUN" secondAttribute="trailing" id="2Wp-ut-J7k"/>
+                                                <constraint firstItem="ASh-gc-4g9" firstAttribute="top" secondItem="qh9-ct-u54" secondAttribute="top" id="70I-al-0hq"/>
                                                 <constraint firstItem="Krp-0k-BUN" firstAttribute="leading" secondItem="qh9-ct-u54" secondAttribute="trailing" constant="10" id="Agd-VH-Vbb"/>
+                                                <constraint firstItem="ASh-gc-4g9" firstAttribute="leading" secondItem="qh9-ct-u54" secondAttribute="leading" id="E9n-VF-1AE"/>
                                                 <constraint firstItem="qw3-Y6-uYe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Krp-0k-BUN" secondAttribute="trailing" constant="10" id="Fba-rp-1RD"/>
                                                 <constraint firstItem="qw3-Y6-uYe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XGi-D8-T59" secondAttribute="trailing" constant="10" id="HNJ-qf-bXg"/>
                                                 <constraint firstItem="qh9-ct-u54" firstAttribute="centerY" secondItem="juD-hf-jFQ" secondAttribute="centerY" id="HNX-xM-XmU"/>
@@ -2681,12 +2687,14 @@
                                                 <constraint firstItem="qh9-ct-u54" firstAttribute="top" secondItem="juD-hf-jFQ" secondAttribute="top" constant="10" id="a9F-KL-1fh"/>
                                                 <constraint firstItem="Krp-0k-BUN" firstAttribute="top" secondItem="juD-hf-jFQ" secondAttribute="top" constant="10" id="bhG-0q-Nu9"/>
                                                 <constraint firstItem="XGi-D8-T59" firstAttribute="top" secondItem="Krp-0k-BUN" secondAttribute="bottom" constant="5" id="cEl-Rp-1Bf"/>
+                                                <constraint firstItem="ASh-gc-4g9" firstAttribute="bottom" secondItem="qh9-ct-u54" secondAttribute="bottom" id="frq-7Q-Q10"/>
                                                 <constraint firstAttribute="bottom" secondItem="qw3-Y6-uYe" secondAttribute="bottom" constant="10" id="gJA-3E-IF2"/>
                                                 <constraint firstItem="qh9-ct-u54" firstAttribute="leading" secondItem="juD-hf-jFQ" secondAttribute="leading" constant="5" id="xfD-vO-wVo"/>
                                                 <constraint firstItem="XGi-D8-T59" firstAttribute="leading" secondItem="qh9-ct-u54" secondAttribute="trailing" constant="10" id="xkB-dL-gnP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btnProfile" destination="ASh-gc-4g9" id="spg-xu-HgA"/>
                                             <outlet property="contentImageView" destination="qw3-Y6-uYe" id="VIa-dp-99r"/>
                                             <outlet property="dateLabel" destination="XGi-D8-T59" id="jym-sv-iJ4"/>
                                             <outlet property="profileImageView" destination="qh9-ct-u54" id="8KA-9t-zNB"/>
@@ -2775,6 +2783,6 @@
         <image name="storyDot" width="4" height="4"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3zm-lb-Kcx"/>
+        <segue reference="2CZ-St-csw"/>
     </inferredMetricsTieBreakers>
 </document>

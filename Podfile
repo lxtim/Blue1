@@ -20,7 +20,7 @@ target 'Blue' do
 #    pod 'BMPlayer'
     pod 'YTBarButtonItemWithBadge'
     pod 'CropViewController'
-    pod 'SJSegmentedScrollView','1.3.6'
+    pod 'SJSegmentedScrollView', ‘1.3.6'
 #    
   target 'BlueTests' do
     inherit! :search_paths

@@ -37,15 +37,11 @@ class SJUtil {
 
 		var topSpacing: CGFloat = 0.0
 		let navigationController = viewController.navigationController
-
-        if navigationController?.children.last == viewController {
-
-			if navigationController?.isNavigationBarHidden == false {
-				topSpacing = UIApplication.shared.statusBarFrame.height
-				topSpacing += (navigationController?.navigationBar.bounds.height)!
-			}
-		}
-		
+        
+        if navigationController?.isNavigationBarHidden == true {
+            topSpacing = UIApplication.shared.statusBarFrame.height
+            s
+        }
         return topSpacing
     }
 

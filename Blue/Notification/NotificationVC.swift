@@ -42,6 +42,9 @@ class NotificationVC: UIViewController , UITableViewDelegate , UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
         cell.object = self.notification[indexPath.row]
+        cell.index = indexPath.row
+        cell.btnProfile.addTarget(self, action: #selector(btnProfileAction(_:)), for: UIControl.Event.touchUpInside)
+        
         return cell
     }
     
@@ -63,6 +66,23 @@ class NotificationVC: UIViewController , UITableViewDelegate , UITableViewDataSo
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 0.5))
         view.backgroundColor = UIColor.lightGray
         return view
+    }
+    
+    @objc func btnProfileAction(_ sender:UIButton) {
+        
+        let cell = self.tableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! NotificationTableViewCell
+        
+        let profile = Object(ProfileSegmentViewController.self)//Object(ProfileViewController.self)
+        
+        if let id = cell.user[ConstantKey.id] as? String ,id == firebaseUser.uid {
+            profile.isOtherUserProfile = false
+        }
+        else {
+            profile.isOtherUserProfile = true
+        }
+        profile.userProfileData = cell.user
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.parent?.navigationController?.pushViewController(profile, animated: true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

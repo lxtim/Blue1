@@ -272,6 +272,17 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		F131B99B21F723E500DA2EAA /* ProfileSegment */ = {
+			isa = PBXGroup;
+			children = (
+				F1BFC2F321F59F6E00B98BA0 /* ProfileSegmentViewController.swift */,
+				F1F436D521F5A2E000307148 /* ProfileHeaderViewController.swift */,
+				F1F436DB21F5B29A00307148 /* UserContentViewController.swift */,
+				F1F436DD21F5F06F00307148 /* BioViewController.swift */,
+			);
+			path = ProfileSegment;
+			sourceTree = "<group>";
+		};
 		F183D69B21254040009DF2AC /* PostCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,14 +334,11 @@
 			isa = PBXGroup;
 			children = (
 				F1EACD93214D466700BB7349 /* ProfileGrid */,
+				F131B99B21F723E500DA2EAA /* ProfileSegment */,
 				D934FE6E2117647500A5F66F /* ProfileViewController.swift */,
 				F1A1B95B21243C2800D24606 /* FollwersViewController.swift */,
 				F1E809A221258CC300CB7197 /* FollowingViewController.swift */,
 				F1A1B95D21244A8A00D24606 /* SettingViewController.swift */,
-				F1BFC2F321F59F6E00B98BA0 /* ProfileSegmentViewController.swift */,
-				F1F436D521F5A2E000307148 /* ProfileHeaderViewController.swift */,
-				F1F436DB21F5B29A00307148 /* UserContentViewController.swift */,
-				F1F436DD21F5F06F00307148 /* BioViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";

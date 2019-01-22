@@ -49,6 +49,7 @@ class ProfileSegmentViewController: SJSegmentedViewController , SJSegmentedViewC
         segmentShadow = SJShadow.light()
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
+        
         segmentBounces = true
         segmentViewHeight = 45
         self.delegate = self
