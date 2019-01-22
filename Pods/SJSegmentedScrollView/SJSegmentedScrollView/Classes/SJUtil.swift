@@ -40,7 +40,7 @@ class SJUtil {
         
         if navigationController?.isNavigationBarHidden == true {
             topSpacing = UIApplication.shared.statusBarFrame.height
-            s
+            //topSpacing += (navigationController?.navigationBar.bounds.height)!
         }
         return topSpacing
     }
