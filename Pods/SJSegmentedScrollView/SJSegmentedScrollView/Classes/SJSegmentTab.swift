@@ -27,7 +27,7 @@ typealias DidSelectSegmentAtIndex = (_ segment: SJSegmentTab?,_ index: Int,_ ani
 open class SJSegmentTab: UIView {
 
 	let kSegmentViewTagOffset = 100
-	let button = UIButton(type: .custom)
+    let button = UIButton(type: .custom)
 
 	var didSelectSegmentAtIndex: DidSelectSegmentAtIndex?
 	var isSelected = false {
@@ -79,9 +79,9 @@ open class SJSegmentTab: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	open func titleColor(_ color: UIColor) {
+    open func titleColor(_ color: UIColor ,_ state:UIControl.State? = .normal) {
 
-		button.setTitleColor(color, for: .normal)
+        button.setTitleColor(color, for: state ?? .normal)
 	}
 
 	open func titleFont(_ font: UIFont) {

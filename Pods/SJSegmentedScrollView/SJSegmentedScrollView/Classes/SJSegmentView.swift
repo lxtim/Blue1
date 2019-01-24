@@ -49,11 +49,11 @@ class SJSegmentView: UIScrollView {
     var shadow: SJShadow? {
         didSet {
             if let shadow = shadow {
-                layer.shadowOffset = shadow.offset
-                layer.shadowColor = shadow.color.cgColor
-                layer.shadowRadius = shadow.radius
-                layer.shadowOpacity = shadow.opacity
-                layer.masksToBounds = false;
+               // layer.shadowOffset = shadow.offset
+             //   layer.shadowColor = shadow.color.cgColor
+              //  layer.shadowRadius = shadow.radius
+              //  layer.shadowOpacity = shadow.opacity
+               // layer.masksToBounds = false;
             }
         }
     }
@@ -185,7 +185,7 @@ class SJSegmentView: UIScrollView {
         
         if segments.count == 0 {
             
-            let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]",
+            let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-25-[view]",
                                                                                        options: [],
                                                                                        metrics: nil,
                                                                                        views: ["view": segmentView])
@@ -194,7 +194,7 @@ class SJSegmentView: UIScrollView {
         } else {
             
             let previousView = segments.last
-            let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[previousView]-0-[view]",
+            let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[previousView]-50-[view]",
                                                                                        options: [],
                                                                                        metrics: nil,
                                                                                        views: ["view": segmentView,
@@ -202,15 +202,15 @@ class SJSegmentView: UIScrollView {
             segmentContentView!.addConstraints(horizontalConstraints)
         }
         
-        let widthConstraint = NSLayoutConstraint(item: segmentView,
-                                                 attribute: .width,
-                                                 relatedBy: .equal,
-                                                 toItem: nil,
-                                                 attribute: .notAnAttribute,
-                                                 multiplier: 1.0,
-                                                 constant: width)
-        segmentContentView!.addConstraint(widthConstraint)
-        contentSubViewWidthConstraints.append(widthConstraint)
+//        let widthConstraint = NSLayoutConstraint(item: segmentView,
+//                                                 attribute: .width,
+//                                                 relatedBy: .equal,
+//                                                 toItem: nil,
+//                                                 attribute: .notAnAttribute,
+//                                                 multiplier: 1.0,
+//                                                 constant: width)
+//        segmentContentView!.addConstraint(widthConstraint)
+//        contentSubViewWidthConstraints.append(widthConstraint)
         
         let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
                                                                                  options: [],

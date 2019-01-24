@@ -218,6 +218,34 @@ class SJSegmentedScrollView: UIScrollView {
                                                                                      views: ["headerView": view!,
                                                                                         "segmentView": segmentView!])
             addConstraints(verticalConstraints)
+            
+            let scrollBottomContentView = UIView()
+            scrollBottomContentView.backgroundColor = UIColor.lightGray
+            scrollBottomContentView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(scrollBottomContentView)
+            //(==mainView)
+            //, "mainView": view!
+            let bottomhorizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[contentView]-15-|",
+                                                                             options: [],
+                                                                             metrics: nil,
+                                                                             views: ["contentView": scrollBottomContentView])
+            addConstraints(bottomhorizontalConstraints)
+            
+            let bottomverticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[segmentView]-0-[bottomView(\(0.5))]",
+                                                                           options: [],
+                                                                           metrics: nil,
+                                                                           views: ["segmentView":segmentView!,"bottomView": scrollBottomContentView])
+            addConstraints(bottomverticalConstraints)
+            
+//            let bottomcontentViewHeightConstraint = NSLayoutConstraint(item: scrollBottomContentView,
+//                                                                       attribute: .height,
+//                                                                       relatedBy: .equal,
+//                                                                       toItem: nil,
+//                                                                       attribute: .notAnAttribute,
+//                                                                       multiplier: 1.0,
+//                                                                       constant: 20.0)
+//            addConstraint(bottomcontentViewHeightConstraint)
+            
         } else {
             
             segmentViewHeight = 0.0

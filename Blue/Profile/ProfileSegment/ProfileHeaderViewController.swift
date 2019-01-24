@@ -79,6 +79,9 @@ class ProfileHeaderViewController: UIViewController {
     
     @IBAction func btnFollowAction(_ sender: UIButton) {
         if self.isOtherUserProfile == false {
+            if let segment = self.parent as? ProfileSegmentViewController {
+                segment.isBackFromSetting = true
+            }
             self.btnSettingAction(sender)
             return
         }

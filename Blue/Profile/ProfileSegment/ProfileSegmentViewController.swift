@@ -15,8 +15,9 @@ class ProfileSegmentViewController: SJSegmentedViewController , SJSegmentedViewC
     var userProfileData:[String:Any] = [String:Any]()
     
     var index:Int = 0
-    
     var firstTime:Bool = true
+    var isBackFromSetting:Bool = false
+    
     override func viewDidLoad() {
         
         let userContentVC = Object(UserContentViewController.self)
@@ -44,17 +45,22 @@ class ProfileSegmentViewController: SJSegmentedViewController , SJSegmentedViewC
         
         headerViewHeight = 183
         selectedSegmentViewHeight = 2.0
-        selectedSegmentViewColor = UIColor("4A4A4A")
+        selectedSegmentViewColor = .white //UIColor("4A4A4A")
         segmentBackgroundColor = .white//UIColor("FE6525") //FE5A22
         segmentShadow = SJShadow.light()
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
         
         segmentBounces = true
-        segmentViewHeight = 45
+        segmentViewHeight = 30
         self.delegate = self
-        
         super.viewDidLoad()
+        
+        for item in self.segments {
+            item.titleFont(UIFont(name: "Helvetica", size: 12)!)
+            item.titleColor(.lightGray, UIControl.State.normal)
+            item.titleColor(.black, UIControl.State.selected)
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -92,7 +98,12 @@ class ProfileSegmentViewController: SJSegmentedViewController , SJSegmentedViewC
             self.firstTime = false
         }
         else {
-            if self.index != 0 {
+            if self.isBackFromSetting {
+                self.isBackFromSetting = false
+                let vc = self.segmentControllers[0]
+                vc.viewWillAppear(animated)
+            }
+            else if self.index != 0 {
                 let vc = self.segmentControllers[0]
                 vc.viewWillAppear(animated)
             }
