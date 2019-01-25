@@ -20,6 +20,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     var pageControl = UIPageControl()
     var ref: DatabaseReference = Database.database().reference()
     
+    var isFirstTime:Bool = true
+    
     // MARK: UIPageViewControllerDataSource
     
     lazy var orderedViewControllers: [UIViewController] = {
@@ -59,9 +61,13 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.pageControl.isUserInteractionEnabled = false
         
         guard let controllers = self.viewControllers else {return}
-        
-        if let first = controllers.first {
-            first.viewWillAppear(animated)
+        if isFirstTime == false {
+            if let first = controllers.first {
+                first.viewWillAppear(animated)
+            }
+        }
+        else {
+            self.isFirstTime = false
         }
     }
     

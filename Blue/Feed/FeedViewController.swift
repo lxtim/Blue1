@@ -23,7 +23,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var shareRef = Database.database().reference().child(ConstantKey.share)
     
     var feedData:[[String:Any]] = [[String:Any]]()
-    var allFeed:NSDictionary = NSDictionary()
     
     var currentObserver:UInt?
     var isFirstTime:Bool = true
@@ -44,6 +43,11 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var refreshControl:UIRefreshControl = UIRefreshControl()
     var selectedIndexPath:IndexPath?
     
+    
+    //Feed In second Option
+    private var users:[[String:Any]] = [[String:Any]]()
+    private var allfeed:[[String:Any]] = [[String:Any]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,6 +65,9 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     
     @objc func pullToRefresh(_ sender:UIRefreshControl) {
+        JDB.log("Pull To refresh")
+        self.refreshControl.accessibilityLabel = "Refresh"
+        self.refreshControl.beginRefreshing()
         self.getFeed()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -71,9 +78,13 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         self.parent?.navigationItem.title = "Feed"
         
         setRightBar()
+        if self.isFirstTime == false {
+            self.getFeed()
+        }
+        else {
+            self.isFirstTime = false
+        }
         
-        
-        self.getFeed()
         
         //        if let indexPath = self.tableView.indexPathsForVisibleRows {
         //            tableView.beginUpdates()
@@ -103,7 +114,7 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         //                            self.player.displayView.snp.remakeConstraints {
         //                                $0.edges.equalTo(cell.playerContentView)
         //                            }
-        //                        }
+        //                        }	
         //                    }
         //                    else {
         //                        self.player.displayView.removeFromSuperview()
@@ -188,9 +199,6 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
     @IBAction func btnSearchAction(_ sender: UIButton) {
         
-        //    }
-        //    @IBAction func btnSearchAction(_ sender: UIBarButtonItem) {
-        
         if let navigation = self.storyboard?.instantiateViewController(withIdentifier: "searchNavigation") as? UINavigationController {
             let searchTableController = navigation.viewControllers.first as! UserSearchViewController
             let searchController = UISearchController(searchResultsController: searchTableController)
@@ -204,13 +212,19 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         let notificationVC = Object(NotificationContentVC.self)
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
-    func getFeed() {
-        HUD.show()
-        self.feedData = [[String:Any]]()
+    
+    func feedInSecondOption() {
         self.userRef.observeSingleEvent(of: DataEventType.value) { (snapshot) in
             if  let value = snapshot.value as? [String:Any] {
-                let keys = value.keys.map({$0})
-                self.getFeedData(keys, value, index: 0)
+                
+                self.users = [[String:Any]]()
+                let allusers = value.values.map({$0 as! [String:Any]})
+                for item in allusers {
+                    let key = item[ConstantKey.id] as! String
+                    if BasicStuff.shared.followArray.contains(key) || firebaseUser.uid == key {
+                        self.users.append(item)
+                    }
+                }
                 
                 for (k,v) in self.changeObserver {
                     for int in v {
@@ -218,21 +232,102 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
                     }
                 }
                 self.changeObserver.removeAll()
+                
+                DispatchQueue.main.async(execute: {
+                    self.allfeed = [[String:Any]]()
+                    self.getFeedsFromUsers(index: 0)
+                })
             }
         }
-        self.userRef.observe(.childRemoved) { (snapshot) in
-            if  let value = snapshot.value as? [String:Any] {
-                let keys = value.keys.map({$0})
-                self.getFeedData(keys, value, index: 0)
-                
-                for (k,v) in self.changeObserver {
-                    for int in v {
-                        self.feedRef.child(k).removeObserver(withHandle: int)
+    }
+    
+    func getFeedsFromUsers(index:Int) {
+        if self.users.count <= index {
+            self.feedData = self.allfeed.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+            self.tableView.reloadData()
+            
+            if self.feedData.count > 0 {
+                self.tableView.isHidden = false
+            }
+            else {
+                self.tableView.isHidden = true
+            }
+            self.refreshControl.endRefreshing()
+            return
+        }
+        else {
+            let user = self.users[index]
+            let userID = user[ConstantKey.id] as! String
+            self.feedRef.child(userID).observeSingleEvent(of: .value) { (snap) in
+                if let value = snap.value as? [String:Any] {
+                    let feeds = value.values.map({$0 as! [String:Any]})
+                    
+                    for var feed in feeds {
+                        feed[ConstantKey.user] = user
+                        if let story = feed[ConstantKey.storyType] as? String {
+                            if story == StoryType.story {
+                                // check date for 24 hours
+                                if let timeStamp = feed[ConstantKey.date] as? Double {
+                                    let postDate = Date(timeIntervalSince1970: timeStamp)
+                                    let hours = Date().hours(from: postDate)
+                                    if hours < storyTime {
+                                        self.allfeed.append(feed)
+                                    }
+                                }
+                            }
+                            else {
+                                self.allfeed.append(feed)
+                            }
+                        }
+                        else {
+                            
+                            self.allfeed.append(feed)
+                        }
                     }
                 }
-                self.changeObserver.removeAll()
+                
+                DispatchQueue.main.async(execute: {
+                    let indx = index + 1
+                    self.getFeedsFromUsers(index: indx)
+                })
             }
+            self.observeChangedObject(userID)
         }
+    }
+    
+    func getFeed() {
+        self.feedInSecondOption()
+     //   return
+            
+       // HUD.show()
+//        self.feedData = [[String:Any]]()
+//        self.userRef.observeSingleEvent(of: DataEventType.value) { (snapshot) in
+//            if  let value = snapshot.value as? [String:Any] {
+//                let keys = value.keys.map({$0})
+//                self.getFeedData(keys, value, index: 0)
+//
+//                for (k,v) in self.changeObserver {
+//                    for int in v {
+//                        self.feedRef.child(k).removeObserver(withHandle: int)
+//                    }
+//                }
+//                self.changeObserver.removeAll()
+//            }
+//        }
+//
+//        self.userRef.observe(.childRemoved) { (snapshot) in
+//            if  let value = snapshot.value as? [String:Any] {
+//                let keys = value.keys.map({$0})
+//                self.getFeedData(keys, value, index: 0)
+//
+//                for (k,v) in self.changeObserver {
+//                    for int in v {
+//                        self.feedRef.child(k).removeObserver(withHandle: int)
+//                    }
+//                }
+//                self.changeObserver.removeAll()
+//            }
+//        }
     }
     
     func observeChangedObject(_ key:String) {
@@ -299,137 +394,138 @@ class FeedViewController: UIViewController , UITableViewDelegate , UITableViewDa
         
         self.changeObserver[key] = [changeIndex,removeIndex]
     }
-    func getFeedData(_ keys:[String], _ sender:[String:Any] , index:Int) {
-        if index >= sender.count {
-            HUD.dismiss()
-            let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
-            var feedImageData:[[String:Any]] = [[String:Any]]()
-            
-            //self.feedData = sortedArray
-            
-//            JDB.log("feeddata ==>%@", sortedArray.count)
-//            JDB.log("feeddata ==>%@", sortedArray)
-            
-            for item in sortedArray {
-                if item[ConstantKey.contentType] == nil || item[ConstantKey.contentType] as! String != ConstantKey.video {
-                    if let story = item[ConstantKey.storyType] as? String {
-                        if story == StoryType.story {
-                            // check date for 24 hours
-                            if let timeStamp = item[ConstantKey.date] as? Double {
-                                let postDate = Date(timeIntervalSince1970: timeStamp)
-                                let hours = Date().hours(from: postDate)
-                                if hours < storyTime {
-                                    feedImageData.append(item)
-                                }
-                            }
-                        }
-                        else {
-                            feedImageData.append(item)
-                        }
-                    }
-                    else {
-                        feedImageData.append(item)
-                    }
-                }
-            }
-            self.feedData = feedImageData
-            
-            //            for i in 0...feedData.count - 1 {
-            //                JDB.log("feed data index \(i) ====>%@", feedData[i])
-            //            }
-            
-            if self.feedData.count > 0 {
-                self.tableView.isHidden = false
-            }
-            else {
-                self.tableView.isHidden = true
-            }
-            
-            self.tableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: {
-                if let indexPath = self.selectedIndexPath {
-                    self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.none, animated: false)
-                    self.selectedIndexPath = nil
-                }
-            })
-            
-            //            if self.isFirstTime {
-            //                self.isFirstTime = false
-            //                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            //                    let visibleCell = self.tableView.visibleCells
-            //                    for item in visibleCell {
-            //                        if let cell = item as? PostCell , cell.type == .video {
-            //                            self.currentPlayIndexPath = cell.indexPath
-            ////                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.tableView, change: nil, context: nil)
-            //                        }
-            //                    }
-            //                }
-            //            }
-            self.refreshControl.endRefreshing()
-            return
-        }
-        else {
-            let key = keys[index]
-            let userValue = sender[key] as! [String:Any]
-            
-            if BasicStuff.shared.followArray.contains(key) || firebaseUser.uid == key {
-                
-                self.feedRef.child(key).observeSingleEvent(of: .value) { (snap) in
-                    //
-                    //                }
-                    //                self.feedRef.child(key).observe(.value, with: { (snap) in
-                    if let value = snap.value as? [String:Any] {
-                        var isItemChanged:Bool = false
-                        var changedIndex:[Int] = [Int]()
-                        for (k,v) in value {
-                            if var data = v as? [String:Any] {
-                                data[ConstantKey.user] = userValue
-                                data[ConstantKey.id] = k
-                                if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
-                                    self.feedData.remove(at: itemIndex)
-                                    self.feedData.insert(data, at: itemIndex)
-                                    changedIndex.append(itemIndex)
-                                    isItemChanged = true
-                                }
-                                else {
-                                    self.feedData.append(data)
-                                    self.isFirstTime = true
-                                }
-                            }
-                        }
-                        
-                        if isItemChanged {
-                            self.tableView.reloadData()
-                            //                            let indexPaths = changedIndex.map({IndexPath(row: $0, section: 0)})
-                            //                            self.tableView.reloadRows(at: indexPaths, with: .none)
-                        }
-                        else {
-                            self.tableView.reloadData()
-                            let next = index + 1
-                            DispatchQueue.main.async {
-                                self.getFeedData(keys, sender, index: next)
-                            }
-                        }
-                    }
-                    else {
-                        DispatchQueue.main.async {
-                            let next = index + 1
-                            self.getFeedData(keys, sender, index: next)
-                        }
-                    }
-                }
-                self.observeChangedObject(key)
-            }
-            else {
-                DispatchQueue.main.async {
-                    let next = index + 1
-                    self.getFeedData(keys, sender, index: next)
-                }
-            }
-        }
-    }
+    
+//    func getFeedData(_ keys:[String], _ sender:[String:Any] , index:Int) {
+//        if index >= sender.count {
+//            HUD.dismiss()
+//            let sortedArray = self.feedData.sorted(by: {($0[ConstantKey.date] as! Double) > $1[ConstantKey.date] as! Double})
+//            var feedImageData:[[String:Any]] = [[String:Any]]()
+//
+//            //self.feedData = sortedArray
+//
+////            JDB.log("feeddata ==>%@", sortedArray.count)
+////            JDB.log("feeddata ==>%@", sortedArray)
+//
+//            for item in sortedArray {
+//                if item[ConstantKey.contentType] == nil || item[ConstantKey.contentType] as! String != ConstantKey.video {
+//                    if let story = item[ConstantKey.storyType] as? String {
+//                        if story == StoryType.story {
+//                            // check date for 24 hours
+//                            if let timeStamp = item[ConstantKey.date] as? Double {
+//                                let postDate = Date(timeIntervalSince1970: timeStamp)
+//                                let hours = Date().hours(from: postDate)
+//                                if hours < storyTime {
+//                                    feedImageData.append(item)
+//                                }
+//                            }
+//                        }
+//                        else {
+//                            feedImageData.append(item)
+//                        }
+//                    }
+//                    else {
+//                        feedImageData.append(item)
+//                    }
+//                }
+//            }
+//            self.feedData = feedImageData
+//
+//            //            for i in 0...feedData.count - 1 {
+//            //                JDB.log("feed data index \(i) ====>%@", feedData[i])
+//            //            }
+//
+//            if self.feedData.count > 0 {
+//                self.tableView.isHidden = false
+//            }
+//            else {
+//                self.tableView.isHidden = true
+//            }
+//
+//            self.tableView.reloadData()
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: {
+//                if let indexPath = self.selectedIndexPath {
+//                    self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.none, animated: false)
+//                    self.selectedIndexPath = nil
+//                }
+//            })
+//
+//            //            if self.isFirstTime {
+//            //                self.isFirstTime = false
+//            //                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+//            //                    let visibleCell = self.tableView.visibleCells
+//            //                    for item in visibleCell {
+//            //                        if let cell = item as? PostCell , cell.type == .video {
+//            //                            self.currentPlayIndexPath = cell.indexPath
+//            ////                            self.observeValue(forKeyPath: #keyPath(UITableView.contentOffset), of: self.tableView, change: nil, context: nil)
+//            //                        }
+//            //                    }
+//            //                }
+//            //            }
+//            self.refreshControl.endRefreshing()
+//            return
+//        }
+//        else {
+//            let key = keys[index]
+//            let userValue = sender[key] as! [String:Any]
+//
+//            if BasicStuff.shared.followArray.contains(key) || firebaseUser.uid == key {
+//
+//                self.feedRef.child(key).observeSingleEvent(of: .value) { (snap) in
+//                    //
+//                    //                }
+//                    //                self.feedRef.child(key).observe(.value, with: { (snap) in
+//                    if let value = snap.value as? [String:Any] {
+//                        var isItemChanged:Bool = false
+//                        var changedIndex:[Int] = [Int]()
+//                        for (k,v) in value {
+//                            if var data = v as? [String:Any] {
+//                                data[ConstantKey.user] = userValue
+//                                data[ConstantKey.id] = k
+//                                if let itemIndex = self.feedData.index(where: {($0[ConstantKey.id] as! String) == k}) {
+//                                    self.feedData.remove(at: itemIndex)
+//                                    self.feedData.insert(data, at: itemIndex)
+//                                    changedIndex.append(itemIndex)
+//                                    isItemChanged = true
+//                                }
+//                                else {
+//                                    self.feedData.append(data)
+//                                    self.isFirstTime = true
+//                                }
+//                            }
+//                        }
+//
+//                        if isItemChanged {
+//                            self.tableView.reloadData()
+//                            //                            let indexPaths = changedIndex.map({IndexPath(row: $0, section: 0)})
+//                            //                            self.tableView.reloadRows(at: indexPaths, with: .none)
+//                        }
+//                        else {
+//                            self.tableView.reloadData()
+//                            let next = index + 1
+//                            DispatchQueue.main.async {
+//                                self.getFeedData(keys, sender, index: next)
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        DispatchQueue.main.async {
+//                            let next = index + 1
+//                            self.getFeedData(keys, sender, index: next)
+//                        }
+//                    }
+//                }
+//                self.observeChangedObject(key)
+//            }
+//            else {
+//                DispatchQueue.main.async {
+//                    let next = index + 1
+//                    self.getFeedData(keys, sender, index: next)
+//                }
+//            }
+//        }
+//    }
     func getMyFollowers() {
-        HUD.show()
+       // HUD.show()
         var localisFirsTime = false
         self.ref.child(ConstantKey.Users).child(firebaseUser.uid).observe(DataEventType.value) { (snapshot) in
             if let snap = snapshot.value as? NSDictionary {

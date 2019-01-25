@@ -23,7 +23,6 @@ class UserContentViewController: UIViewController , UITableViewDelegate , UITabl
     var feedRef = Database.database().reference().child(ConstantKey.feed)
     
     var feedData:[[String:Any]] = [[String:Any]]()
-    var allFeed:NSDictionary = NSDictionary()
     
     var currentUser:[String:Any] = [String:Any]()
     
@@ -84,8 +83,10 @@ class UserContentViewController: UIViewController , UITableViewDelegate , UITabl
             if let value = snap.value as? [String:Any] {
                 for (_,v) in value {
                     if var data = v as? [String:Any] {
-                        data[ConstantKey.user] = self.currentUser
-                        self.feedData.append(data)
+                        if let story = data[ConstantKey.storyType] as? String , story != StoryType.story {
+                            data[ConstantKey.user] = self.currentUser
+                            self.feedData.append(data)
+                        }
                     }
                 }
                 
@@ -142,7 +143,7 @@ class UserContentViewController: UIViewController , UITableViewDelegate , UITabl
     
     //MARK:- UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.size.width - 15)/2
+        let width = (collectionView.frame.size.width - 45)/2
         return CGSize(width: width, height: width)
     }
     
