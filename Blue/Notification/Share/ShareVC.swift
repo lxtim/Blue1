@@ -28,6 +28,9 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     
     var isViewShow:Bool = false
     var isFirstTime:Bool = false
+    
+    var observers:[UInt] = [UInt]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,11 +64,10 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     func getRefresh() {
-        HUD.show()
+//        HUD.show()
         self.follow = BasicStuff.shared.followArray.map({$0 as! String})
         self.follow.append(firebaseUser.uid)
         self.shareTableData = [[String:Any]]()
@@ -85,6 +87,12 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     //func get All FollowData
     func getShareData(count:Int) {
         if count >= self.follow.count {
+            
+            for i in observers {
+                self.ref.child(ConstantKey.feed).removeObserver(withHandle:i)
+            }
+            observers.removeAll()
+            
             self.getShareContent(count:0)
             return
         }
@@ -93,19 +101,9 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         self.ref.child(ConstantKey.share).child(id).observeSingleEvent(of: .value) { (snapshot) in
             if let response = snapshot.value as? [String:Any] {
                 let data = response.map({$1 as! [String:Any]})
-                
-                for item in data {
-                    if let contentType = item[ConstantKey.contentType] as? Int , contentType != 2 {
-                        self.shareTableData.append(item)
-                    }
-                    
-//                    if item[ConstantKey.contentType] as! Int == 2 {
-//
-//                    }else {
-//                        self.shareTableData.append(item)
-//                    }
-                }
+                self.shareTableData.append(contentsOf: data)
             }
+            
             let nextCount = count + 1
             DispatchQueue.main.async {
                 self.getShareData(count: nextCount)
@@ -116,20 +114,17 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
     func getShareContent(count:Int) {
         
         if count >= self.shareTableData.count {
-            HUD.dismiss()
+            
             for index in self.removeShareDataObject {
-                JDB.log("Remove SHare Object ID ==>%@", index)
-                self.shareTableData = self.shareTableData.filter { (data) -> Bool in
-                    if let shareID = data[ConstantKey.shareID] as? String , shareID != index {
-                        return true
-                    }
-                    else {
-                        return false
-                    }
-                }
+                
+                self.shareTableData = self.shareTableData.filter { (data) -> Bool in if let shareID = data[ConstantKey.shareID] as? String , shareID != index { return true } else { return false } }
+                
             }
             self.shareTableData = self.shareTableData.sorted(by: {($0[ConstantKey.date] as! Double) > ($1[ConstantKey.date] as! Double)})
+            
             self.shareTableView.reloadData()
+            
+//            HUD.dismiss()
             
 //            if self.isFirstTime {
 //                self.isFirstTime = false
@@ -150,8 +145,9 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
             let postUserID = object[ConstantKey.userid] as! String
             let postID = object[ConstantKey.postID] as! String
             
-            self.ref.child(ConstantKey.feed).child(postUserID).child(postID).observe(.value) { (snapshot) in
-                if let post = snapshot.value as? [String:Any] {
+            let observerInt = self.ref.child(ConstantKey.feed).child(postUserID).child(postID).observe(.value) { (snap) in
+                
+                if let post = snap.value as? Snap {
                     if let storyType = post[ConstantKey.storyType] as? String , storyType == StoryType.story {
                         if let timeStamp = post[ConstantKey.date] as? Double {
                             let postDate = Date(timeIntervalSince1970: timeStamp)
@@ -174,6 +170,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
                     self.getShareContent(count: nextCount)
                 }
             }
+            self.observers.append(observerInt);
         }
     }
     
@@ -241,7 +238,7 @@ class ShareVC: UIViewController , UITableViewDataSource , UITableViewDelegate ,F
         }
         else {
             profile.isOtherUserProfile = true
-            profile.userProfileData = user//NSMutableDictionary(dictionary: user)
+            profile.userProfileData = user
         }
         self.navigationController?.pushViewController(profile, animated: true)
     }

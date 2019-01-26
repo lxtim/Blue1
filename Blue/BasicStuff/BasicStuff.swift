@@ -54,6 +54,9 @@ struct Platform {
     }()
 }
 
+typealias Snap = [String:Any]
+
+
 struct StoryType  {
     static let regular: String = "regular"
     static let story: String = "story"

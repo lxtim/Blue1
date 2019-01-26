@@ -46,7 +46,8 @@ class ShareTableViewCell: UITableViewCell {
     
     var post:[String:Any] = [String:Any]()
     
-    var adminUser:[String:Any] = [String:Any]()
+    var adminUser:Snap = Snap()
+    var shareUser:Snap = Snap()
     
     var object:[String:Any] = [String:Any]() {
         didSet(newValue){
@@ -59,8 +60,11 @@ class ShareTableViewCell: UITableViewCell {
                 let date = Date(timeIntervalSince1970: timeStamp)
                 self.shareUserDateLabel.text = Date().offset(from: date) + " ago"
             }
+            
             guard let cellPost = object[ConstantKey.post] as? [String:Any] else {return}
+            
             self.post = cellPost
+            
             if let url = post[ConstantKey.image] as? String {
                 if self.postType == .video {
                     if let thumb = post[ConstantKey.thumb_image] as? String {
@@ -143,6 +147,7 @@ class ShareTableViewCell: UITableViewCell {
             
             self.ref.child(ConstantKey.Users).child(shareUserID).observeSingleEvent(of: .value) { (snapshot) in
                 guard let shareUser = snapshot.value as? [String:Any] else {return}
+                self.shareUser = shareUser
                 self.shareUserNameLabel.text = shareUser[ConstantKey.username] as? String
                 if let url = shareUser[ConstantKey.image] as? String {
                     self.shareUserImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
@@ -158,29 +163,21 @@ class ShareTableViewCell: UITableViewCell {
     }
     
     @IBAction func btnLikeAction(_ sender: UIButton) {
-        if object[ConstantKey.likes] != nil {
+        if self.post[ConstantKey.likes] != nil {
             if let delegate = self.delegate {
-                delegate.feedLikeDidSelect(user: object)
+                delegate.feedLikeDidSelect(user: self.post)
             }
+        }
+    }
+    @IBAction func btnUserShareProfileAction(_ sender: UIButton) {
+        if let delegate = self.delegate {
+            delegate.feedProfileDidSelect(user: self.shareUser)
         }
     }
     
     @IBAction func btnUserProfileAction(_ sender: UIButton) {
-        if object[ConstantKey.userid] != nil {
-            if let delegate = self.delegate {
-                if let id = object[ConstantKey.userid] as? String {
-                    if id == firebaseUser.uid {
-                        delegate.feedProfileDidSelect(user: object)
-                    }
-                    else {
-                        self.ref.child(ConstantKey.Users).child(id).observeSingleEvent(of: .value) { (snapshot) in
-                            if let value = snapshot.value as? [String:Any] {
-                                self.delegate?.feedProfileDidSelect(user: value)
-                            }
-                        }
-                    }
-                }
-            }
+        if let delegate = self.delegate {
+            delegate.feedProfileDidSelect(user: self.adminUser)
         }
     }
     

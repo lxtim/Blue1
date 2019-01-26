@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,7 +35,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qk1-DH-yqi">
-                                <rect key="frame" x="65" y="37" width="30.5" height="15.5"/>
+                                <rect key="frame" x="65" y="36.5" width="30.5" height="15.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -49,19 +49,29 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iT7-lv-3Bg">
+                                <rect key="frame" x="5" y="10" width="94.5" height="50"/>
+                                <connections>
+                                    <action selector="btnUserShareProfileAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uis-J7-cmc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="5Mi-e3-WYv" firstAttribute="top" secondItem="JDf-au-d8J" secondAttribute="bottom" constant="10" id="0Ap-LZ-f0H"/>
                             <constraint firstItem="f8I-wB-9rD" firstAttribute="leading" secondItem="JDf-au-d8J" secondAttribute="trailing" constant="10" id="7KS-Nt-D0i"/>
+                            <constraint firstItem="iT7-lv-3Bg" firstAttribute="top" secondItem="JDf-au-d8J" secondAttribute="top" id="EV9-DM-IfP"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qk1-DH-yqi" secondAttribute="trailing" constant="20" id="FqW-om-6tT"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="f8I-wB-9rD" secondAttribute="trailing" constant="20" id="Lxx-7b-tdR"/>
                             <constraint firstItem="Qk1-DH-yqi" firstAttribute="leading" secondItem="JDf-au-d8J" secondAttribute="trailing" constant="10" id="TUc-ZN-jv2"/>
+                            <constraint firstItem="iT7-lv-3Bg" firstAttribute="leading" secondItem="JDf-au-d8J" secondAttribute="leading" id="Ut4-Py-2Or"/>
                             <constraint firstAttribute="bottom" secondItem="5Mi-e3-WYv" secondAttribute="bottom" constant="5" id="Vc9-Nr-2cv"/>
                             <constraint firstItem="f8I-wB-9rD" firstAttribute="top" secondItem="otN-3K-jw2" secondAttribute="top" constant="15" id="Xou-mJ-GHZ"/>
                             <constraint firstItem="5Mi-e3-WYv" firstAttribute="leading" secondItem="otN-3K-jw2" secondAttribute="leading" constant="20" id="YQX-tU-Qk0"/>
+                            <constraint firstItem="iT7-lv-3Bg" firstAttribute="trailing" secondItem="f8I-wB-9rD" secondAttribute="trailing" id="Z1h-PW-rPC"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5Mi-e3-WYv" secondAttribute="trailing" constant="20" id="gIZ-On-l00"/>
                             <constraint firstItem="Qk1-DH-yqi" firstAttribute="top" secondItem="f8I-wB-9rD" secondAttribute="bottom" constant="5" id="kLe-13-qxT"/>
                             <constraint firstItem="JDf-au-d8J" firstAttribute="leading" secondItem="otN-3K-jw2" secondAttribute="leading" constant="5" id="wm9-VD-hDS"/>
+                            <constraint firstItem="iT7-lv-3Bg" firstAttribute="bottom" secondItem="JDf-au-d8J" secondAttribute="bottom" id="x1T-vh-YQF"/>
                             <constraint firstItem="JDf-au-d8J" firstAttribute="top" secondItem="otN-3K-jw2" secondAttribute="top" constant="10" id="xNt-Cu-ydf"/>
                         </constraints>
                     </view>
@@ -82,13 +92,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="how-xf-yOc">
-                                <rect key="frame" x="65" y="37" width="30.5" height="15.5"/>
+                                <rect key="frame" x="65" y="36.5" width="30.5" height="15.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" white="0.0" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storyDot" translatesAutoresizingMaskIntoConstraints="NO" id="its-IM-ea5">
-                                <rect key="frame" x="100" y="43" width="5" height="5"/>
+                                <rect key="frame" x="99.5" y="42" width="5" height="5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="5" id="egE-cv-k9a"/>
@@ -101,26 +111,36 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98F-kw-OJi">
-                                <rect key="frame" x="109" y="36.5" width="33.5" height="16.5"/>
+                                <rect key="frame" x="108.5" y="36" width="33.5" height="16.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYi-a2-daO">
+                                <rect key="frame" x="5" y="10" width="94.5" height="50"/>
+                                <connections>
+                                    <action selector="btnUserProfileAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gbG-5x-fzb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="CJG-Jl-Ifj"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="10" id="CQT-Rz-TsH"/>
                             <constraint firstItem="its-IM-ea5" firstAttribute="leading" secondItem="how-xf-yOc" secondAttribute="trailing" constant="4" id="CrI-Q3-3mI"/>
+                            <constraint firstItem="sYi-a2-daO" firstAttribute="bottom" secondItem="wag-8N-3gP" secondAttribute="bottom" id="Ftd-Wk-gzE"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ezh-NT-dn7" secondAttribute="trailing" constant="20" id="Hvt-Gy-l30"/>
+                            <constraint firstItem="sYi-a2-daO" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="leading" id="JHc-P6-hFl"/>
                             <constraint firstItem="98F-kw-OJi" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="Kcm-W2-xzY"/>
                             <constraint firstItem="Ezh-NT-dn7" firstAttribute="top" secondItem="TLY-LG-PCg" secondAttribute="top" constant="15" id="NMu-F1-icu"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="98F-kw-OJi" secondAttribute="trailing" constant="20" id="QNa-eE-2sc"/>
+                            <constraint firstItem="sYi-a2-daO" firstAttribute="top" secondItem="wag-8N-3gP" secondAttribute="top" id="Sw1-ZJ-Kxe"/>
                             <constraint firstAttribute="bottom" secondItem="wag-8N-3gP" secondAttribute="bottom" constant="5" id="U1s-7b-uZl"/>
                             <constraint firstItem="its-IM-ea5" firstAttribute="centerY" secondItem="how-xf-yOc" secondAttribute="centerY" id="UaJ-4R-A9F"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="top" secondItem="Ezh-NT-dn7" secondAttribute="bottom" constant="5" id="WbX-C7-x5s"/>
                             <constraint firstItem="98F-kw-OJi" firstAttribute="leading" secondItem="its-IM-ea5" secondAttribute="trailing" constant="4" id="bHd-ED-KfT"/>
                             <constraint firstItem="how-xf-yOc" firstAttribute="leading" secondItem="wag-8N-3gP" secondAttribute="trailing" constant="10" id="eh7-4g-7rN"/>
+                            <constraint firstItem="sYi-a2-daO" firstAttribute="trailing" secondItem="Ezh-NT-dn7" secondAttribute="trailing" id="emu-Ta-mMC"/>
                             <constraint firstItem="wag-8N-3gP" firstAttribute="leading" secondItem="TLY-LG-PCg" secondAttribute="leading" constant="5" id="qeA-Rj-AOo"/>
                         </constraints>
                     </view>
@@ -213,7 +233,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Filledheart" width="25" height="21"/>
+        <image name="Filledheart" width="25" height="21.5"/>
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="Star" width="25" height="23"/>
         <image name="commentBg" width="29" height="26"/>
