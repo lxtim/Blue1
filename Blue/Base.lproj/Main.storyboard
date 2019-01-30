@@ -1303,11 +1303,11 @@
             <objects>
                 <viewController storyboardIdentifier="ProfileHeaderViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="p0F-ag-T26" customClass="ProfileHeaderViewController" customModule="Blue" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZMT-d0-RHP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="182.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZ6-y0-iZb">
-                                <rect key="frame" x="0.0" y="20" width="375" height="162.5"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZ6-y0-iZb">
+                                <rect key="frame" x="0.0" y="20" width="375" height="90"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_placeHolder" translatesAutoresizingMaskIntoConstraints="NO" id="nM6-QJ-a7y">
                                         <rect key="frame" x="15" y="10" width="72" height="72"/>
@@ -1351,21 +1351,15 @@
                                             <color key="titleColor" red="0.15686274510000001" green="0.63921568630000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.15686274510000001" green="0.63921568630000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="btnFollowAction:" destination="p0F-ag-T26" eventType="touchUpInside" id="IHw-P4-K5T"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UOq-Io-cGy">
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UOq-Io-cGy">
                                         <rect key="frame" x="20" y="92" width="335" height="50.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xsq-vR-aDK">
@@ -1442,7 +1436,7 @@
                                             <constraint firstItem="YYV-jl-biA" firstAttribute="leading" secondItem="xsq-vR-aDK" secondAttribute="trailing" id="sUJ-Cc-czp"/>
                                         </constraints>
                                     </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYW-dk-PCb">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYW-dk-PCb">
                                         <rect key="frame" x="20" y="92" width="335" height="50.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfK-VY-YCy">
@@ -1487,19 +1481,19 @@
                                     <constraint firstItem="4Th-Fz-yeu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1nG-49-KLh" secondAttribute="trailing" constant="20" id="606-D1-gDh"/>
                                     <constraint firstItem="nM6-QJ-a7y" firstAttribute="leading" secondItem="UZ6-y0-iZb" secondAttribute="leading" constant="15" id="8H8-vt-uwP"/>
                                     <constraint firstItem="1nG-49-KLh" firstAttribute="leading" secondItem="nM6-QJ-a7y" secondAttribute="trailing" constant="10" id="Ene-ZG-QGN"/>
+                                    <constraint firstAttribute="bottom" secondItem="nM6-QJ-a7y" secondAttribute="bottom" constant="8" id="FYn-Hm-zVC"/>
                                     <constraint firstItem="4Th-Fz-yeu" firstAttribute="centerY" secondItem="1nG-49-KLh" secondAttribute="centerY" id="JNb-ir-ew8"/>
                                     <constraint firstItem="9cR-7h-mKR" firstAttribute="leading" secondItem="nM6-QJ-a7y" secondAttribute="leading" id="K7O-1M-NDc"/>
                                     <constraint firstItem="UOq-Io-cGy" firstAttribute="height" secondItem="nM6-QJ-a7y" secondAttribute="height" multiplier="0.7" id="MvX-ri-Mp7"/>
-                                    <constraint firstItem="UOq-Io-cGy" firstAttribute="top" secondItem="nM6-QJ-a7y" secondAttribute="bottom" constant="10" id="Ol4-35-03C"/>
                                     <constraint firstAttribute="trailing" secondItem="UOq-Io-cGy" secondAttribute="trailing" constant="20" id="Rfb-47-J0D"/>
                                     <constraint firstItem="9cR-7h-mKR" firstAttribute="bottom" secondItem="nM6-QJ-a7y" secondAttribute="bottom" id="Tk6-S3-LiV"/>
                                     <constraint firstItem="aYW-dk-PCb" firstAttribute="leading" secondItem="UOq-Io-cGy" secondAttribute="leading" id="UaT-dE-nhS"/>
                                     <constraint firstAttribute="trailing" secondItem="4Th-Fz-yeu" secondAttribute="trailing" constant="15" id="UgA-fz-wra"/>
                                     <constraint firstItem="aYW-dk-PCb" firstAttribute="top" secondItem="UOq-Io-cGy" secondAttribute="top" id="YLh-Y4-3X3"/>
+                                    <constraint firstItem="UOq-Io-cGy" firstAttribute="top" secondItem="nM6-QJ-a7y" secondAttribute="bottom" constant="10" id="aDa-Je-eJE"/>
                                     <constraint firstItem="nM6-QJ-a7y" firstAttribute="top" secondItem="UZ6-y0-iZb" secondAttribute="top" constant="10" id="cxG-pb-Atw"/>
                                     <constraint firstItem="UOq-Io-cGy" firstAttribute="leading" secondItem="UZ6-y0-iZb" secondAttribute="leading" constant="20" id="dNO-93-cB1"/>
                                     <constraint firstItem="1nG-49-KLh" firstAttribute="centerY" secondItem="nM6-QJ-a7y" secondAttribute="centerY" id="kmD-HJ-P7O"/>
-                                    <constraint firstAttribute="bottom" secondItem="aYW-dk-PCb" secondAttribute="bottom" constant="20" id="ndl-9G-rub"/>
                                     <constraint firstItem="9cR-7h-mKR" firstAttribute="trailing" secondItem="nM6-QJ-a7y" secondAttribute="trailing" id="oLI-BJ-p3G"/>
                                     <constraint firstItem="aYW-dk-PCb" firstAttribute="bottom" secondItem="UOq-Io-cGy" secondAttribute="bottom" id="ogm-wv-LwJ"/>
                                     <constraint firstItem="9cR-7h-mKR" firstAttribute="top" secondItem="nM6-QJ-a7y" secondAttribute="top" id="pZZ-as-LaU"/>
@@ -1515,7 +1509,7 @@
                         <viewLayoutGuide key="safeArea" id="xTr-ay-SNM"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="182.5"/>
+                    <size key="freeformSize" width="375" height="110"/>
                     <connections>
                         <outlet property="btnFollow" destination="4Th-Fz-yeu" id="1An-RR-85q"/>
                         <outlet property="followersLabel" destination="k7O-gr-vbA" id="dsA-m4-g4Q"/>
@@ -1527,7 +1521,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3C-Zz-1hT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4116" y="317"/>
+            <point key="canvasLocation" x="4116" y="316.19190404797604"/>
         </scene>
         <!--Bio View Controller-->
         <scene sceneID="P1I-rX-oBC">
@@ -2780,7 +2774,7 @@
         <image name="profile_placeHolder" width="23.172412872314453" height="23.172412872314453"/>
         <image name="square_normal" width="115" height="146"/>
         <image name="square_selected" width="115" height="146"/>
-        <image name="storyDot" width="4" height="4"/>
+        <image name="storyDot" width="4" height="5.5"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="2CZ-St-csw"/>

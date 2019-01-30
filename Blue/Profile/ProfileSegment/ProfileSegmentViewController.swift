@@ -43,7 +43,7 @@ class ProfileSegmentViewController: SJSegmentedViewController , SJSegmentedViewC
         headerViewController = headerController
         segmentControllers = [userContentVC,followVC,bioVC]
         
-        headerViewHeight = 183
+        headerViewHeight = 110
         selectedSegmentViewHeight = 2.0
         selectedSegmentViewColor = .white //UIColor("4A4A4A")
         segmentBackgroundColor = .white//UIColor("FE6525") //FE5A22

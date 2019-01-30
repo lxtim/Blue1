@@ -237,6 +237,6 @@
         <image name="Heart unfilled" width="25" height="22"/>
         <image name="Star" width="25" height="23"/>
         <image name="commentBg" width="29" height="26"/>
-        <image name="storyDot" width="4" height="4"/>
+        <image name="storyDot" width="4" height="5.5"/>
     </resources>
 </document>

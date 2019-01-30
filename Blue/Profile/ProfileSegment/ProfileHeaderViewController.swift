@@ -40,7 +40,7 @@ class ProfileHeaderViewController: UIViewController {
         if isOtherUserProfile {
             
             self.checkFollow()
-            self.getNumberOfPost()
+            //self.getNumberOfPost()
             
             if let url = userData[ConstantKey.image] as? String , url != "" {
                 self.profileImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "profile_placeHolder"), options: .continueInBackground, completed: nil)
@@ -69,12 +69,12 @@ class ProfileHeaderViewController: UIViewController {
                 self.userNameLabel.text = userData[ConstantKey.username] as? String
                 self.userData = userData
                 
-                self.getNumberOfPost()
+               // self.getNumberOfPost()
             }
         }
         
-        self.getFollowers()
-        self.getFollowing()
+       // self.getFollowers()
+       // self.getFollowing()
     }
     
     @IBAction func btnFollowAction(_ sender: UIButton) {
@@ -129,26 +129,27 @@ class ProfileHeaderViewController: UIViewController {
         if BasicStuff.shared.followArray.contains(userData[ConstantKey.id] as! String) {
             self.btnFollow.tag = 1
             self.btnFollow.setTitle("Following", for: .normal)
-            self.btnFollow.borderColor = UIColor("54C7FC")
+//            self.btnFollow.borderColor = UIColor("54C7FC")
             self.btnFollow.setTitleColor(.black, for: .normal)
-            self.btnFollow.backgroundColor = .clear
+            self.btnFollow.setBackgroundImage(UIImage(named: "following"), for: UIControl.State.normal)
         }
         else {
             self.btnFollow.tag = 0
             self.btnFollow.setTitle("Follow", for: .normal)
-            self.btnFollow.borderColor = UIColor("54C7FC")
+            //self.btnFollow.borderColor = UIColor("54C7FC")
             self.btnFollow.setTitleColor(.white, for: .normal)
-            self.btnFollow.backgroundColor = UIColor("54C7FC")
+//            self.btnFollow.backgroundColor = UIColor("54C7FC")
+            self.btnFollow.setBackgroundImage(UIImage(named: "Rectangle"), for: UIControl.State.normal)
             
         }
     }
     
-    func getNumberOfPost() {
-        let userID = userData[ConstantKey.id] as! String
-        self.feedRef.child(userID).observeSingleEvent(of: .value) { (snap) in
-            self.postLabel.text = "\(snap.childrenCount)"
-        }
-    }
+//    func getNumberOfPost() {
+//        let userID = userData[ConstantKey.id] as! String
+//        self.feedRef.child(userID).observeSingleEvent(of: .value) { (snap) in
+//            self.postLabel.text = "\(snap.childrenCount)"
+//        }
+//    }
     
     func getFollowing() {
         if self.isOtherUserProfile {
