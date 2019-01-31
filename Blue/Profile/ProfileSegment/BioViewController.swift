@@ -16,11 +16,15 @@ class BioViewController: UIViewController {
     
     var userRef = Database.database().reference().child(ConstantKey.Users)
     
-    @IBOutlet weak var bioTextView: UITextView!
+    @IBOutlet weak var bioTextView: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if isOtherUserProfile {
             self.bioTextView.text = self.userData[ConstantKey.caption] as? String
         }
@@ -30,10 +34,12 @@ class BioViewController: UIViewController {
                 self.bioTextView.text = userObject[ConstantKey.caption] as? String
             }
         }
-        // Do any additional setup after loading the view.
+    }
+
+    func viewForSegmentControllerToObserveContentOffsetChange() -> UIView {
+        return self.scrollView
     }
     
-
     /*
     // MARK: - Navigation
 

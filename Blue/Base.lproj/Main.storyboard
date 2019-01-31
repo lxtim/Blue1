@@ -1531,29 +1531,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yhw-Uh-Iu3">
-                                <rect key="frame" x="15" y="40" width="345" height="607"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dvx-M3-Ifh">
+                                <rect key="frame" x="16" y="40" width="343" height="607"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wt9-9m-0gx">
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="wt9-9m-0gx" secondAttribute="trailing" id="3EZ-yA-Ai8"/>
+                                    <constraint firstItem="wt9-9m-0gx" firstAttribute="top" secondItem="Dvx-M3-Ifh" secondAttribute="top" id="92j-NC-I4N"/>
+                                    <constraint firstItem="wt9-9m-0gx" firstAttribute="leading" secondItem="Dvx-M3-Ifh" secondAttribute="leading" id="GGg-A2-yF9"/>
+                                    <constraint firstAttribute="bottom" secondItem="wt9-9m-0gx" secondAttribute="bottom" id="vL3-eg-y3Y"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wDr-Ox-oYH" firstAttribute="trailing" secondItem="yhw-Uh-Iu3" secondAttribute="trailing" constant="15" id="Cqx-6T-uoq"/>
-                            <constraint firstItem="wDr-Ox-oYH" firstAttribute="bottom" secondItem="yhw-Uh-Iu3" secondAttribute="bottom" constant="20" id="TMY-vy-V2X"/>
-                            <constraint firstItem="yhw-Uh-Iu3" firstAttribute="top" secondItem="wDr-Ox-oYH" secondAttribute="top" constant="20" id="qza-J1-Mpx"/>
-                            <constraint firstItem="yhw-Uh-Iu3" firstAttribute="leading" secondItem="wDr-Ox-oYH" secondAttribute="leading" constant="15" id="rYI-LH-1Uo"/>
+                            <constraint firstItem="Dvx-M3-Ifh" firstAttribute="top" secondItem="wDr-Ox-oYH" secondAttribute="top" constant="20" id="Bqa-Mu-UWH"/>
+                            <constraint firstItem="Dvx-M3-Ifh" firstAttribute="leading" secondItem="wDr-Ox-oYH" secondAttribute="leading" constant="16" id="Lbl-Yl-07a"/>
+                            <constraint firstItem="wDr-Ox-oYH" firstAttribute="bottom" secondItem="Dvx-M3-Ifh" secondAttribute="bottom" constant="20" id="tMd-JJ-dsT"/>
+                            <constraint firstItem="wDr-Ox-oYH" firstAttribute="trailing" secondItem="Dvx-M3-Ifh" secondAttribute="trailing" constant="16" id="uVv-PG-QBE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wDr-Ox-oYH"/>
                     </view>
                     <connections>
-                        <outlet property="bioTextView" destination="yhw-Uh-Iu3" id="7AS-T6-EQv"/>
+                        <outlet property="bioTextView" destination="wt9-9m-0gx" id="oE3-Jd-Jmf"/>
+                        <outlet property="scrollView" destination="Dvx-M3-Ifh" id="EeS-Hq-ceI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Lh-EV-hmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4116" y="765"/>
+            <point key="canvasLocation" x="4116" y="764.16791604197908"/>
         </scene>
         <!--User Content View Controller-->
         <scene sceneID="QpP-jT-4CK">

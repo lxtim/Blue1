@@ -100,12 +100,14 @@ class ProfileSegmentViewController: SJSegmentedViewController , SJSegmentedViewC
         else {
             if self.isBackFromSetting {
                 self.isBackFromSetting = false
-                let vc = self.segmentControllers[0]
-                vc.viewWillAppear(animated)
+                for item in self.segmentControllers {
+                    item.viewWillAppear(animated)
+                }
             }
             else if self.index != 0 {
-                let vc = self.segmentControllers[0]
-                vc.viewWillAppear(animated)
+                for item in self.segmentControllers {
+                    item.viewWillAppear(animated)
+                }
             }
         }
     }

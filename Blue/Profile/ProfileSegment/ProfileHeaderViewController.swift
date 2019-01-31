@@ -69,7 +69,7 @@ class ProfileHeaderViewController: UIViewController {
                 self.userNameLabel.text = userData[ConstantKey.username] as? String
                 self.userData = userData
                 
-               // self.getNumberOfPost()
+                //self.getNumberOfPost()
             }
         }
         
